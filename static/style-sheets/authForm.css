@@ -1,0 +1,48 @@
+.content {
+  margin-top: 2%;
+}
+
+/* .flexbox  container */
+.flexbox {
+  display: flex;
+  width: 80%;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.sideImg {
+  flex: 1 1 auto;
+  height: 500px;
+  margin-right: 10px;
+  margin-top: 100px;
+}
+
+.authForm {
+  flex: 1 1 auto;
+
+  background-color: lightblue;
+
+  margin-left: auto;
+}
+
+button {
+  background-color: #4caf50;
+  color: black;
+  padding: 15px;
+  margin: 10px 0px;
+  border: none;
+  cursor: pointer;
+}
+
+.text {
+  margin: 8px 0;
+  width: 250px;
+  padding: 12px 20px;
+  display: block;
+  border: 2px solid green;
+  box-sizing: border-box;
+}
+
+button:hover {
+  opacity: 0.7;
+}

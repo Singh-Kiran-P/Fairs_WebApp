@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./style-sheets/basic.css">
-  <link rel="stylesheet" href="./style-sheets/login.css">
+  <link rel="stylesheet" href="./style-sheets/authForm.css">
 </head>
 
 <body>
@@ -34,26 +34,41 @@
     </nav>
   </header>
 
-  <!-- The flexible grid (content) -->
   <div class="content">
-    <!-- Side Img -->
-    <div class="sideImg">
-      Lorem ipsum
+    <!-- The flexible grid (content) -->
+    <div class="flexbox">
+
+      <!-- Side Img
+      <div class="sideImg">
+        <img src="https://i2.wp.com/blogpascher.com/wp-content/uploads/2015/11/frontend-login-page.jpg" alt="">
+      </div> -->
+
+      <!-- Login form -->
+      <div class="authForm">
+        <center>
+          <h1> Kermis Login Form </h1>
+          <form>
+            <label>Username : </label>
+            <input class="text type="text" placeholder="Enter Username" name="username" required>
+            <label>Password : </label>
+            <input class="text type="password" placeholder="Enter Password" name="password" required>
+            <input type="checkbox" checked="checked"> Remember me <br>
+            <button type="submit">Login</button>
+            Forgot <a href="#"> password? </a>
+          </form>
+        </center>
+      </div>
+
     </div>
-
-    <!-- Login form -->
-    <div class="loginForm">
-      Lorem ipsum
-    </div>
-
-
   </div>
 
-  <!-- Footer -->
-  <div class="footer">
+  <!-- Footer
+  <footer class="footer">
     <h2>Footer</h2>
-  </div>
+  </footer> -->
+
 
 </body>
+
 
 </html>

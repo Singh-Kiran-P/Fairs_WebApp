@@ -2,16 +2,19 @@
 <html>
 
 <head>
-  <title>Register</title>
+  <title>Login</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./style-sheets/basic.css">
+  <link rel="stylesheet" href="./style-sheets/authForm.css">
 </head>
 
 <body>
 
+
   <header>
     <nav class="topNavbar">
+
       <!-- Navigation Bar -->
       <div class="logo">
         <a href="./index.html">
@@ -19,6 +22,7 @@
             alt="">
         </a>
       </div>
+
       <a href="#">Link1</a>
       <a href="#">Link2</a>
       <a class="l3" href="#">Link3</a>
@@ -30,12 +34,41 @@
     </nav>
   </header>
 
+  <div class="content">
+    <!-- The flexible grid (content) -->
+    <div class="flexbox">
 
-  <!-- Footer -->
-  <div class="footer">
-    <h2>Footer</h2>
+      <!-- Side Img
+      <div class="sideImg">
+        <img src="https://i2.wp.com/blogpascher.com/wp-content/uploads/2015/11/frontend-login-page.jpg" alt="">
+      </div> -->
+
+      <!-- Login form -->
+      <div class="authForm">
+        <center>
+          <h1> Kermis Register Form </h1>
+          <form>
+            <label>Username : </label>
+            <input class="text type="text" placeholder="Enter Username" name="username" required>
+            <label>Email : </label>
+            <input class="text" type="text" placeholder="Enter Email" name="email" required>
+            <label>Password : </label>
+            <input class="text type="password" placeholder="Enter Password" name="password" required>
+            <button type="submit">Register</button>
+          </form>
+        </center>
+      </div>
+
+    </div>
   </div>
 
+  <!-- Footer
+  <footer class="footer">
+    <h2>Footer</h2>
+  </footer> -->
+
+
 </body>
+
 
 </html>

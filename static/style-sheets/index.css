@@ -1,10 +1,13 @@
-
 /* Column container */
 .content {
   display: flex;
   width: 80%;
   margin: auto;
   flex-wrap: wrap;
+}
+
+.banner {
+  margin-bottom: -2%;
 }
 
 .striped-border {
@@ -16,3 +19,9 @@
   background-color: white;
   padding: 20px;
 }
+
+/* Fake image, just for this example */
+.fakeimg {
+  padding: 20px;
+}
+

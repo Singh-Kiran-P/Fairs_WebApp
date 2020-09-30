@@ -6,6 +6,12 @@
 body {
   font-family: Arial;
   margin: 0;
+  /* position: relative; */
+  min-width: 400px;
+  background-image: url("https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/129325364/original/afaddcb9d7dfaaf5bff7ef04101935814665ac16/design-an-attractive-background-for-your-website.png");
+  background-size: 100%;
+
+
 }
 
 /* Header/logo Title */
@@ -16,11 +22,7 @@ body {
   color: white;
 }
 
-.banner {
-  height: 300px;
-  background-color: black;
-}
-header{
+header {
   flex-direction: row;
 }
 
@@ -29,15 +31,15 @@ header{
   display: flex;
   background-color: #333;
 }
-
-.logo{
+img {
+  max-width: 100%;
+}
+.logo {
   margin-right: auto;
   text-align: center;
 }
 
-
-
-.l3{
+.l3 {
   margin-right: 20px;
 }
 
@@ -49,7 +51,7 @@ header{
   text-decoration: none;
   text-align: center;
 }
-.line{
+.line {
   border-right: 2px solid white;
   margin-right: 10px;
 }
@@ -65,31 +67,50 @@ header{
   background-color: transparent;
 }
 
-/* Fake image, just for this example */
-.fakeimg {
-  background-color: #aaa;
-  width: 100%;
-  padding: 20px;
-}
+
 
 /* Footer */
 .footer {
   padding: 20px;
+  position: absolute;
   text-align: center;
+  bottom: 0;
+  width: 100%;
   background: #ddd;
 }
 
+/* Column container */
+.content {
+  display: flex;
+  width: 80%;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.striped-border {
+  border-bottom: 1px dashed #000;
+}
+
+/* Main column */
+.main {
+  background-color: white;
+  padding: 20px;
+}
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 700px) {
   .row,
-  .navbar {
+  .topNavbar {
     flex-direction: column;
   }
-  .logo{
+  .logo {
     margin-right: 0;
   }
 
-  .l3{
+  .line {
+    border-top: 2px solid white;
+  }
+
+  .l3 {
     margin-right: 0;
   }
 }

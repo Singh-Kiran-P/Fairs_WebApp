@@ -1,0 +1,18 @@
+
+/* Column container */
+.content {
+  display: flex;
+  width: 80%;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.striped-border {
+  border-bottom: 1px dashed #000;
+}
+
+/* Main column */
+.main {
+  background-color: white;
+  padding: 20px;
+}

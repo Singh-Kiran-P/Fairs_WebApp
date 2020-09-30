@@ -1,3 +1,11 @@
+/*
+Got some inspration form
+ - https://www.w3schools.com/css/css3_flexbox_responsive.asp
+ - https://www.youtube.com/watch?v=-Wlt8NRtOpo&ab_channel=freeCodeCamp.org
+To build basic.css
+
+*/
+
 * {
   box-sizing: border-box;
 }

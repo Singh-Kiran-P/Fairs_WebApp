@@ -32,6 +32,12 @@ body {
 
 header {
   flex-direction: row;
+  /* for sticky navbar */
+  /* position: fixed;
+  top: 0;
+  left: 0;
+  margin: auto;
+  width: 100%; */
 }
 
 /* Style the top navigation bar */

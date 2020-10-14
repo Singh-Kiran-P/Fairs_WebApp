@@ -4,6 +4,9 @@ Got some inspration form
  - https://www.youtube.com/watch?v=-Wlt8NRtOpo&ab_channel=freeCodeCamp.org
 To build basic.css
 
+nav menu from
+  https://webdesign.tutsplus.com/tutorials/how-to-build-a-responsive-navigation-bar-with-flexbox--cms-33535
+
 */
 
 * {
@@ -16,10 +19,8 @@ body {
   margin: 0;
   /* position: relative; */
   min-width: 400px;
-  background-image: url("https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/129325364/original/afaddcb9d7dfaaf5bff7ef04101935814665ac16/design-an-attractive-background-for-your-website.png");
+  background-image: url("../img/bgImg.jpg");
   background-size: 100%;
-
-
 }
 
 /* Header/logo Title */
@@ -45,16 +46,26 @@ header {
   display: flex;
   background-color: #333;
 }
+
 img {
   max-width: 100%;
 }
+
 .logo {
   margin-right: auto;
   text-align: center;
 }
 
+.logo img {
+  width: 200px;
+}
+
 .l3 {
   margin-right: 20px;
+}
+
+.fakeimg{
+  height:200px;
 }
 
 /* Style the navigation bar links */
@@ -81,8 +92,6 @@ img {
   background-color: transparent;
 }
 
-
-
 /* Footer */
 .footer {
   padding: 20px;
@@ -103,6 +112,12 @@ img {
 
 .striped-border {
   border-bottom: 1px dashed #000;
+}
+
+.menu-icon {
+  font-size: "100px";
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* Main column */

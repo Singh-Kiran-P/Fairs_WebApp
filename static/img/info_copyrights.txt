@@ -1,0 +1,8 @@
+bgImg.jpg
+  -> https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/129325364/original/afaddcb9d7dfaaf5bff7ef04101935814665ac16/design-an-attractive-background-for-your-website.png
+
+banner_van_hasselt.png
+  -> https://www.hasselt.be/kermis
+
+uhasselt.jpp
+  -> Uhasselt.be

@@ -1,4 +1,3 @@
-<!-- Got some inspration form https://www.w3schools.com/css/css3_flexbox_responsive.asp -->
 <!DOCTYPE html>
 <html>
 
@@ -8,6 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./style-sheets/basic.css">
   <link rel="stylesheet" href="./style-sheets/index.css">
+  <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
@@ -18,25 +20,28 @@
       <!-- Navigation Bar -->
       <div class="logo">
         <a href="./index.html">
-          <img src="https://www.uhasselt.be/images/DCM/huisstijl/2017/logo/download/UHasselt-liggend.jpg" width="200px"
-            alt="">
+          <img src="./img/UHasselt-liggend.jpg" alt="">
         </a>
       </div>
 
-      <a href="#">Link1</a>
-      <a href="#">Link2</a>
-      <a class="l3" href="#">Link3</a>
-      <div class="line"></div>
-      <a class="mySpace" href="#">My space</a>
-      <a class="submenu login" href="./login.html">Login</a>
-      <a class="submenu register" href="./register.html">Register</a>
+        <a href="#">Link1</a>
+        <a href="#">Link2</a>
+        <a class="l3" href="#">Link3</a>
+        <div class="line"></div>
+        <a class="mySpace" href="#">My space</a>
+        <a class="submenu login" href="./login.html">Login</a>
+        <a class="submenu register" href="./register.html">Register</a>
+
 
     </nav>
+
+
+
   </header>
 
-  <!-- Banner foto gedownload van Hasselt.be -->
+  <!-- Banner foto -->
   <div class="banner">
-    <img src="https://www.hasselt.be/sites/hasselt/files/styles/banner/public/2020-09/Banner%20kermis%201920x400.png" />
+    <img src="./img/banner_Van_hasselt.be.png" alt="">
   </div>
 
   <!-- The flexible grid (content) -->
@@ -44,9 +49,7 @@
     <div class="main">
       <div class="info striped-border">
         <h2>PROJECT INFO</h2>
-        <div class="contentImg">
-          <img src="https://www.thoughtco.com/thmb/rZH_irD47xiq7eM7m_BL9Q9pfow=/2123x1194/smart/filters:no_upscale()/Getty_fair_and_fare-38593979-57afc0e85f9b58b5c235346f.jpg" alt="">
-        </div>
+        <div class="fakeimg">Image</div>
         <p>Some text..</p>
         <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -55,12 +58,13 @@
       </div>
 
       <h2>PROJECT FUTEURS</h2>
-      <div class="contentImg"><img src="https://assets.simpleviewinc.com/simpleview/image/upload/crm/knoxville/IMG_015501_fd7d71d2-5056-a348-3a3f8e57e061276d.jpg"  alt=""></div>
+      <div class="fakeimg">Image</div>
       <p>Some text..</p>
       <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
       </p>
     </div>
+
   </div>
 
   <!-- Footer
@@ -68,6 +72,9 @@
     <h2>Footer</h2>
   </footer> -->
 
+  <script src="./scripts/main.js"></script>
+
 </body>
+
 
 </html>

@@ -5,8 +5,7 @@
   <title>Login</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="./style-sheets/basic.css">
-  <link rel="stylesheet" href="./style-sheets/authForm.css">
+  <link rel="stylesheet" href="../style-sheets/authForms.css">
 </head>
 
 <body>
@@ -17,19 +16,19 @@
 
       <!-- Navigation Bar -->
       <div class="logo">
-        <a href="./index.html">
+        <a href="../index.html">
           <img src="https://www.uhasselt.be/images/DCM/huisstijl/2017/logo/download/UHasselt-liggend.jpg" width="200px"
             alt="">
         </a>
       </div>
-
+      <!--
       <a href="#">Link1</a>
       <a href="#">Link2</a>
-      <a class="l3" href="#">Link3</a>
+      <a class="l3" href="#">Link3</a> -->
       <div class="line"></div>
-      <a class="mySpace" href="#">My space</a>
-      <a class="submenu login" href="./login.html">Login</a>
-      <a class="submenu register" href="./register.html">Register</a>
+      <!-- <a class="mySpace" href="#">My space</a> -->
+      <!-- <a class="submenu login" href="./login.html">Login</a> -->
+      <a class="submenu register" href="../Auth/register.html">Register</a>
 
     </nav>
   </header>
@@ -44,14 +43,12 @@
       </div> -->
 
       <!-- Login form -->
-      <div class="authForm">
+      <div id="authForm">
         <center>
           <h1> Kermis Login Form </h1>
           <form>
-            <label>Username : </label>
-            <input class="text type="text" placeholder="Enter Username" name="username" required>
-            <label>Password : </label>
-            <input class="text type="password" placeholder="Enter Password" name="password" required>
+            <input class="text" type="text" placeholder="Enter Username" name="username" required>
+            <input class="text" type="password" placeholder="Enter Password" name="password" required>
             <input type="checkbox" checked="checked"> Remember me <br>
             <button type="submit">Login</button>
             Forgot <a href="#"> password? </a>
@@ -66,9 +63,6 @@
   <footer class="footer">
     <h2>Footer</h2>
   </footer> -->
-
-
 </body>
-
 
 </html>

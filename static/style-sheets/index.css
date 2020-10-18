@@ -1,3 +1,5 @@
+@import "basic.css";
+
 /* Column container */
 .content {
   display: flex;

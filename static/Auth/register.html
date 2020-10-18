@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../style-sheets/authForms.css">
+</head>
+
+<body>
+
+
+  <header>
+    <nav class="topNavbar">
+
+      <!-- Navigation Bar -->
+      <div class="logo">
+        <a href="../index.html">
+          <img src="https://www.uhasselt.be/images/DCM/huisstijl/2017/logo/download/UHasselt-liggend.jpg" width="200px"
+            alt="">
+        </a>
+      </div>
+      <!--
+      <a href="#">Link1</a>
+      <a href="#">Link2</a>
+      <a class="l3" href="#">Link3</a> -->
+      <div class="line"></div>
+      <!-- <a class="mySpace" href="#">My space</a> -->
+      <a class="submenu login" href="../Auth/login.html">Login</a>
+      <!-- <a class="submenu register" href="./register.html">Register</a> -->
+
+    </nav>
+  </header>
+
+  <div class="content">
+    <!-- The flexible grid (content) -->
+    <div class="flexbox">
+
+      <!-- Side Img
+      <div class="sideImg">
+        <img src="https://i2.wp.com/blogpascher.com/wp-content/uploads/2015/11/frontend-login-page.jpg" alt="">
+      </div> -->
+
+      <!-- Register form -->
+      <div id="authForm">
+        <center>
+          <h1> Kermis Register Form </h1>
+          <form action="" method="post">
+            <input class="text" type="text" placeholder="Enter Username" name="username" required>
+            <input class="text" type="email" placeholder="Enter Email" name="email" required>
+            <input class="text" type="password" placeholder="Enter Password" name="password" required>
+            <input class="text" type="password" placeholder="ReEnter Password" name="password2" required>
+            <button type="submit" id="btn" class="normalbutton"> Register </button>
+          </form>
+          <p id="error"></p>
+        </center>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer
+  <footer class="footer">
+    <h2>Footer</h2>
+  </footer> -->
+
+
+  <!-- Linking Events -->
+  <script>
+
+    var btn = document.getElementById("btn");
+    btn.addEventListener("click", (event) => { allReadyExits() })
+
+  </script>
+
+  <!-- Extrenal scripts -->
+  <script src="register.js"></script>
+
+
+</body>
+
+
+
+
+
+</html>

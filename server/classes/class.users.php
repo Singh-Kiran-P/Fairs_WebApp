@@ -5,7 +5,6 @@ include "class.database.php";
 
 class Users extends Database
 {
-
     public function login($email, $password)
     {
         require '../config/config.php';
@@ -26,15 +25,15 @@ class Users extends Database
                 $_SESSION['username'] = $res['username'];
                 $_SESSION['email'] = $res['email'];
 
-                if($res['type'] === "gemeente")
-                  $redirectTo = $rootURL.'/server/dashboard/gemeente.php';
-                else
-                  $redirectTo = $rootURL.'/server/dashboard/user.php';
-
+                if ($res['type'] === "gemeente") {
+                    $redirectTo = $rootURL . '/server/dashboard/gemeente.php';
+                } else {
+                    $redirectTo = $rootURL . '/server/dashboard/user.php';
+                }
 
                 // Json obj to send back
                 $data = ['redirectTo' => $redirectTo,
-                          'status' => 200 ];
+                    'status' => 200];
                 echo json_encode($data);
 
             } else {
@@ -58,11 +57,13 @@ class Users extends Database
 
             if ($query->execute()) {
                 // Json obj to send back
-                $data = ['msg' => "Account created successfully. Go ahead at login"];
+                $data = ['msg' => "Account created successfully. Go ahead at login",
+                    'status' => 200];
                 echo json_encode($data);
 
             } else { // Json obj to send back
-                $data = ['msg' => $this->conn->errorInfo()];
+                $data = ['msg' => $this->conn->errorInfo(),
+                    'status' => 404];
                 echo json_encode($data);
             }
         }

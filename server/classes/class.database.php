@@ -10,7 +10,7 @@ class Database
         // Connect to the Mysql database
         try
         {
-            require '../config/db.php';
+            require '../config/config.php';
             $this->conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
             return $this->conn;

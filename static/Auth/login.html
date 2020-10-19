@@ -6,6 +6,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style-sheets/authForms.css">
+  <script src="../scripts/jquery.min.js"></script>
+  <!-- Script -->
+  <script src="login.js"></script>
 </head>
 
 <body>
@@ -46,13 +49,15 @@
       <div id="authForm">
         <center>
           <h1> Kermis Login Form </h1>
-          <form>
-            <input class="text" type="text" placeholder="Enter Username" name="username" required>
-            <input class="text" type="password" placeholder="Enter Password" name="password" required>
+          <form method="post">
+            <input class="text" type="text" placeholder="Enter email" id="email" required>
+            <input class="text" type="password" placeholder="Enter Password" id="password" required>
             <input type="checkbox" checked="checked"> Remember me <br>
-            <button type="submit">Login</button>
+            <button type="button" id="btn">Login</button>
             Forgot <a href="#"> password? </a>
           </form>
+          <p id="error"></p>
+
         </center>
       </div>
 
@@ -64,5 +69,8 @@
     <h2>Footer</h2>
   </footer> -->
 </body>
+<!-- Script -->
+<script src="login.js"></script>
+
 
 </html>

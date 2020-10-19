@@ -8,3 +8,4 @@ $type = $_POST['type'];
 
 $user = new Users();
 $user->register($email,$password,$username,$type);
+

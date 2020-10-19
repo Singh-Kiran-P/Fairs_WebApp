@@ -6,6 +6,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style-sheets/authForms.css">
+  <script src="../scripts/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -47,16 +49,20 @@
         <center>
           <h1> Kermis Register Form </h1>
           <form action="" method="post">
-            <input class="text" type="text" placeholder="Enter Username" name="username" required>
-            <input class="text" type="email" placeholder="Enter Email" name="email" required>
-            <input class="text" type="password" placeholder="Enter Password" name="password" required>
-            <input class="text" type="password" placeholder="ReEnter Password" name="password2" required>
-            <button type="submit" id="btn" class="normalbutton"> Register </button>
+            <input class="text" type="text" placeholder="Enter Username" id="username" required>
+            <input class="text" type="email" placeholder="Enter Email" id="email" required>
+            <input class="text" type="password" placeholder="Enter Password" id="password" required>
+            <input class="text" type="password" placeholder="ReEnter Password" id="password2" required>
+            Soort gebruiker: <select name="type" id="type" class="form-control">
+              <option value="">Select</option>
+              <option value="gemeente">Gemeente</option>
+              <option value="bezoeker">Bezoeker</option>
+            </select> <br>
+            <button type="button" id="btn" class="normalbutton"> Register </button>
           </form>
           <p id="error"></p>
         </center>
       </div>
-
     </div>
   </div>
 
@@ -64,24 +70,11 @@
   <footer class="footer">
     <h2>Footer</h2>
   </footer> -->
-
-
-  <!-- Linking Events -->
-  <script>
-
-    var btn = document.getElementById("btn");
-    btn.addEventListener("click", (event) => { allReadyExits() })
-
-  </script>
-
-  <!-- Extrenal scripts -->
-  <script src="register.js"></script>
-
-
 </body>
 
 
-
+<!-- Script -->
+<script src="register.js"></script>
 
 
 </html>

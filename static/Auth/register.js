@@ -29,7 +29,7 @@ function completeReg() {
     var type = $("#type").val();
     if (username != "" && email != "" && password != "" && password2 != "") {
       $.ajax({
-        url: "../../server/auth/register.php",
+        url: "/server/auth/register.php",
         type: "POST",
         data: {
           username: username,

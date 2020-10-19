@@ -5,6 +5,11 @@ include "class.database.php";
 
 class Users extends Database
 {
+    private $userId;
+    private $type;
+    private $username;
+    private $email;
+
     public function login($email, $password)
     {
         require '../config/config.php';
@@ -19,11 +24,18 @@ class Users extends Database
 
                 $res = $queryUser->fetch();
 
+                // set session variables
                 $_SESSION['loggedin'] = true;
                 $_SESSION['userId'] = $res['id'];
                 $_SESSION['type'] = $res['type'];
                 $_SESSION['username'] = $res['username'];
                 $_SESSION['email'] = $res['email'];
+
+                // set member variables
+                $this->userId = $res['id'];
+                $this->type = $res['type'];
+                $this->username = $res['username'];
+                $this->email = $res['email'];
 
                 if ($res['type'] === "gemeente") {
                     $redirectTo = $rootURL . '/server/dashboard/gemeente.php';
@@ -56,6 +68,10 @@ class Users extends Database
             $query->bindParam(":type", $type, PDO::PARAM_STR, 50);
 
             if ($query->execute()) {
+                // set member variables
+                $_SESSION['username'] = $username;
+
+
                 // Json obj to send back
                 $data = ['msg' => "Account created successfully. Go ahead at login",
                     'status' => 200];

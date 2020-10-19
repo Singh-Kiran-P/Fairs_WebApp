@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include '../classes/class.users.php';
 
 $username = $_POST['username'];

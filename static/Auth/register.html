@@ -5,8 +5,8 @@
   <title>Login</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../style-sheets/authForms.css">
-  <script src="../scripts/jquery.min.js"></script>
+  <link rel="stylesheet" href="/static/style-sheets/authForms.css">
+  <script src="/static/scripts/jquery.min.js"></script>
 
 </head>
 
@@ -18,7 +18,7 @@
 
       <!-- Navigation Bar -->
       <div class="logo">
-        <a href="../index.html">
+        <a href="/static/index.html">
           <img src="https://www.uhasselt.be/images/DCM/huisstijl/2017/logo/download/UHasselt-liggend.jpg" width="200px"
             alt="">
         </a>
@@ -29,7 +29,7 @@
       <a class="l3" href="#">Link3</a> -->
       <div class="line"></div>
       <!-- <a class="mySpace" href="#">My space</a> -->
-      <a class="submenu login" href="../Auth/login.html">Login</a>
+      <a class="submenu login" href="/static/Auth/login.html">Login</a>
       <!-- <a class="submenu register" href="./register.html">Register</a> -->
 
     </nav>
@@ -45,36 +45,34 @@
       </div> -->
 
       <!-- Register form -->
-      <div id="authForm" class="register" >
+      <div id="authForm" class="register">
 
-          <center>
-            <h1> Kermis Register Form </h1>
-            <form action="" method="post">
-              <input class="text" type="text" placeholder="Enter Username" id="username" required>
-              <input class="text" type="email" placeholder="Enter Email" id="email" required>
-              <input class="text" type="password" placeholder="Enter Password" id="password" required>
-              <input class="text" type="password" placeholder="ReEnter Password" id="password2" required>
-              Soort gebruiker: <select name="type" id="type" class="form-control">
-                <option value="">Select</option>
-                <option value="gemeente">Gemeente</option>
-                <option value="bezoeker">Bezoeker</option>
-              </select> <br>
-              <button type="button" id="btn" class="normalbutton"> Register </button>
-            </form>
-            <p id="error"></p>
-          </center>
+        <center>
+          <h1> Kermis Register Form </h1>
+          <form action="" method="post">
+            <input class="text" type="text" placeholder="Enter Username" id="username" required>
+            <input class="text" type="email" placeholder="Enter Email" id="email" required>
+            <input class="text" type="password" placeholder="Enter Password" id="password" required>
+            <input class="text" type="password" placeholder="ReEnter Password" id="password2" required>
+            Soort gebruiker: <select name="type" id="type" class="form-control">
+              <option value="">Select</option>
+              <option value="gemeente">Gemeente</option>
+              <option value="bezoeker">Bezoeker</option>
+            </select> <br>
+            <button type="button" id="btn" class="normalbutton"> Register </button>
+          </form>
+          <p id="error"></p>
+        </center>
       </div>
     </div>
 
-    <div id="authForm" class="completeRegisteration" >
+    <div id="authForm" class="completeRegisteration">
       <center>
         <h1> Complete Registeration </h1>
-        <form action="" method="post">
-          <input class="text" type="text" placeholder="Enter Username" id="username" required>
-          <input class="text" type="email" placeholder="Enter Email" id="email" required>
-          <input class="text" type="password" placeholder="Enter Password" id="password" required>
-          <input class="text" type="password" placeholder="ReEnter Password" id="password2" required>
-          <button type="button" id="btn" class="normalbutton"> Confirm </button>
+        <form action="/server/io/upload.php" method="post" enctype="multipart/form-data">
+          Select image to upload:
+          <input type="file" name="fileToUpload" id="fileToUpload">
+          <input type="submit" value="Upload Image" name="submit">
         </form>
         <p id="error"></p>
       </center>

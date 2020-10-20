@@ -21,10 +21,10 @@ if(isset($_SESSION['loggedin'])){
   require '../config/config.php';
   echo "<br>";
 
-  $s = '<a href="'.$rootURL."/server/auth/logout.php" .'">Logout</a>';
+  $s = '<a href="'.$rootURL."/~kiransingh/project/server/auth/logout.php" .'">Logout</a>';
   echo $s;
 
-  $s = '<img  height="100" src="'.$rootURL."/server/uploads/profileImg/user_". $_SESSION['username'] .'.jpg"></img>';
+  $s = '<img  height="100" src="'.$rootURL."/~kiransingh/project/server/uploads/profileImg/user_". $_SESSION['username'] .'.jpg"></img>';
   echo $s;
 }
 else{

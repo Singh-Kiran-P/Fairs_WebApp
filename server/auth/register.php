@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include '../classes/class.users.php';
+require '../classes/class.users.php';
 
 $username = $_POST['username'];
 $password = $_POST['password'];

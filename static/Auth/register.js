@@ -29,7 +29,7 @@ function completeReg() {
     var type = $("#type").val();
     if (username != "" && email != "" && password != "" && password2 != "") {
       $.ajax({
-        url: "/server/auth/register.php",
+        url: "/~kiransingh/project/server/auth/register.php",
         type: "POST",
         data: {
           username: username,
@@ -65,7 +65,7 @@ function registerAjax() {
     if (checkPassword()) {
       if (username != "" && email != "" && password != "" && password2 != "") {
         $.ajax({
-          url: "../../server/auth/register.php",
+          url: "/~kiransingh/project/server/auth/register.php",
           type: "POST",
           data: {
             username: username,

@@ -38,9 +38,9 @@ class Users extends Database
                 $this->email = $res['email'];
 
                 if ($res['type'] === "gemeente") {
-                    $redirectTo = $rootURL . '/server/dashboard/gemeente.php';
+                    $redirectTo = $rootURL . '/~kiransingh/project/server/dashboard/gemeente.php';
                 } else {
-                    $redirectTo = $rootURL . '/server/dashboard/user.php';
+                    $redirectTo = $rootURL . '/~kiransingh/project/server/dashboard/user.php';
                 }
 
                 // Json obj to send back

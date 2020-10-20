@@ -8,7 +8,7 @@ function run() {
     var password = $("#password").val();
     if (email != "" && password != "") {
       $.ajax({
-        url: "../../server/auth/login.php",
+        url: "/~kiransingh/project/server/auth/login.php",
         type: "POST",
         data: {
           email: email,

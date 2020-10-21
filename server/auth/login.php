@@ -9,3 +9,7 @@ $email = $_POST['email'];
 
 $user = new Users();
 $user->login($email,$password);
+
+header('Location: '.$_SESSION['redirectTo']);
+
+

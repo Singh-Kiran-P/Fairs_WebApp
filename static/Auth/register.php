@@ -1,0 +1,84 @@
+<?php
+
+include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/server/classes/class.users.php';
+if (isset($_POST['isset'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $password2 = $_POST['password2'];
+    $email = $_POST['email'];
+    $type = $_POST['type'];
+
+    $res="";
+    if ($password != $password2) {
+        $res = "Passwords do not match";
+    } else {
+        $user = new Users();
+        $res = $user->register($email, $password, $username, $type);
+
+        if ($res == "true" && $type == "gemeente") {
+            header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/completeRegisteration.php');
+        } else if ($res == "true" && $type == "bezoeker") {
+            header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
+        }
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/~kiransingh/project/static/style-sheets/authForms.css">
+</head>
+
+<body>
+  <header>
+  <!-- navbar -->
+    <?php
+      $typeNav = "register";
+      include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/static/componets/navbarTop.php';
+    ?>
+  </header>
+  <div class="content">
+    <!-- The flexible grid (content) -->
+    <div class="flexbox">
+
+      <!-- Register form -->
+      <div id="authForm" class="register">
+
+        <center>
+          <h1> Kermis Register Form </h1>
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input class="text" type="text" placeholder="Enter Username" name="username" value="<?php if (isset($_POST['username']))echo $_POST['username'];?>" required>
+            <input class="text" type="email" placeholder="Enter Email" name="email" value="<?php if (isset($_POST['username']))echo $_POST['email'];?>"  required>
+            <input class="text" type="password" placeholder="Enter Password" name="password" required>
+            <input class="text" type="password" placeholder="ReEnter Password" name="password2" required>
+            Soort gebruiker: <select name="type" name="type" class="form-control" required>
+              <option value="bezoeker">Bezoeker</option>
+              <option value="gemeente">Gemeente</option>
+            </select> <br>
+            <input name="isset" value="set" hidden>
+            <button type="submit" class="normalbutton"> Register </button>
+          </form>
+          <p id="error">
+            <?php
+              if (isset($_POST['isset']))
+                echo $res;
+            ?>
+          </p>
+        </center>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+
+<!-- Script -->
+<script src="register.js"></script>
+
+
+</html>

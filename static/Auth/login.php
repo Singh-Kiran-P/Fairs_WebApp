@@ -1,17 +1,16 @@
 <?php
 session_start();
-
 include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/server/classes/class.users.php';
+
 if (isset($_POST['isset'])) {
   $password = $_POST['password'];
   $email = $_POST['email'];
 
-
   $user = new Users();
-  $user->login($email, $password);
+  $loggedIn = $user->login($email, $password);
 
-
-  if (isset($_SESSION['redirectTo']))
+  $res = "";
+  if ($loggedIn && isset($_SESSION['redirectTo']))
     header('Location: ' . $_SESSION['redirectTo']);
   else // no redirect -> user does not exites
     $res = "User does not exites!!";
@@ -25,15 +24,16 @@ if (isset($_POST['isset'])) {
   <title>Login</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/~kiransingh/project/static/style-sheets/authForms.css">
+  <link rel="stylesheet" href="/~kiransingh/project/static/style-sheets/form.css">
 </head>
 
 <body>
 
   <header>
+    <!-- Navbar -->
     <?php
-      $typeNav = "login";
-      include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/static/componets/navbarTop.php';
+    $typeNav = "login";
+    include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/static/componets/navbarTop.php';
     ?>
   </header>
 
@@ -42,14 +42,14 @@ if (isset($_POST['isset'])) {
     <div class="flexbox">
 
       <!-- Login form -->
-      <div id="authForm">
+      <div id="form">
         <center>
           <h1> Kermis Login Form </h1>
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <input class="text" type="text" placeholder="Enter email" name="email" required>
             <input class="text" type="password" placeholder="Enter Password" name="password" required>
             <input type="checkbox" checked="checked"> Remember me <br>
-            <input name="isset" hidden>
+            <input name="isset" class="hidden">
             <button type="submit" id="btn">Login</button>
             Forgot <a href="#"> password? </a>
           </form>
@@ -59,7 +59,6 @@ if (isset($_POST['isset'])) {
               echo $res;
             ?>
           </p>
-
         </center>
       </div>
     </div>

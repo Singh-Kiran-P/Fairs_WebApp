@@ -13,40 +13,7 @@ CREATE TABLE accounts (
   last_login TIMESTAMP
 );
 
-/* INSERT INTO
-  "accounts"
-VALUES
-  (
-    DEFAULT,
-    'kiran',
-    'kiranhass',
-    'hello',
-    'singh@sigh.com',
-    'gemeente',
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP
-  ),
-  (
-    DEFAULT,
-    'kiran',
-    'singh',
-    'singh',
-    'singh@sigh.singh',
-    'bezoeker',
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP
-  ),
-  (
-    DEFAULT,
-    'admin',
-    'admin',
-    'admin',
-    'admin@admin.com',
-    'admin',
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP
-  );
- */
+
 -- gemeente-----------------------------------------------------
 DROP TABLE IF EXISTS gemeente;
 
@@ -58,15 +25,7 @@ CREATE TABLE gemeente (
   FOREIGN KEY (user_id) REFERENCES accounts (user_id)
 );
 
-INSERT INTO
-  "gemeente"
-VALUES
-  (
-    DEFAULT,
-    1,
-    '048704756',
-    'hasselt is goed'
-  );
+
 
 -- kermis-------------------------------------------------------
 DROP TABLE IF EXISTS kermis;
@@ -84,19 +43,6 @@ CREATE TABLE kermis (
   FOREIGN KEY (gemeente_id) REFERENCES gemeente (gemeente_id)
 );
 
-INSERT INTO
-  "kermis"
-VALUES
-  (
-    DEFAULT,
-    1,
-    'hasselt 2020',
-    'hasselt kermis 2020',
-    '2008-11-11',
-    '2008-11-20',
-    '13:30',
-    '18:30'
-  );
 
 -- zones-------------------------------------------------------
 DROP TABLE IF EXISTS zones;
@@ -111,17 +57,6 @@ CREATE TABLE zones (
   FOREIGN KEY (kermis_id) REFERENCES kermis (kermis_id)
 );
 
-INSERT INTO
-  "zones"
-VALUES
-  (
-    DEFAULT,
-    1,
-    'Zone 1',
-    'hasselt kermis 2020 zone1 DEsc',
-    'hasselt',
-    30
-  );
 
 -- attractions------------------------------------------------
 DROP TABLE IF EXISTS attractions;
@@ -144,7 +79,7 @@ CREATE TABLE reservations (
   user_id INT NOT NULL,
   zone_id INT NOT NULL,
   kermis_id INT NOT NULL,
-  going boolean NOT NULL DEFAULT 'f',
+  going boolean NOT NULL DEFAULT 0,
   review_rating INT,
   review_description VARCHAR (500),
   FOREIGN KEY (kermis_id) REFERENCES kermis (kermis_id),

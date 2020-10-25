@@ -16,8 +16,7 @@
       "url": "http://uhasselt.me",
       "webRoot": "${workspaceFolder}"
 
-    ]
-  }
+     }
 
 ]
 }

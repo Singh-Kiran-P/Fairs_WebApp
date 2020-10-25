@@ -1,6 +1,4 @@
 <?php
-
-
 class Database
 {
   protected $conn;
@@ -11,7 +9,7 @@ class Database
       // get the env variables
       include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/server/config/config.php';
 
-      $this->conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
+      $this->conn = new PDO("$db_type:host=$db_host;port=$port;dbname=$db_name", $db_user, $db_password);
       $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
       return $this->conn;
     } catch (PDOException $e) {

@@ -19,7 +19,7 @@
   margin-top: 100px;
 }
 
-#authForm {
+#form {
   flex: 1 1 auto;
 
   background-color: lightblue;
@@ -40,13 +40,17 @@ select{
   display: inline-block;
 }
 
-.text {
+input,textarea {
   margin: 8px 0;
   width: 250px;
   padding: 12px 20px;
   display: block;
   border: 2px solid green;
   box-sizing: border-box;
+}
+
+.hidden{
+  display: none;
 }
 
 button:hover {

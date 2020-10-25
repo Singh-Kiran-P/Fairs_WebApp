@@ -5,34 +5,17 @@
   <title>Home</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css"  href="/~kiransingh/project/static/style-sheets/index.css">
+  <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/index.css">
 </head>
 
 <body>
 
   <header>
-    <nav class="topNavbar">
-
-      <!-- Navigation Bar -->
-      <div class="logo">
-        <a href="/~kiransingh/project/static/index.html">
-          <img src="/~kiransingh/project/static/img/UHasselt-liggend.jpg" width="200px" alt="">
-        </a>
-      </div>
-<!--
-        <a href="#">Link1</a>
-        <a href="#">Link2</a>
-        <a class="l3" href="#">Link3</a> -->
-        <div class="line"></div>
-        <!-- <a class="mySpace" href="#">My space</a> -->
-        <a class="submenu login" href="/~kiransingh/project/static/Auth/login.php">Login</a>
-        <a class="submenu register" href="/~kiransingh/project/static/Auth/register.php">Register</a>
-
-
-    </nav>
-
-
-
+    <!-- navbar -->
+    <?php
+    $typeNav = "index";
+    include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/static/componets/navbarTop.php';
+    ?>
   </header>
 
   <!-- Banner foto -->
@@ -62,11 +45,6 @@
     </div>
 
   </div>
-
-  <!-- Footer
-  <footer class="footer">
-    <h2>Footer</h2>
-  </footer> -->
 
   <script src="/~kiransingh/project/static/scripts/main.js"></script>
 

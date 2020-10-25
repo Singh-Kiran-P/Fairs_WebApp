@@ -1,12 +1,13 @@
 -- https://www.postgresqltutorial.com/postgresql-create-table/
 -- accounts---------------------------------------------------
+DROP TABLE kiransingh;
 DROP TABLE IF EXISTS accounts;
 
 CREATE TABLE accounts (
   user_id serial PRIMARY KEY,
   name VARCHAR (50),
   username VARCHAR (50) UNIQUE NOT NULL,
-  password VARCHAR (50) NOT NULL,
+  password VARCHAR (255) NOT NULL,
   email VARCHAR (255) UNIQUE NOT NULL,
   type VARCHAR (30) NOT NULL,
   created_on TIMESTAMP NOT NULL,
@@ -58,7 +59,7 @@ CREATE TABLE gemeente (
   FOREIGN KEY (user_id) REFERENCES accounts (user_id)
 );
 
-INSERT INTO
+/* INSERT INTO
   "gemeente"
 VALUES
   (
@@ -66,7 +67,7 @@ VALUES
     1,
     '048704756',
     'hasselt is goed'
-  );
+  ); */
 
 -- kermis-------------------------------------------------------
 DROP TABLE IF EXISTS kermis;
@@ -84,7 +85,7 @@ CREATE TABLE kermis (
   FOREIGN KEY (gemeente_id) REFERENCES gemeente (gemeente_id)
 );
 
-INSERT INTO
+/* INSERT INTO
   "kermis"
 VALUES
   (
@@ -96,7 +97,7 @@ VALUES
     '2008-11-20',
     '13:30',
     '18:30'
-  );
+  ); */
 
 -- zones-------------------------------------------------------
 DROP TABLE IF EXISTS zones;
@@ -111,7 +112,7 @@ CREATE TABLE zones (
   FOREIGN KEY (kermis_id) REFERENCES kermis (kermis_id)
 );
 
-INSERT INTO
+/* INSERT INTO
   "zones"
 VALUES
   (
@@ -122,7 +123,7 @@ VALUES
     'hasselt',
     30
   );
-
+ */
 -- attractions------------------------------------------------
 DROP TABLE IF EXISTS attractions;
 

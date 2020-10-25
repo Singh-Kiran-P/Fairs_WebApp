@@ -39,7 +39,7 @@ if(isset($_SESSION['loggedin'])){
   $s = '<a href="'.$rootURL."/~kiransingh/project/server/auth/logout.php" .'">Logout</a>';
   echo $s;
 
-  $s = '<img  height="100" src="'.$rootURL."/~kiransingh/project/server/uploads/profileImg/user_". $_SESSION['username'] .'.jpg"></img>';
+  $s = '<img  height="100" src="'.$rootURL."/~kiransingh/project/server/uploads/profile/user_". $_SESSION['username'] .'.jpg"></img>';
   echo $s;
 }
 else{

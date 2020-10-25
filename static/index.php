@@ -14,7 +14,7 @@
     <!-- navbar -->
     <?php
     $typeNav = "index";
-    include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/static/componets/navbarTop.php';
+    include '../componets/navbarTop.php';
     ?>
   </header>
 

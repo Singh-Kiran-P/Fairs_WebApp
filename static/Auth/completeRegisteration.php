@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/server/classes/class.users.php';
+include '../../server/classes/class.users.php';
 if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
   $telephone = $_POST['telephone'];
   $desc = $_POST['desc'];
@@ -15,7 +15,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
     //upload img
     $_SESSION['typeImg'] = "profile";
     $_SESSION["fileToUpload"] = $fileToUpload;
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/server/io/upload.php');
+    require_once('../../server/io/upload.php');
   } catch (\Throwable $th) {
     echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
   }
@@ -46,7 +46,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
     <!-- Navbar -->
     <?php
     $typeNav = "register";
-    include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/static/componets/navbarTop.php';
+    include '../componets/navbarTop.php';
     ?>
   </header>
   <div class="content">

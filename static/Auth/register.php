@@ -1,29 +1,30 @@
 <?php
 session_start();
 
-include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/server/classes/class.users.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/server/config/config.php';
+include '../../server/classes/class.users.php';
+include '../../server/config/config.php';
 if (isset($_POST['isset'])) {
-    $name = $_POST['name'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $password2 = $_POST['password2'];
-    $email = $_POST['email'];
-    $type = $_POST['type'];
+  $name = $_POST['name'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+  $password2 = $_POST['password2'];
+  $email = $_POST['email'];
+  $type = $_POST['type'];
 
-    $res="";
-    if ($password != $password2) {
-        $res = "Passwords do not match";
-    } else {
-        $user = new Users();
-        $res = $user->register($name, $email, $password, $username, $type);
+  $out = "";
+  if ($password != $password2) {
+    $out = "Passwords do not match";
+  } else {
+    $user = new Users();
+    $res = $user->register($name, $email, $password, $username, $type);
+    $out = $res['msg'];
 
-        if ($res == true&& $type == "gemeente") {
-            header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/completeRegisteration.php');
-        } else if ($res == true && $type == "bezoeker") {
-            header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
-        }
+    if ($res['val'] == true && $type == "gemeente") {
+      header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/completeRegisteration.php');
+    } else if ($res['val'] == true && $type == "bezoeker") {
+      header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
     }
+  }
 }
 ?>
 
@@ -39,10 +40,10 @@ if (isset($_POST['isset'])) {
 
 <body>
   <header>
-  <!-- navbar -->
+    <!-- navbar -->
     <?php
-      $typeNav = "register";
-      include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/static/componets/navbarTop.php';
+    $typeNav = "register";
+    include '../componets/navbarTop.php';
     ?>
   </header>
   <div class="content">
@@ -55,9 +56,9 @@ if (isset($_POST['isset'])) {
         <center>
           <h1> Kermis Register Form </h1>
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <input class="text" type="text" placeholder="Enter your name" name="name" value="<?php if (isset($_POST['name']))echo $_POST['name'];?>" required>
-            <input class="text" type="text" placeholder="Enter Username" name="username" value="<?php if (isset($_POST['username']))echo $_POST['username'];?>" required>
-            <input class="text" type="email" placeholder="Enter Email" name="email" value="<?php if (isset($_POST['email']))echo $_POST['email'];?>"  required>
+            <input class="text" type="text" placeholder="Enter your name" name="name" value="<?php if (isset($_POST['name'])) echo $_POST['name']; ?>" required>
+            <input class="text" type="text" placeholder="Enter Username" name="username" value="<?php if (isset($_POST['username'])) echo $_POST['username']; ?>" required>
+            <input class="text" type="email" placeholder="Enter Email" name="email" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" required>
             <input class="text" type="password" placeholder="Enter Password" name="password" required>
             <input class="text" type="password" placeholder="ReEnter Password" name="password2" required>
             Soort gebruiker: <select name="type" name="type" class="form-control" required>
@@ -69,8 +70,8 @@ if (isset($_POST['isset'])) {
           </form>
           <p id="error">
             <?php
-              if (isset($_POST['isset']))
-                echo $res;
+            if (isset($_POST['isset']))
+              echo $out;
             ?>
           </p>
         </center>

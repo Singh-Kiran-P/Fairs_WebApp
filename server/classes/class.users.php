@@ -85,7 +85,7 @@ class Users extends Database
    */
   public function _login($row)
   {
-    include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/server/config/config.php';
+    include '../../server/config/config.php';
 
     // set session variables
     $_SESSION['loggedin'] = true;
@@ -129,9 +129,9 @@ class Users extends Database
   {
     // Validating EMail and username
     if ($this->checkIfEmail($email))
-      return "Email already taken!";
+      return ['msg' => "Email already taken!", 'val' => false];
     else if ($this->checkIfUsername($username))
-      return "username already taken!";
+      return ['msg' => "Username already taken!", 'val' => false];
     else {
       $query = $this->conn->prepare("INSERT INTO accounts VALUES (DEFAULT, :name,:username,:password,:email,:type,NOW(),NULL)");
 
@@ -148,7 +148,7 @@ class Users extends Database
       if ($query->execute()) {
         // Login the registered user, to get the identity and making session variables
         $this->login($email, $password);
-        return true;
+        return ['msg' => "Username already taken!", 'val' => true];
       } else {
         return ($this->conn->errorInfo());
       }

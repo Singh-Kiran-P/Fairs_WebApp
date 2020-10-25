@@ -1,5 +1,5 @@
 <?php
-require '../config/config.php';
+      include '../../server/config/config.php';
 
 session_start();
 // logout.php, de sessie vernietigen en doorsturen naar de homepage

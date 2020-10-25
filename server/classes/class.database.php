@@ -7,9 +7,9 @@ class Database
     // Connect to the Mysql database
     try {
       // get the env variables
-      include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/server/config/config.php';
+      include '../../server/config/config.php';
 
-      $this->conn = new PDO("$db_type:host=$db_host;port=$port;dbname=$db_name", $db_user, $db_password);
+      $this->conn = new PDO("pgsql:host=localhost;port=5432;dbname=kiransingh", 'postgres', 'singh');
       $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
       return $this->conn;
     } catch (PDOException $e) {

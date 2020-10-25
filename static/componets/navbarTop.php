@@ -2,7 +2,7 @@
 
   <!-- Navigation Bar -->
   <div class="logo">
-    <a href="/~kiransingh/project/static/index.html">
+    <a href="/~kiransingh/project/static/index.php">
       <img src="/~kiransingh/project/static/img/UHasselt-liggend.jpg" width="200px" alt="">
     </a>
   </div>

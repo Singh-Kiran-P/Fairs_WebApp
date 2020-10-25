@@ -1,6 +1,6 @@
 <?php
 session_start();
-include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/server/classes/class.users.php';
+include '../../server/classes/class.users.php';
 
 if (isset($_POST['isset'])) {
   $password = $_POST['password'];
@@ -9,11 +9,11 @@ if (isset($_POST['isset'])) {
   $user = new Users();
   $loggedIn = $user->login($email, $password);
 
-  $res = "";
+  $out = "";
   if ($loggedIn && isset($_SESSION['redirectTo']))
     header('Location: ' . $_SESSION['redirectTo']);
   else // no redirect -> user does not exites
-    $res = "User does not exites!!";
+    $out = "User does not exites!!";
 }
 ?>
 
@@ -33,7 +33,7 @@ if (isset($_POST['isset'])) {
     <!-- Navbar -->
     <?php
     $typeNav = "login";
-    include $_SERVER['DOCUMENT_ROOT'] . '/~kiransingh/project/static/componets/navbarTop.php';
+    include '../componets/navbarTop.php';
     ?>
   </header>
 
@@ -56,7 +56,7 @@ if (isset($_POST['isset'])) {
           <p id="error">
             <?php
             if (isset($_POST['isset']))
-              echo $res;
+              echo $out;
             ?>
           </p>
         </center>

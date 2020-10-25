@@ -14,7 +14,7 @@
     <!-- navbar -->
     <?php
     $typeNav = "index";
-    include '../componets/navbarTop.php';
+    include './componets/navbarTop.php';
     ?>
   </header>
 

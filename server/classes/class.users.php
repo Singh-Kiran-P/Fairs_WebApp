@@ -85,7 +85,7 @@ class Users extends Database
    */
   public function _login($row)
   {
-    include '../../server/config/config.php';
+    include __DIR__.'/../config/config.php';
 
     // set session variables
     $_SESSION['loggedin'] = true;
@@ -107,9 +107,9 @@ class Users extends Database
     $redirectTo = "";
 
     if ($row['type'] === "gemeente") {
-      $redirectTo = $rootURL . '/~kiransingh/project/server/dashboard/gemeente.php';
+      $redirectTo = $rootURL . '/~kiransingh/project/static/dashboard/gemeente/profile.php';
     } else if ($row['type'] === "bezoeker") {
-      $redirectTo = $rootURL . '/~kiransingh/project/server/dashboard/user.php';
+      $redirectTo = $rootURL . '/~kiransingh/project/static/dashboard/user/main.php';
     }
 
     // add the redirect path to session variable

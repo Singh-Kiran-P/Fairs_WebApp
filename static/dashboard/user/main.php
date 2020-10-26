@@ -34,10 +34,10 @@ if (isset($_SESSION['loggedin'])) {
 
   echo "email: " . $_SESSION['email'];
 
-  require '../config/config.php';
+  require '../../../server/config/config.php';
   echo "<br>";
 
-  $s = '<a href="' . $rootURL . "/~kiransingh/project/server/auth/logout.php" . '">Logout</a>';
+  $s = '<a href="/~kiransingh/project/server/auth/logout.php">Logout</a>';
   echo $s;
 } else {
   echo "login first";

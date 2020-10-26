@@ -3,6 +3,7 @@ session_start();
 
 include '../../server/classes/class.users.php';
 include '../../server/config/config.php';
+
 if (isset($_POST['isset'])) {
   $name = $_POST['name'];
   $username = $_POST['username'];

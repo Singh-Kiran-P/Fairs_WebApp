@@ -11,6 +11,16 @@ nav menu from
 
 * {
   box-sizing: border-box;
+  color:white;
+}
+
+input,textarea,select {
+  background-color: #181a1b;
+  border: 2px solid #00d900;
+}
+
+input:disabled {
+  background-color: #282b2c;
 }
 
 /* Style the body */
@@ -45,6 +55,7 @@ header {
 .topNavbar {
   display: flex;
   background-color: #333;
+/*   background-color: #141516;*/
 }
 
 img {
@@ -64,8 +75,8 @@ img {
   margin-right: 20px;
 }
 
-.fakeimg{
-  height:200px;
+.fakeimg {
+  height: 200px;
 }
 
 /* Style the navigation bar links */
@@ -76,6 +87,7 @@ img {
   text-decoration: none;
   text-align: center;
 }
+
 .line {
   border-right: 2px solid white;
   margin-right: 10px;
@@ -102,29 +114,6 @@ img {
   background: #ddd;
 }
 
-/* Column container */
-.content {
-  display: flex;
-  width: 80%;
-  margin: auto;
-  flex-wrap: wrap;
-}
-
-.striped-border {
-  border-bottom: 1px dashed #000;
-}
-
-.menu-icon {
-  font-size: "100px";
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* Main column */
-.main {
-  background-color: white;
-  padding: 20px;
-}
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 700px) {
   .row,

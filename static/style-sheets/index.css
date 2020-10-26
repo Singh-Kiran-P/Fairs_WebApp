@@ -8,6 +8,22 @@
   flex-wrap: wrap;
 }
 
+.striped-border {
+  border-bottom: 1px dashed #000;
+}
+
+.menu-icon {
+  font-size: "100px";
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Main column */
+.main {
+  background-color: #141516;
+  padding: 20px;
+}
+
 .banner {
   margin-bottom: -2%;
 }
@@ -16,14 +32,7 @@
   border-bottom: 1px dashed #000;
 }
 
-/* Main column */
-.main {
-  background-color: white;
-  padding: 20px;
-}
-
 /* Content Image for the site */
 .contentImg {
   padding: 20px;
 }
-

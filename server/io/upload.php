@@ -4,7 +4,7 @@
  * sources:
  *  https://www.w3schools.com/php/php_file_upload.asp
  */
-include '../../server/config/config.php';
+include __DIR__.'/../config/config.php';
 
 $username = $_SESSION['username'];
 $typeImg = $_SESSION['typeImg'];

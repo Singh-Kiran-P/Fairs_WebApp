@@ -1,0 +1,85 @@
+@import "basic.css";
+
+*{
+  color:white;
+}
+
+/* navbar customs */
+.mostRight {
+  flex: 1;
+}
+
+.mostLeft {
+  flex: 1;
+}
+
+/* profile Img center */
+.profileImg {
+  width: 15%;
+  margin: auto;
+}
+.topImg{
+  border-radius: 50%;
+}
+
+/* Column container */
+.content {
+  display: flex;
+  width: 50%;
+  margin: auto;
+  flex-wrap: wrap;
+
+}
+
+textarea {
+  height: 100%;
+}
+
+input,
+textarea {
+  margin: 8px 0;
+  width: 90%;
+  padding: 12px 20px;
+  display: block;
+  box-sizing: border-box;
+}
+
+.mainCol1 {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #1b4958;
+}
+.mainCol2 {
+  flex: 50%;
+  background-color: #1b4958;
+}
+
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+  .mainCol1,
+  .mainCol2 {
+    flex: 100%;
+  }
+  /* profile Img center */
+  .profileImg {
+    width: 30%;
+    border-radius: 50%;
+    margin: auto;
+  }
+}
+
+.save{
+  flex: none;
+}
+
+button {
+  background-color: #4caf50;
+  width: 100%;
+  color: black;
+  padding: 15px;
+  margin: 10px 0px;
+  border: none;
+  cursor: pointer;
+}

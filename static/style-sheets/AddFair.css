@@ -94,3 +94,8 @@ button {
   border: none;
   cursor: pointer;
 }
+
+/* change color to white */
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}

@@ -1,3 +1,11 @@
+<?php
+require '../../../server/classes/class.fair.php';
+
+Fair::add();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,29 +32,36 @@
 
         <h1 class="topTitle">Add Fair</h1>
 
-        <input type="text" placeholder="Title">
+        <input type="text" name="title" placeholder="Title">
 
         <textarea type="" name="desc" placeholder="Give a short discription about this fair" form="form" required></textarea>
 
         <input type="file" name="file[]" class="inputfile" multiple>
 
         <div class="datum">
-          <input type="text" placeholder="Start Datum">
-          <input type="text" placeholder="End Datum">
+          <input type="date" name="startDate" placeholder="Start Date">
+          <input type="date" name="endDate" placeholder="End Date">
         </div>
 
         <div class="datum">
-          <input type="text" placeholder="Opening Hour">
-          <input type="text" placeholder="Closing Hour">
+          <input type="time" name="openingHour" placeholder="Opening Hour">
+          <input type="time" name="closingHour" placeholder="Closing Hour">
         </div>
 
-        <input type="text" placeholder="Location">
+        <input type="text" name="location" placeholder="Location">
 
       </center>
+sqdqsd
+
     </div>
 
     <button type="submit" id="btn">Save</button>
+
   </form>
+  <!-- print msg on save -->
+  <?php
+
+  ?>
 </body>
 
 </html>

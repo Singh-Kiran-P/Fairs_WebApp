@@ -10,7 +10,7 @@
 include_once "class.database.php";
 
 /* Accounts class holds the users identity and fuction/methode that are related to users*/
-class Accounts extends Database
+class Accounts
 {
 
   private $userId;
@@ -30,11 +30,14 @@ class Accounts extends Database
    */
   public function init($userId, $type)
   {
+    //connect to database
+    $conn = Database::connect();
+
     // check if there is account with this userID
     if ($type == "city")
-      $queryUser = $this->conn->prepare("select * from accounts a,city c where a.user_id=:userid and c.user_id= a.user_id");
+      $queryUser = $conn->prepare("select * from accounts a,city c where a.user_id=:userid and c.user_id= a.user_id");
     if ($type == "visitor")
-      $queryUser = $this->conn->prepare("select * from accounts a where a.user_id=:userid");
+      $queryUser = $conn->prepare("select * from accounts a where a.user_id=:userid");
 
     $queryUser->bindParam(":userid", $userId, PDO::PARAM_STR, 255);
 
@@ -50,8 +53,8 @@ class Accounts extends Database
         $this->email = $row['email'];
         $this->name = $row['name'];
         if ($type == "city") {
-        $this->short_desc = $row['short_description'];
-        $this->telephone = $row['telephone'];
+          $this->short_desc = $row['short_description'];
+          $this->telephone = $row['telephone'];
         }
       } else {
         throw new Exception("UserId error", 1);
@@ -68,8 +71,11 @@ class Accounts extends Database
    */
   public function login($email_username, $password)
   {
+    //connect to database
+    $conn = Database::connect();
+
     // check if there is account only using email
-    $queryUser = $this->conn->prepare("select * from accounts where email=:email or username=:username");
+    $queryUser = $conn->prepare("select * from accounts where email=:email or username=:username");
     $queryUser->bindParam(":email", $email_username, PDO::PARAM_STR, 255);
     $queryUser->bindParam(":username", $email_username, PDO::PARAM_STR, 255);
 
@@ -129,13 +135,16 @@ class Accounts extends Database
    */
   public function register($name, $email, $password, $username, $type)
   {
+    //connect to database
+    $conn = Database::connect();
+
     // Validating EMail and username
     if ($this->checkIfEmail($email))
       return ['msg' => "Email already taken!", 'val' => false];
     else if ($this->checkIfUsername($username))
       return ['msg' => "Username already taken!", 'val' => false];
     else {
-      $query = $this->conn->prepare("INSERT INTO accounts VALUES (DEFAULT, :name,:username,:password,:email,:type,NOW(),NULL)");
+      $query = $conn->prepare("INSERT INTO accounts VALUES (DEFAULT, :name,:username,:password,:email,:type,NOW(),NULL)");
 
       // Bind params
       $query->bindParam(":username", $username, PDO::PARAM_STR, 255);
@@ -152,7 +161,7 @@ class Accounts extends Database
         $this->login($email, $password);
         return ['msg' => "Username already taken!", 'val' => true];
       } else {
-        return ($this->conn->errorInfo());
+        return ($conn->errorInfo());
       }
       echo "<script>console.log('Debug Objects: " . "Error in Accounts->register" . "' );</script>";
     }
@@ -167,7 +176,10 @@ class Accounts extends Database
    */
   public function completeRegisteration($telephone, $desc)
   {
-    $query = $this->conn->prepare("INSERT INTO city (city_id,user_id,telephone,short_description) VALUES (DEFAULT,:userId,:telephone,:desc)");
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("INSERT INTO city (city_id,user_id,telephone,short_description) VALUES (DEFAULT,:userId,:telephone,:desc)");
     $query->bindParam(":userId", $this->userId, PDO::PARAM_STR, 255);
     $query->bindParam(":telephone", $telephone, PDO::PARAM_STR, 255);
     $query->bindParam(":desc", $desc, PDO::PARAM_STR, 255);
@@ -176,7 +188,7 @@ class Accounts extends Database
       return "true";
     } else {
       return $query->errorInfo()[2];
-        }
+    }
   }
 
   /**
@@ -187,8 +199,10 @@ class Accounts extends Database
    */
   private function checkIfEmail($email)
   {
+    //connect to database
+    $conn = Database::connect();
 
-    $queryEmail = $this->conn->prepare("select * from accounts where email=:email");
+    $queryEmail = $conn->prepare("select * from accounts where email=:email");
     $queryEmail->bindParam(":email", $email, PDO::PARAM_STR, 255);
 
     if ($queryEmail->execute()) {
@@ -211,7 +225,10 @@ class Accounts extends Database
    */
   private function checkIfUsername($username)
   {
-    $queryUser = $this->conn->prepare("select * from accounts where username=:username");
+    //connect to database
+    $conn = Database::connect();
+
+    $queryUser = $conn->prepare("select * from accounts where username=:username");
     $queryUser->bindParam(":username", $username, PDO::PARAM_STR, 255);
 
     if ($queryUser->execute()) {
@@ -224,7 +241,7 @@ class Accounts extends Database
     return false;
   }
 
-/* ___________________________ GETTER / SETTERS_________________________________ */
+  /* ___________________________ GETTER / SETTERS_________________________________ */
 
   public function getUserId()
   {

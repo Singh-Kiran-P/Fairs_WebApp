@@ -18,8 +18,8 @@
   <?php
   /* Gemeente main navTop Links middle */
   if ($typeNav == "city_nav") {
-    echo '<a class="mostLeft line" href="/~kiransingh/project/static/city/addFair.php">Add Fair</a>';
-    echo '<a class="mostRight" href="/~kiransingh/project/static/city/listOfFair.php">List of Fair</a>';
+    echo '<a class="mostLeft line" href="/~kiransingh/project/static/dashboard/city/addFair.php">Add Fair</a>';
+    echo '<a class="mostRight" href="/~kiransingh/project/static/dashboard/city/listOfFair.php">List of Fair</a>';
   }
   ?>
   <!-- Break Line -->

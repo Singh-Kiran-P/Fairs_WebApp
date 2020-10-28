@@ -9,8 +9,9 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
 
   $userId = $_SESSION['userId'];
   try {
+    //Login as visitor to set the gernal variable
     $user = new Accounts();
-    $user->init($userId);
+    $user->init($userId, "visitor");
 
     //upload img
     $_SESSION['typeImg'] = "profile";

@@ -7,29 +7,35 @@
  *    https://alexwebdevelop.com/user-authentication/
  */
 
-include "class.database.php";
+include_once "class.database.php";
 
 /* Accounts class holds the users identity and fuction/methode that are related to users*/
 class Accounts extends Database
 {
 
-  private $userId;
-  private $name;
-  private $username;
-  private $type;
-  private $email;
-  private $created_on;
-  private $last_login;
+  private $userId = "";
+  private $name = "";
+  private $username = "";
+  private $type = "";
+  private $email = "";
+  private $created_on = "";
+  private $last_login = "";
+  private $short_desc = "";
+  private $telephone = "";
 
   /**
    * Accounts constuctor to init member variables
    *
    * @param [type] $userId
    */
-  public function init($userId)
+  public function init($userId, $type)
   {
     // check if there is account with this userID
-    $queryUser = $this->conn->prepare("select * from accounts where user_id=:userid");
+    if ($type == "city")
+      $queryUser = $this->conn->prepare("select * from accounts a,city c where a.user_id=:userid and c.user_id= a.user_id");
+    if ($type == "visitor")
+      $queryUser = $this->conn->prepare("select * from accounts a where a.user_id=:userid");
+
     $queryUser->bindParam(":userid", $userId, PDO::PARAM_STR, 255);
 
     if ($queryUser->execute()) {
@@ -42,6 +48,11 @@ class Accounts extends Database
         $this->type = $row['type'];
         $this->username = $row['username'];
         $this->email = $row['email'];
+        $this->name = $row['name'];
+        if ($type == "city") {
+        $this->short_desc = $row['short_description'];
+        $this->telephone = $row['telephone'];
+        }
       } else {
         throw new Exception("UserId error", 1);
       }
@@ -90,17 +101,7 @@ class Accounts extends Database
     // set session variables
     $_SESSION['loggedin'] = true;
     $_SESSION['userId'] = $row['user_id'];
-    $_SESSION['name'] = $row['name'];
     $_SESSION['type'] = $row['type'];
-    $_SESSION['username'] = $row['username'];
-    $_SESSION['email'] = $row['email'];
-
-    // set member variables
-    $this->userId = $row['user_id'];
-    $this->type = $row['type'];
-    $this->username = $row['username'];
-    $this->email = $row['email'];
-
 
     // set redirect path
     // 3 types of users [city,visitor,admin]
@@ -220,5 +221,126 @@ class Accounts extends Database
       return true;
     }
     return false;
+  }
+
+/* ___________________________ GETTER / SETTERS_________________________________ */
+
+  public function getUserId()
+  {
+    return $this->userId;
+  }
+
+
+  public function setUserId($userId)
+  {
+    $this->userId = $userId;
+
+    return $this;
+  }
+
+
+  public function getName()
+  {
+    return $this->name;
+  }
+
+
+  public function setName($name)
+  {
+    $this->name = $name;
+
+    return $this;
+  }
+
+  public function getUsername()
+  {
+    return $this->username;
+  }
+
+
+  public function setUsername($username)
+  {
+    $this->username = $username;
+
+    return $this;
+  }
+
+
+  public function getType()
+  {
+    return $this->type;
+  }
+
+
+  public function setType($type)
+  {
+    $this->type = $type;
+
+    return $this;
+  }
+
+
+  public function getEmail()
+  {
+    return $this->email;
+  }
+
+
+  public function setEmail($email)
+  {
+    $this->email = $email;
+
+    return $this;
+  }
+
+  public function getCreated_on()
+  {
+    return $this->created_on;
+  }
+
+  public function setCreated_on($created_on)
+  {
+    $this->created_on = $created_on;
+
+    return $this;
+  }
+
+
+  public function getLast_login()
+  {
+    return $this->last_login;
+  }
+
+
+  public function setLast_login($last_login)
+  {
+    $this->last_login = $last_login;
+
+    return $this;
+  }
+
+  public function getShort_desc()
+  {
+    return $this->short_desc;
+  }
+
+  public function setShort_desc($short_desc)
+  {
+    $this->short_desc = $short_desc;
+
+    return $this;
+  }
+
+  public function getTelephone()
+  {
+    return $this->telephone;
+  }
+
+
+  public function setTelephone($telephone)
+  {
+    $this->telephone = $telephone;
+
+    return $this;
   }
 }

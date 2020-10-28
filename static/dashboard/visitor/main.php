@@ -1,47 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<H1>BEZOEKER</H1>
-
-<body>
-
-</body>
-
-</html>
-
 <?php
+require '../../../server/classes/class.city.php';
+require '../../../server/classes/class.accounts.php';
+
 session_start();
 
 if (isset($_SESSION['loggedin'])) {
+  $userId = $_SESSION['userId'];
+  $type = $_SESSION['type'];
+  $account = new Accounts();
+  $account->init($userId,$type);
+
+  $username = $account->getUsername();
+  $email = $account->getEmail();
+  $type = $account->getType();
+  $name = $account->getName();
 
 
-  echo "logedIn: " . $_SESSION['loggedin'];
-  echo "<br>";
-
-  echo "userId: " . $_SESSION['userId'];
-  echo "<br>";
-
-  echo "type: " . $_SESSION['type'];
-  echo "<br>";
-
-  echo "username: " . $_SESSION['username'];
-  echo "<br>";
-
-  echo "email: " . $_SESSION['email'];
-
-  require '../../../server/config/config.php';
-  echo "<br>";
-
-  $s = '<a href="/~kiransingh/project/server/auth/logout.php">Logout</a>';
-  echo $s;
 } else {
-  echo "login first";
+  header("Location: ../unauthorized.php");
 }
-
-
 ?>

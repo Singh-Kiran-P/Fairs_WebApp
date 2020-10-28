@@ -8,7 +8,7 @@ include __DIR__ . '/../config/config.php';
 
 $username = $_SESSION['username'];
 $typeImg = $_SESSION['typeImg'];
-$target_dir = __DIR__ . '/../../server/uploads/' . $typeImg . '/';
+$target_dir = __DIR__ . '/../uploads/' . $typeImg . '/';
 $target_file = $target_dir . basename($_SESSION["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));

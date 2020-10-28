@@ -40,6 +40,8 @@ if (isset($_POST['isset'])) {
 </head>
 
 <body>
+  <!-- Script -->
+  <script src="register.js"></script>
   <header>
     <!-- navbar -->
     <?php
@@ -56,7 +58,7 @@ if (isset($_POST['isset'])) {
 
         <center>
           <h1> Kermis Register Form </h1>
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" onsubmit="return validateForm()">
             <input class="text" type="text" placeholder="Enter your name" name="name" value="<?php if (isset($_POST['name'])) echo $_POST['name']; ?>" required>
             <input class="text" type="text" placeholder="Enter Username" name="username" value="<?php if (isset($_POST['username'])) echo $_POST['username']; ?>" required>
             <input class="text" type="email" placeholder="Enter Email" name="email" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" required>
@@ -82,9 +84,9 @@ if (isset($_POST['isset'])) {
   </div>
 </body>
 
-
 <!-- Script -->
 <script src="register.js"></script>
+
 
 
 </html>

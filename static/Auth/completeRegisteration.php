@@ -54,7 +54,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
       <div id="form" class="completeRegisteration">
         <center>
           <h1> Complete Registeration </h1>
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" id="usrform">
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" id="usrform" onsubmit="return validateForm()" >
             <input type="text" name="telephone" placeholder="Telephone" required>
             <textarea type="" name="desc" placeholder="Give a short discription of your city" form="usrform" required></textarea>
             Select image to upload: <input type="file" name="fileToUpload" id="fileToUpload" required>
@@ -74,7 +74,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
 
 
 <!-- Script -->
-<script src="register.js"></script>
+<script src="completeRegisteration.js"></script>
 
 
 </html>

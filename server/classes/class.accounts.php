@@ -14,6 +14,7 @@ class Accounts
 {
 
   private $userId;
+  private $cityId;
   private $name = "";
   private $username = "";
   private $type = "";
@@ -46,13 +47,19 @@ class Accounts
 
       if ($queryUser->rowCount() > 0) {
         $row = $queryUser->fetch(PDO::FETCH_ASSOC);
+
         // set member variables
         $this->userId = intval($row['user_id']);
         $this->type = $row['type'];
         $this->username = $row['username'];
         $this->email = $row['email'];
         $this->name = $row['name'];
+
         if ($type == "city") {
+
+          $this->cityId = intval($row['city_id']);
+          $_SESSION['cityId'] = $this->cityId;
+
           $this->short_desc = $row['short_description'];
           $this->telephone = $row['telephone'];
         }

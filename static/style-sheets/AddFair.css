@@ -44,7 +44,7 @@ textarea,
   box-sizing: border-box;
 }
 
-.datum input{
+.date input{
   display: inline;
   margin: 8px 0;
   width: 40%;

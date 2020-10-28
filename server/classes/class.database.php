@@ -3,7 +3,7 @@ class Database
 {
   public static  function connect()
   {
-    // Connect to the Mysql database
+    // Connect to the Postgrs database
     try {
       // get the env variables
       require __DIR__ . '/../config/config.php';

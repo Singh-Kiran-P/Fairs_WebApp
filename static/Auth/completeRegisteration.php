@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include '../../server/classes/class.users.php';
+include '../../server/classes/class.accounts.php';
 if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
   $telephone = $_POST['telephone'];
   $desc = $_POST['desc'];
@@ -9,7 +9,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
 
   $userId = $_SESSION['userId'];
   try {
-    $user = new Users();
+    $user = new Accounts();
     $user->init($userId);
 
     //upload img
@@ -58,8 +58,8 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
           <h1> Complete Registeration </h1>
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" id="usrform">
             <input type="text" name="telephone" placeholder="Telephone" required>
-            <textarea type="" name="desc" placeholder="" form="usrform" required>Give a short discription of your 'gemeente'</textarea>
-            Select image to upload: <input type="file" name="fileToUpload" id="fileToUpload">
+            <textarea type="" name="desc" placeholder="Give a short discription of your city" form="usrform" required></textarea>
+            Select image to upload: <input type="file" name="fileToUpload" id="fileToUpload" required>
             <input type="submit" value="Confirm" name="submit">
           </form>
           <p id="error">

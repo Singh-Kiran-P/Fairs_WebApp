@@ -9,20 +9,20 @@
 
 include "class.database.php";
 
-/* Users class holds the users identity and fuction/methode that are related to users*/
-class Users extends Database
+/* Accounts class holds the users identity and fuction/methode that are related to users*/
+class Accounts extends Database
 {
 
   private $userId;
-  private $type;
+  private $name;
   private $username;
+  private $type;
   private $email;
-  private $telephone;
-  private $desc;
-
+  private $created_on;
+  private $last_login;
 
   /**
-   * Users constuctor to init member variables
+   * Accounts constuctor to init member variables
    *
    * @param [type] $userId
    */
@@ -85,7 +85,7 @@ class Users extends Database
    */
   public function _login($row)
   {
-    include __DIR__.'/../config/config.php';
+    include __DIR__ . '/../config/config.php';
 
     // set session variables
     $_SESSION['loggedin'] = true;
@@ -103,13 +103,13 @@ class Users extends Database
 
 
     // set redirect path
-    // 3 types of users [gemeente,bezoeker(user),admin]
+    // 3 types of users [city,visitor,admin]
     $redirectTo = "";
 
-    if ($row['type'] === "gemeente") {
-      $redirectTo = $rootURL . '/~kiransingh/project/static/dashboard/gemeente/profile.php';
-    } else if ($row['type'] === "bezoeker") {
-      $redirectTo = $rootURL . '/~kiransingh/project/static/dashboard/user/main.php';
+    if ($row['type'] === "city") {
+      $redirectTo = $rootURL . '/~kiransingh/project/static/dashboard/city/profile.php';
+    } else if ($row['type'] === "visitor") {
+      $redirectTo = $rootURL . '/~kiransingh/project/static/dashboard/visitor/main.php';
     }
 
     // add the redirect path to session variable
@@ -152,6 +152,7 @@ class Users extends Database
       } else {
         return ($this->conn->errorInfo());
       }
+      echo "<script>console.log('Debug Objects: " . "Error in Accounts->register" . "' );</script>";
     }
   }
 
@@ -164,7 +165,7 @@ class Users extends Database
    */
   public function completeRegisteration($telephone, $desc)
   {
-    $query = $this->conn->prepare("INSERT INTO gemeente (gemeente_id,user_id,telephone,short_description) VALUES (DEFAULT,:userId,:telephone,:desc)");
+    $query = $this->conn->prepare("INSERT INTO city (city_id,user_id,telephone,short_description) VALUES (DEFAULT,:userId,:telephone,:desc)");
     $query->bindParam(":userId", $this->userId, PDO::PARAM_STR, 255);
     $query->bindParam(":telephone", $telephone, PDO::PARAM_STR, 255);
     $query->bindParam(":desc", $desc, PDO::PARAM_STR, 255);

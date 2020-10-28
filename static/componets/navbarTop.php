@@ -3,9 +3,9 @@
   <!-- Navigation Bar -->
   <div class="logo">
     <?php
-    if ($typeNav == "gemeente_nav")
-      echo '<a href="/~kiransingh/project/static/dashboard/gemeente/profile.php">';
-    else if ($typeNav == "user_nav")
+    if ($typeNav == "city_nav")
+      echo '<a href="/~kiransingh/project/static/dashboard/city/profile.php">';
+    else if ($typeNav == "visitor_nav")
       echo "";
     else
       echo '<a href="/~kiransingh/project/static/index.php">';
@@ -17,12 +17,11 @@
   <!-- navbar Links for gemeente middle -->
   <?php
   /* Gemeente main navTop Links middle */
-  if ($typeNav == "gemeente_nav") {
-    echo '<a class="mostLeft line" href="/~kiransingh/project/static/Auth/register.php">Add Kermis</a>';
-    echo '<a class="mostRight" href="/~kiransingh/project/static/Auth/register.php">List of Kermissen</a>';
+  if ($typeNav == "city_nav") {
+    echo '<a class="mostLeft line" href="/~kiransingh/project/static/city/addFair.php">Add Fair</a>';
+    echo '<a class="mostRight" href="/~kiransingh/project/static/city/listOfFair.php">List of Fair</a>';
   }
   ?>
-
   <!-- Break Line -->
   <div class="line"></div>
 
@@ -38,8 +37,8 @@
   }
 
   /* Gemeente main navTop Links right */
-  if ($typeNav == "gemeente_nav") {
-    echo '<a href="/~kiransingh/project/static/Auth/register.php">Profile</a>';
+  if ($typeNav == "city_nav") {
+    echo '<a href="/~kiransingh/project/static/dashboard/city/profile.php">Profile</a>';
     echo '<a href="/~kiransingh/project/server/auth/logout.php">Logout</a>';
   }
   ?>

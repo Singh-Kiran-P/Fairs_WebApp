@@ -1,12 +1,14 @@
 <?php
 session_start();
-include '../../server/classes/class.users.php';
+include '../../server/classes/class.accounts.php';
+echo "<script>console.log('Debug Objects: " ."test" . "' );</script>";
+
 
 if (isset($_POST['isset'])) {
   $password = $_POST['password'];
   $email = $_POST['email'];
 
-  $user = new Users();
+  $user = new Accounts();
   $loggedIn = $user->login($email, $password);
 
   $out = "";

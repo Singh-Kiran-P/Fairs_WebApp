@@ -1,5 +1,5 @@
 <?php
-require '../../../server/classes/class.users.php';
+require '../../../server/classes/class.city.php';
 
 session_start();
 
@@ -8,9 +8,12 @@ if (isset($_SESSION['loggedin'])) {
   $type =  $_SESSION['type'];
   $username = $_SESSION['username'];
   $email =  $_SESSION['email'];
+  $name =  $_SESSION['name'];
 
-  /*$userObj = new Users();
-  $userObj->init($userId); */
+  $cityObj = new City();
+  $cityObj->init($userId);
+  $desc = $cityObj->getShort_desc();
+  $telephone = $cityObj->getTelephone();
 } else {
   header("Location: ../unauthorized.php");
 }
@@ -23,7 +26,7 @@ if (isset($_SESSION['loggedin'])) {
   <title>Home</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/gemeente_main.css">
+  <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/city_main.css">
 </head>
 
 <body>
@@ -31,7 +34,7 @@ if (isset($_SESSION['loggedin'])) {
   <header>
     <!-- navbar -->
     <?php
-    $typeNav = "gemeente_nav";
+    $typeNav = "city_nav";
     include '../../componets/navbarTop.php';
     ?>
   </header>
@@ -47,17 +50,17 @@ if (isset($_SESSION['loggedin'])) {
   <form action="" method="post" class="content">
     <div class="mainCol1 g">
       <center>
-        <input type="text" placeholder="Name" disabled>
-        <input type="text" placeholder="Email">
-        <input type="text" placeholder="Type">
-
+        <input type="text" placeholder="Name" value="<?php echo $name; ?>" disabled>
+        <input type="text" placeholder="Email" value="<?php echo $email; ?>">
+        <input type="text" placeholder="Type" value="<?php echo $type; ?>" disabled>
+        <input type="text" placeholder="Telephone" value="<?php echo $telephone; ?>">
       </center>
     </div>
     <div class="mainCol2 b">
       <center>
-        <input type="text" placeholder="Password">
-        <input type="text" placeholder="Email">
-        <textarea type="" name="desc" placeholder="Give a short discription of your 'gemeente'" form="usrform" required></textarea>
+        <input type="text" placeholder="Username" value="<?php echo $username; ?>">
+        <input type="text" placeholder="Password" value="">
+        <textarea type="" name="desc" placeholder="Give a short discription of your city" form="usrform" required><?php echo $desc; ?></textarea>
       </center>
     </div>
 

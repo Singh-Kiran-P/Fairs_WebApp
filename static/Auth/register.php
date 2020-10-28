@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include '../../server/classes/class.users.php';
+include '../../server/classes/class.accounts.php';
 include '../../server/config/config.php';
 
 if (isset($_POST['isset'])) {
@@ -16,13 +16,13 @@ if (isset($_POST['isset'])) {
   if ($password != $password2) {
     $out = "Passwords do not match";
   } else {
-    $user = new Users();
+    $user = new Accounts();
     $res = $user->register($name, $email, $password, $username, $type);
     $out = $res['msg'];
 
-    if ($res['val'] == true && $type == "gemeente") {
+    if ($res['val'] == true && $type == "city") {
       header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/completeRegisteration.php');
-    } else if ($res['val'] == true && $type == "bezoeker") {
+    } else if ($res['val'] == true && $type == "visitor") {
       header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
     }
   }
@@ -63,8 +63,8 @@ if (isset($_POST['isset'])) {
             <input class="text" type="password" placeholder="Enter Password" name="password" required>
             <input class="text" type="password" placeholder="ReEnter Password" name="password2" required>
             Soort gebruiker: <select name="type" name="type" class="form-control" required>
-              <option value="bezoeker">Bezoeker</option>
-              <option value="gemeente">Gemeente</option>
+              <option value="visitor">Visitor</option>
+              <option value="city">City</option>
             </select> <br>
             <input name="isset" value="set" class="hidden">
             <button type="submit" class="normalbutton"> Register </button>

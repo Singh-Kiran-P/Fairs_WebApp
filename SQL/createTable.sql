@@ -1,6 +1,5 @@
 -- https://www.postgresqltutorial.com/postgresql-create-table/
 -- accounts---------------------------------------------------
-DROP TABLE kiransingh;
 DROP TABLE IF EXISTS accounts;
 
 CREATE TABLE accounts (
@@ -15,44 +14,44 @@ CREATE TABLE accounts (
 );
 
 /* INSERT INTO
-  "accounts"
-VALUES
-  (
-    DEFAULT,
-    'kiran',
-    'kiranhass',
-    'hello',
-    'singh@sigh.com',
-    'gemeente',
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP
-  ),
-  (
-    DEFAULT,
-    'kiran',
-    'singh',
-    'singh',
-    'singh@sigh.singh',
-    'bezoeker',
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP
-  ),
-  (
-    DEFAULT,
-    'admin',
-    'admin',
-    'admin',
-    'admin@admin.com',
-    'admin',
-    CURRENT_TIMESTAMP,
-    CURRENT_TIMESTAMP
-  );
+ "accounts"
+ VALUES
+ (
+ DEFAULT,
+ 'kiran',
+ 'kiranhass',
+ 'hello',
+ 'singh@sigh.com',
+ 'gemeente',
+ CURRENT_TIMESTAMP,
+ CURRENT_TIMESTAMP
+ ),
+ (
+ DEFAULT,
+ 'kiran',
+ 'singh',
+ 'singh',
+ 'singh@sigh.singh',
+ 'bezoeker',
+ CURRENT_TIMESTAMP,
+ CURRENT_TIMESTAMP
+ ),
+ (
+ DEFAULT,
+ 'admin',
+ 'admin',
+ 'admin',
+ 'admin@admin.com',
+ 'admin',
+ CURRENT_TIMESTAMP,
+ CURRENT_TIMESTAMP
+ );
  */
 -- gemeente-----------------------------------------------------
-DROP TABLE IF EXISTS gemeente;
+DROP TABLE IF EXISTS city;
 
-CREATE TABLE gemeente (
-  gemeente_id serial PRIMARY KEY,
+CREATE TABLE city (
+  city_id serial PRIMARY KEY,
   user_id INT NOT NULL,
   telephone VARCHAR (50) UNIQUE,
   short_description VARCHAR (1000),
@@ -60,21 +59,20 @@ CREATE TABLE gemeente (
 );
 
 /* INSERT INTO
-  "gemeente"
-VALUES
-  (
-    DEFAULT,
-    1,
-    '048704756',
-    'hasselt is goed'
-  ); */
+ "gemeente"
+ VALUES
+ (
+ DEFAULT,
+ 1,
+ '048704756',
+ 'hasselt is goed'
+ ); */
+-- fair-------------------------------------------------------
+DROP TABLE IF EXISTS fair;
 
--- kermis-------------------------------------------------------
-DROP TABLE IF EXISTS kermis;
-
-CREATE TABLE kermis (
-  kermis_id serial PRIMARY KEY,
-  gemeente_id INT NOT NULL,
+CREATE TABLE fair (
+  fair_id serial PRIMARY KEY,
+  city_id INT NOT NULL,
   title VARCHAR (50) NOT NULL,
   description VARCHAR (500),
   start_date DATE NOT NULL,
@@ -82,47 +80,46 @@ CREATE TABLE kermis (
   opening_hour TIME NOT NULL,
   closing_hour TIME NOT NULL,
   location VARCHAR (50),
-  FOREIGN KEY (gemeente_id) REFERENCES gemeente (gemeente_id)
+  FOREIGN KEY (city_id) REFERENCES city (city_id)
 );
 
 /* INSERT INTO
-  "kermis"
-VALUES
-  (
-    DEFAULT,
-    1,
-    'hasselt 2020',
-    'hasselt kermis 2020',
-    '2008-11-11',
-    '2008-11-20',
-    '13:30',
-    '18:30'
-  ); */
-
+ "kermis"
+ VALUES
+ (
+ DEFAULT,
+ 1,
+ 'hasselt 2020',
+ 'hasselt kermis 2020',
+ '2008-11-11',
+ '2008-11-20',
+ '13:30',
+ '18:30'
+ ); */
 -- zones-------------------------------------------------------
 DROP TABLE IF EXISTS zones;
 
 CREATE TABLE zones (
   zone_id serial PRIMARY KEY,
-  kermis_id INT NOT NULL,
+  fair_id INT NOT NULL,
   title VARCHAR (50) NOT NULL,
   description VARCHAR (50),
   location VARCHAR (50),
   open_spots INT NOT NULL,
-  FOREIGN KEY (kermis_id) REFERENCES kermis (kermis_id)
+  FOREIGN KEY (fair_id) REFERENCES fair (fair_id)
 );
 
 /* INSERT INTO
-  "zones"
-VALUES
-  (
-    DEFAULT,
-    1,
-    'Zone 1',
-    'hasselt kermis 2020 zone1 DEsc',
-    'hasselt',
-    30
-  );
+ "zones"
+ VALUES
+ (
+ DEFAULT,
+ 1,
+ 'Zone 1',
+ 'hasselt kermis 2020 zone1 DEsc',
+ 'hasselt',
+ 30
+ );
  */
 -- attractions------------------------------------------------
 DROP TABLE IF EXISTS attractions;
@@ -130,10 +127,10 @@ DROP TABLE IF EXISTS attractions;
 CREATE TABLE attractions (
   attraction_id serial PRIMARY KEY,
   zone_id INT NOT NULL,
-  kermis_id INT NOT NULL,
+  fair_id INT NOT NULL,
   title VARCHAR (50) NOT NULL,
   description VARCHAR (50),
-  FOREIGN KEY (kermis_id) REFERENCES kermis (kermis_id),
+  FOREIGN KEY (fair_id) REFERENCES fair (fair_id),
   FOREIGN KEY (zone_id) REFERENCES zones (zone_id)
 );
 
@@ -144,11 +141,11 @@ CREATE TABLE reservations (
   reservation_id serial PRIMARY KEY,
   user_id INT NOT NULL,
   zone_id INT NOT NULL,
-  kermis_id INT NOT NULL,
+  fair_id INT NOT NULL,
   going boolean NOT NULL DEFAULT 'f',
   review_rating INT,
   review_description VARCHAR (500),
-  FOREIGN KEY (kermis_id) REFERENCES kermis (kermis_id),
+  FOREIGN KEY (fair_id) REFERENCES fair (fair_id),
   FOREIGN KEY (zone_id) REFERENCES zones (zone_id),
   FOREIGN KEY (user_id) REFERENCES accounts (user_id)
 );

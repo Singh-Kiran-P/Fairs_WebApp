@@ -50,7 +50,7 @@ if (isset($_SESSION['loggedin'])) {
   </div>
 
   <!-- The flexible grid (content) -->
-  <form action="" method="post" class="content">
+  <form action="" method="post" class="content" id="form">
     <div class="mainCol1 g">
       <center>
         <input type="text" placeholder="Name" value="<?php echo $name; ?>" disabled>
@@ -63,7 +63,7 @@ if (isset($_SESSION['loggedin'])) {
       <center>
         <input type="text" placeholder="Username" value="<?php echo $username; ?>">
         <input type="text" placeholder="Password" value="">
-        <textarea type="" name="desc" placeholder="Give a short discription of your city" form="usrform" required><?php echo $desc; ?></textarea>
+        <textarea type="" name="desc" placeholder="Give a short discription of your city" form="form" required><?php echo $desc; ?></textarea>
       </center>
     </div>
 

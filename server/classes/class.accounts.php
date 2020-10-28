@@ -13,7 +13,7 @@ include_once "class.database.php";
 class Accounts extends Database
 {
 
-  private $userId = "";
+  private $userId;
   private $name = "";
   private $username = "";
   private $type = "";
@@ -44,7 +44,7 @@ class Accounts extends Database
       if ($queryUser->rowCount() > 0) {
         $row = $queryUser->fetch(PDO::FETCH_ASSOC);
         // set member variables
-        $this->userId = $row['user_id'];
+        $this->userId = intval($row['user_id']);
         $this->type = $row['type'];
         $this->username = $row['username'];
         $this->email = $row['email'];
@@ -101,6 +101,7 @@ class Accounts extends Database
     // set session variables
     $_SESSION['loggedin'] = true;
     $_SESSION['userId'] = $row['user_id'];
+    $_SESSION['username'] = $row['username'];
     $_SESSION['type'] = $row['type'];
 
     // set redirect path
@@ -172,10 +173,10 @@ class Accounts extends Database
     $query->bindParam(":desc", $desc, PDO::PARAM_STR, 255);
 
     if ($query->execute()) {
-      return true;
+      return "true";
     } else {
-      return true;
-    }
+      return $query->errorInfo()[2];
+        }
   }
 
   /**

@@ -23,13 +23,10 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
 
   $res = $user->completeRegisteration($telephone, $desc);
 
-  if ($res == true) {
+  if ($res == "true") {
     header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
-  } else {
-    $res = "Error saving data";
   }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -61,6 +58,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
             <input type="text" name="telephone" placeholder="Telephone" required>
             <textarea type="" name="desc" placeholder="Give a short discription of your city" form="usrform" required></textarea>
             Select image to upload: <input type="file" name="fileToUpload" id="fileToUpload" required>
+            <input name="isset" value="set" class="hidden">
             <input type="submit" value="Confirm" name="submit">
           </form>
           <p id="error">

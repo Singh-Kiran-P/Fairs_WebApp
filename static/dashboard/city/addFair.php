@@ -15,10 +15,15 @@ if (isset($_SESSION['loggedin'])) {
     $closingHour = $_POST['closingHour'];
     $location = $_POST['location'];
 
-    $fairId = Fair::add($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, count($files));
-    Fair::uploadFiles($files, $fairId);
+    $fair = new Fair();
+    $errorMsg = $fair->checking($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location);
+    if ($errorMsg == "") {
 
-    header("Location: listOfFair.php");
+      $fairId = $fair->add($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, count($files));
+      $fair->uploadFiles($files, $fairId);
+
+      header("Location: listOfFair.php");
+    }
   }
 } else {
   header("Location: ../unauthorized.php");
@@ -53,24 +58,30 @@ if (isset($_SESSION['loggedin'])) {
 
         <h1 class="topTitle">Add Fair</h1>
 
-        <input type="text" name="title" placeholder="Title" required>
+        <input type="text" name="title" placeholder="Title" value="<?php if (isset($_POST['title'])) echo $_POST['title']; ?>" required>
 
-        <textarea type="" name="desc" placeholder="Give a short discription about this fair" form="form" required></textarea>
+        <textarea type="" name="desc" placeholder="Give a short discription about this fair" form="form" required><?php if (isset($_POST['desc'])) echo $_POST['desc']; ?></textarea>
 
-        <input type="file" name="file[]" class="inputfile" multiple>
+        <input type="file" name="file[]" class="inputfile" value="<?php if (isset($_POST['file'])) echo $_POST['file']; ?>" multiple>
         <div>
           <div class="date">
-            <input type="text" name="startDate" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')" required>
-            <input type="text" name="openingHour" placeholder="Opening Hour" onfocus="(this.type='time')" onblur="(this.type='text')" required>
-            <input type="text" name="endDate" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')" required>
-            <input type="text" name="closingHour" placeholder="Closing Hour" onfocus="(this.type='time')" onblur="(this.type='text')" required>
+            <input type="text" name="startDate" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['startDate'])) echo $_POST['startDate']; ?>" required>
+            <input type="text" name="openingHour" placeholder="Opening Hour" onfocus="(this.type='time')" onblur="(this.type='text')" value="<?php if (isset($_POST['openingHour'])) echo $_POST['openingHour']; ?>" required>
+            <input type="text" name="endDate" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['endDate'])) echo $_POST['endDate']; ?>" required>
+            <input type="text" name="closingHour" placeholder="Closing Hour" onfocus="(this.type='time')" onblur="(this.type='text')" value="<?php if (isset($_POST['closingHour'])) echo $_POST['closingHour']; ?>" required>
           </div>
 
 
         </div>
-        <input type="text" name="location" placeholder="Location" required>
+        <input type="text" name="location" placeholder="Location" value="<?php if (isset($_POST['location'])) echo $_POST['location']; ?>" required>
 
-        <p id="error"></p>
+        <p id="error">
+          <?php
+          if (isset($_POST['submit'])) {
+            echo $errorMsg;
+          }
+          ?>
+        </p>
 
       </center>
 

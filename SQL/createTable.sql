@@ -55,7 +55,7 @@ CREATE TABLE city (
   user_id INT NOT NULL,
   telephone VARCHAR (50) UNIQUE,
   short_description VARCHAR (1000),
-  FOREIGN KEY (user_id) REFERENCES accounts (user_id)
+  FOREIGN KEY (user_id) REFERENCES accounts (user_id)  ON DELETE CASCADE
 );
 
 /* INSERT INTO
@@ -80,7 +80,7 @@ CREATE TABLE fair (
   opening_hour TIME NOT NULL,
   closing_hour TIME NOT NULL,
   location VARCHAR (50),
-  FOREIGN KEY (city_id) REFERENCES city (city_id)
+  FOREIGN KEY (city_id) REFERENCES city (city_id)  ON DELETE CASCADE
 );
 
 /* INSERT INTO
@@ -130,8 +130,8 @@ CREATE TABLE attractions (
   fair_id INT NOT NULL,
   title VARCHAR (50) NOT NULL,
   description VARCHAR (50),
-  FOREIGN KEY (fair_id) REFERENCES fair (fair_id),
-  FOREIGN KEY (zone_id) REFERENCES zones (zone_id)
+  FOREIGN KEY (fair_id) REFERENCES fair (fair_id)  ON DELETE CASCADE,
+  FOREIGN KEY (zone_id) REFERENCES zones (zone_id)  ON DELETE CASCADE
 );
 
 -- reservations----------------------------------------------
@@ -145,9 +145,9 @@ CREATE TABLE reservations (
   going boolean NOT NULL DEFAULT 'f',
   review_rating INT,
   review_description VARCHAR (500),
-  FOREIGN KEY (fair_id) REFERENCES fair (fair_id),
-  FOREIGN KEY (zone_id) REFERENCES zones (zone_id),
-  FOREIGN KEY (user_id) REFERENCES accounts (user_id)
+  FOREIGN KEY (fair_id) REFERENCES fair (fair_id)  ON DELETE CASCADE,
+  FOREIGN KEY (zone_id) REFERENCES zones (zone_id)  ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES accounts (user_id)  ON DELETE CASCADE
 );
 
 -- waitingList-----------------------------------------------

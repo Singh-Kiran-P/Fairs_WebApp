@@ -1,5 +1,7 @@
 <?php
 include_once "class.database.php";
+include_once 'class.model.fair.php';
+
 
 /* City class holds the City identity and fuction/methode that are related to users*/
 class Fair
@@ -87,8 +89,41 @@ class Fair
    * @param [int] $cityId
    * @return [list] list with all fair of the city
    */
-  public  function getListOfFairs($cityId)
+  public function getListOfFairs($cityId)
   {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from fair where city_id=:city_id");
+    $query->bindParam(":city_id", $cityId, PDO::PARAM_STR, 255);
+
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $fairRow = new Fair_Model();
+          $fair_id = $row['fair_id'];
+          $city_id = $row['city_id'];
+          $title = $row['title'];
+          $description = $row['description'];
+          $start_date = $row['start_date'];
+          $end_date = $row['end_date'];
+          $opening_hour = $row['opening_hour'];
+          $closing_hour = $row['closing_hour'];
+          $location = $row['location'];
+          $tot_Img = $row['totImg'];
+          $fairRow->setVar($fair_id, $city_id, $title, $description, $start_date, $end_date, $opening_hour, $closing_hour, $location, $tot_Img);
+
+          array_push($list, $fairRow);
+        }
+
+        return $list;
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return NULL;
   }
 
 

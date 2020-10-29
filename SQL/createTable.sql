@@ -80,6 +80,7 @@ CREATE TABLE fair (
   opening_hour TIME NOT NULL,
   closing_hour TIME NOT NULL,
   location VARCHAR (50),
+  totImg INT,
   FOREIGN KEY (city_id) REFERENCES city (city_id)  ON DELETE CASCADE
 );
 

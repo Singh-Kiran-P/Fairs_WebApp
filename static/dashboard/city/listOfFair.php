@@ -1,3 +1,25 @@
+<?php
+include_once '../../../server/classes/class.fair.php';
+include_once '../../../server/classes/class.model.fair.php';
+session_start();
+
+if (isset($_SESSION['loggedin'])) {
+    $cityId = $_SESSION['cityId'];
+    $fair = new Fair();
+
+    $listOfFairs = $fair->getListOfFairs($cityId);
+
+    foreach ($listOfFairs as $fairRow) {
+      print_r($fairRow->getVar());
+      echo "<br>";
+    }
+
+
+} else {
+  header("Location: ../unauthorized.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

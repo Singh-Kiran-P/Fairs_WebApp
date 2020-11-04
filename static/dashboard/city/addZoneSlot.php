@@ -1,0 +1,89 @@
+<?php
+require '../../../server/classes/class.fair.php';
+session_start();
+$errorMsg = "";
+
+if (isset($_GET['zoneId']))
+  $_SESSION['zoneId'] = $_GET['zoneId'];
+
+if (isset($_SESSION['loggedin'])) {
+  if (isset($_POST['submit_addSlot'])) {
+
+    $zoneId = $_SESSION['zoneId'];
+    $openingSlot = $_POST['openingSlot'];
+    $closingSlot = $_POST['closingSlot'];
+
+    $fair = new Fair();
+    $errorMsg = $fair->checkingZoneSlot($openingSlot, $closingSlot);
+    if ($errorMsg == "") {
+      $errorMsg = $fair->addZoneSlot($zoneId, $openingSlot, $closingSlot);
+    }
+  }
+  if (isset($_POST['submit'])) {
+    header("Location: listOfFair.php");
+  }
+} else {
+  header("Location: ../unauthorized.php");
+}
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/addZone.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Fair</title>
+</head>
+
+<body>
+  <header>
+    <!-- navbar -->
+    <?php
+    $typeNav = "city_nav";
+    include '../../componets/navbarTop.php';
+    ?>
+  </header>
+
+  <!-- The flexible grid (content) -->
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
+
+    <div class="mainCol1 g">
+      <center>
+
+        <h1 class="topTitle">Add Zone <?php if (isset($_GET['fairId'])) echo "to " . $_GET['fairId']  ?></h1>
+
+
+        <!-- time slots -->
+        <div>
+          <div class="sidebyside">
+            <input type="text" name="openingSlot" placeholder="Opening Slot" onfocus="(this.type='time')" onblur="(this.type='text')">
+            <input type="text" name="closingSlot" placeholder="Closing Slot" onfocus="(this.type='time')" onblur="(this.type='text')">
+          </div>
+        </div>
+        <button type="submit" name="submit_addSlot" class="addSlot">Add Slot</button>
+
+
+        <p id="error">
+          <?php
+          if (isset($_POST['submit'])) {
+            echo $errorMsg;
+          }
+          ?>
+        </p>
+
+      </center>
+
+    </div>
+
+    <button type="submit" name="submit" id="btn">Save</button>
+
+  </form>
+
+</body>
+<!-- Script -->
+<script src="addFair.js"></script>
+
+</html>

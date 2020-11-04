@@ -15,7 +15,7 @@ class Fair
    * @param [time] $closingHour
    * @return [string] empty string if al is valid else the error msg
    */
-  public function checking($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location)
+  public function checkingAddFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location)
   {
     /* check if startdate before current date  */
     if (strtotime($startDate) < mktime(0, 0, 0))
@@ -36,6 +36,37 @@ class Fair
 
     return $msg;
   }
+
+  /**
+   * Check user input
+   *
+   * @param [date] $startDate
+   * @param [date] $endDate
+   * @param [time] $openingHour
+   * @param [time] $closingHour
+   * @return [string] empty string if al is valid else the error msg
+   */
+  public function checkingAddZone($fairId, $title, $desc, $open_spots, $location, $attractions)
+  {
+    $msg = "";
+    return $msg;
+  }
+
+  /**
+   * Check user input
+   *
+   * @param [date] $startDate
+   * @param [date] $endDate
+   * @param [time] $openingHour
+   * @param [time] $closingHour
+   * @return [string] empty string if al is valid else the error msg
+   */
+  public function checkingZoneSlot($openingSlot, $closingSlot)
+  {
+    $msg = "";
+    return $msg;
+  }
+
 
   private function _checkIfNotDupplicate($cityId, $title, $startDate, $location)
   {
@@ -59,7 +90,7 @@ class Fair
   }
 
 
-  public  function add($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, $totImg)
+  public  function addFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, $totImg)
   {
     //connect to database
     $conn = Database::connect();
@@ -126,9 +157,72 @@ class Fair
     return NULL;
   }
 
+  /**
+   * Add Zone to database
+   *
+   * @param [type] $fairId
+   * @param [type] $title
+   * @param [type] $desc
+   * @param [type] $open_spots
+   * @param [type] $location
+   * @param [type] $attractions
+   * @param [type] $nImg
+   * @param [type] $nVideo
+   * @return [int] zone_id
+   */
+  public function addZone($zoneId, $title, $desc, $open_spots, $location, $attractions, $nImg, $nVideo)
+  {
+    //connect to database
+    $conn = Database::connect();
 
 
-  public  function uploadFiles($files, $fairId)
+    $query = $conn->prepare("INSERT INTO zones VALUES (DEFAULT,:zoneId,:title,:description,:location,:open_spots,:attractions,:totImg,:totVideo)");
+    $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
+    $query->bindParam(":title", $title, PDO::PARAM_STR, 255);
+    $query->bindParam(":description", $desc, PDO::PARAM_STR, 255);
+    $query->bindParam(":location", $location, PDO::PARAM_STR, 255);
+    $query->bindParam(":open_spots", $open_spots, PDO::PARAM_STR, 255);
+    $query->bindParam(":attractions", $attractions, PDO::PARAM_STR, 255);
+    $query->bindParam(":totImg", $nImg, PDO::PARAM_STR, 255);
+    $query->bindParam(":totVideo", $nVideo, PDO::PARAM_STR, 255);
+
+
+    if ($query->execute()) {
+      return $conn->lastInsertId();
+    } else {
+      return $query->errorInfo()[2];
+    }
+  }
+
+  /**
+   * Add Zone slot to database
+   *
+   * @param [type] $fairId
+   * @param [type] $title
+
+   */
+  public function addZoneSlot($zoneId, $openingSlot, $closingSlot)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+
+    $query = $conn->prepare("INSERT INTO zoneslots VALUES (DEFAULT,:zoneId,:openingSlot,:closingSlot)");
+    $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
+    $query->bindParam(":openingSlot", $openingSlot, PDO::PARAM_STR, 255);
+    $query->bindParam(":closingSlot", $closingSlot, PDO::PARAM_STR, 255);
+
+    if ($query->execute()) {
+      return "";
+    } else {
+      return $query->errorInfo()[2];
+    }
+  }
+
+
+
+
+  public  function uploadFiles($files, $id, $type, $ex)
   {
     // Count total files
     $countfiles = count($files['name']);
@@ -139,7 +233,7 @@ class Fair
 
       // Upload file
       $ext = pathinfo($filename, PATHINFO_EXTENSION);
-      move_uploaded_file($files['tmp_name'][$i], __DIR__ . '/../uploads/fair_Img/' . $fairId . '_' . $i . '.' . $ext);
+      move_uploaded_file($files['tmp_name'][$i], __DIR__ . '/../uploads/' . $type . '_' . $ex . '/' . $id . '_' . $i . '.' . $ext);
     }
   }
 

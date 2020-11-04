@@ -1,0 +1,8 @@
+@import "city_forms.css";
+
+
+.addSlot {
+  background-color: #4caf50;
+  border: 2px solid #00d900;
+  color: black;
+}

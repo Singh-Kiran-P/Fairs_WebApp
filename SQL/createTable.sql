@@ -107,6 +107,9 @@ CREATE TABLE zones (
   description VARCHAR (50),
   location VARCHAR (50),
   open_spots INT NOT NULL,
+  attractions TEXT,
+  totImg INT,
+  totVideo INT,
   FOREIGN KEY (fair_id) REFERENCES fair (fair_id) ON DELETE CASCADE
 );
 
@@ -122,6 +125,7 @@ CREATE TABLE zones (
  30
  );
  */
+
 -- zoneSlots ------------------------------------------------
 CREATE TABLE zoneSlots (
   zoneSlot_id serial PRIMARY KEY,

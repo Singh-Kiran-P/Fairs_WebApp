@@ -16,13 +16,13 @@ if (isset($_SESSION['loggedin'])) {
     $location = $_POST['location'];
 
     $fair = new Fair();
-    $errorMsg = $fair->checking($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location);
+    $errorMsg = $fair->checkingAddFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location);
     if ($errorMsg == "") {
 
-      $fairId = $fair->add($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, count($files['name']));
-      $fair->uploadFiles($files, $fairId);
+      $fairId = $fair->addFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, count($files['name']));
+      $fair->uploadFiles($files, $fairId,"fair","img");
 
-      header("Location: listOfFair.php");
+      header("Location: addZone.php?fairId=" . $fairId);
     }
   }
 } else {
@@ -36,7 +36,7 @@ if (isset($_SESSION['loggedin'])) {
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/AddFair.css">
+  <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/city_forms.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Fair</title>
 </head>
@@ -64,7 +64,7 @@ if (isset($_SESSION['loggedin'])) {
 
         <input type="file" name="file[]" class="inputfile" value="<?php if (isset($_POST['file'])) echo $_POST['file']; ?>" multiple>
         <div>
-          <div class="date">
+          <div class="sidebyside">
             <input type="text" name="startDate" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['startDate'])) echo $_POST['startDate']; ?>" required>
             <input type="text" name="openingHour" placeholder="Opening Hour" onfocus="(this.type='time')" onblur="(this.type='text')" value="<?php if (isset($_POST['openingHour'])) echo $_POST['openingHour']; ?>" required>
             <input type="text" name="endDate" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['endDate'])) echo $_POST['endDate']; ?>" required>

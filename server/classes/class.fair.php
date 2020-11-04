@@ -111,8 +111,8 @@ class Fair
           $opening_hour = $row['opening_hour'];
           $closing_hour = $row['closing_hour'];
           $location = $row['location'];
-          $tot_Img = $row['totImg'];
-          $fairRow->setVar($fair_id, $city_id, $title, $description, $start_date, $end_date, $opening_hour, $closing_hour, $location, $tot_Img);
+          $totImg = $row['totimg'];
+          $fairRow->setVar($fair_id, $city_id, $title, $description, $start_date, $end_date, $opening_hour, $closing_hour, $location, $totImg);
 
           array_push($list, $fairRow);
         }

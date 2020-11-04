@@ -19,7 +19,7 @@ if (isset($_SESSION['loggedin'])) {
     $errorMsg = $fair->checking($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location);
     if ($errorMsg == "") {
 
-      $fairId = $fair->add($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, count($files));
+      $fairId = $fair->add($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, count($files['name']));
       $fair->uploadFiles($files, $fairId);
 
       header("Location: listOfFair.php");

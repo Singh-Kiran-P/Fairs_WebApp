@@ -107,7 +107,7 @@ CREATE TABLE zones (
   description VARCHAR (50),
   location VARCHAR (50),
   open_spots INT NOT NULL,
-  FOREIGN KEY (fair_id) REFERENCES fair (fair_id)
+  FOREIGN KEY (fair_id) REFERENCES fair (fair_id) ON DELETE CASCADE
 );
 
 /* INSERT INTO
@@ -135,7 +135,7 @@ CREATE TABLE zoneSlots (
 -- zoneSlots Trigger ------------------------------------------------
 
 CREATE
-OR REPLACE FUNCTION addZoneFreeSlots() RETURNS TRIGGER AS $ example_table $ BEGIN
+OR REPLACE FUNCTION addZoneFreeSlots() RETURNS TRIGGER AS $example_table$ BEGIN
 update
   zoneSlots
 SET
@@ -154,7 +154,7 @@ RETURN NEW;
 
 END;
 
-$ example_table $ LANGUAGE plpgsql;
+$example_table$ LANGUAGE plpgsql;
 
 Create trigger insert_free_slots_zone
 AFTER

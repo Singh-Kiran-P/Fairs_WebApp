@@ -93,10 +93,10 @@ class Accounts
         $row = $queryUser->fetch(PDO::FETCH_ASSOC);
         if (password_verify($password, $row['password'])) {
           /* Call the login helper */
-          $this->_login($row);
-          return true;
+          $redirectTo = $this->_login($row);
+          return $redirectTo;
         } else {
-          return false;
+          return "";
         }
       }
     }
@@ -114,7 +114,7 @@ class Accounts
     // set session variables
     $_SESSION['loggedin'] = true;
     $_SESSION['userId'] = $row['user_id'];
-    $_SESSION['username'] = $row['username'];
+    /*     $_SESSION['username'] = $row['username'];*/
     $_SESSION['type'] = $row['type'];
 
     // set redirect path
@@ -127,8 +127,7 @@ class Accounts
       $redirectTo = $rootURL . '/~kiransingh/project/static/dashboard/visitor/main.php';
     }
 
-    // add the redirect path to session variable
-    $_SESSION['redirectTo'] = $redirectTo;
+    return $redirectTo;
   }
 
   /**

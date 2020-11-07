@@ -11,12 +11,33 @@ nav menu from
 
 * {
   box-sizing: border-box;
-  color:white;
+  color: white;
 }
 
-input,textarea,select {
+a{
+  text-decoration: none;
+}
+
+input,
+textarea,
+select {
   background-color: #181a1b;
   border: 2px solid #00d900;
+}
+
+table, th {
+  border-collapse: collapse;
+  background-color: #181a1b;
+  border: 2px solid #282b2c;
+  padding: 15px;
+
+}
+
+tr,td{
+  background-color: #282b2c;
+  padding: 10px;
+  text-align: center;
+  width: 25%;
 }
 
 input:disabled {
@@ -55,7 +76,16 @@ header {
 .topNavbar {
   display: flex;
   background-color: #333;
-/*   background-color: #141516;*/
+  /*   background-color: #141516;*/
+}
+
+/* Column container */
+.content {
+  display: flex;
+  width: 60%;
+  margin: auto;
+  margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 img {
@@ -130,5 +160,10 @@ img {
 
   .l3 {
     margin-right: 0;
+  }
+
+  /* Column container */
+  .content {
+    width: 80%;
   }
 }

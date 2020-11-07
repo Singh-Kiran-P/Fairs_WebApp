@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../../server/classes/class.accounts.php';
-echo "<script>console.log('Debug Objects: " ."test" . "' );</script>";
+echo "<script>console.log('Debug Objects: " . "test" . "' );</script>";
 
 
 if (isset($_POST['isset'])) {
@@ -9,11 +9,11 @@ if (isset($_POST['isset'])) {
   $email = $_POST['email'];
 
   $user = new Accounts();
-  $loggedIn = $user->login($email, $password);
+  $redirectTo = $user->login($email, $password);
 
   $out = "";
-  if ($loggedIn && isset($_SESSION['redirectTo']))
-    header('Location: ' . $_SESSION['redirectTo']);
+  if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true )
+    header('Location: ' . $redirectTo);
   else // no redirect -> user does not exites
     $out = "User does not exites!!";
 }

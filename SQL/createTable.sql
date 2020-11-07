@@ -125,7 +125,6 @@ CREATE TABLE zones (
  30
  );
  */
-
 -- zoneSlots ------------------------------------------------
 CREATE TABLE zoneSlots (
   zoneSlot_id serial PRIMARY KEY,
@@ -133,39 +132,41 @@ CREATE TABLE zoneSlots (
   opening_slot TIME NOT NULL,
   closing_slot TIME NOT NULL,
   free_slots INT,
+  start_date DATE NOT NULL,
   FOREIGN KEY (zone_id) REFERENCES zones (zone_id) ON DELETE CASCADE
 );
 
--- zoneSlots Trigger ------------------------------------------------
+/* -- zoneSlots Trigger ------------------------------------------------
 
-CREATE
-OR REPLACE FUNCTION addZoneFreeSlots() RETURNS TRIGGER AS $example_table$ BEGIN
-update
-  zoneSlots
-SET
-  free_slots =(
-    select
-      open_spots
-    from
-      zones
-    where
-      zone_id = NEW.zone_id
-  )
-where
-  zoneslot_id = NEW.zoneslot_id;
+ CREATE
+ OR REPLACE FUNCTION addZoneFreeSlots() RETURNS TRIGGER AS $example_table$ BEGIN
+ update
+ zoneSlots
+ SET
+ free_slots =(
+ select
+ open_spots
+ from
+ zones
+ where
+ zone_id = NEW.zone_id
+ )
+ where
+ zoneslot_id = NEW.zoneslot_id;
 
-RETURN NEW;
+ RETURN NEW;
 
-END;
+ END;
 
-$example_table$ LANGUAGE plpgsql;
+ $example_table$ LANGUAGE plpgsql;
 
-Create trigger insert_free_slots_zone
-AFTER
-INSERT
-  ON zoneSlots FOR EACH ROW EXECUTE PROCEDURE addZoneFreeSlots();
+ Create trigger insert_free_slots_zone
+ AFTER
+ INSERT
+ ON zoneSlots FOR EACH ROW EXECUTE PROCEDURE addZoneFreeSlots();
 
--- attractions------------------------------------------------
+ --  */
+--attractions------------------------------------------------
 DROP TABLE IF EXISTS attractions;
 
 CREATE TABLE attractions (

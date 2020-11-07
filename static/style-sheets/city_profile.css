@@ -1,18 +1,4 @@
-@import "basic.css";
-
-* {
-  color: white;
-}
-
-/* navbar customs */
-.mostRight {
-  flex: 1;
-}
-
-.mostLeft {
-  flex: 1;
-}
-
+@import "city_main.css";
 /* profile Img center */
 .profileImg {
   width: 15%;
@@ -22,27 +8,12 @@
   border-radius: 50%;
 }
 
-/* Column container */
-.content {
-  display: flex;
-  width: 50%;
-  margin: auto;
-  flex-wrap: wrap;
-}
-
-.w60{
-  width: 60%;
-
-}
-
 textarea {
-  height: 20%;
+  height: 100%;
 }
 
-.mainCol1 input,
-textarea,
-button,
-.topTitle {
+input,
+textarea {
   margin: 8px 0;
   width: 90%;
   padding: 12px 20px;
@@ -50,32 +21,16 @@ button,
   box-sizing: border-box;
 }
 
-.sidebyside input {
-  display: inline;
-  margin: 8px 0;
-  width: 40%;
-  padding: 12px 20px;
-  box-sizing: border-box;
-}
-
 .mainCol1 {
   flex: 50%;
   display: flex;
   justify-content: center;
-  height: 100%;
   flex-direction: column;
   background-color: #1b4958;
 }
-
-
-select {
-  width: 150px;
-  margin: 10px;
-}
-
-/* table of zone slots on fairoverview */
-.zoneTimeslotstable{
-  width: 100%;
+.mainCol2 {
+  flex: 50%;
+  background-color: #1b4958;
 }
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
@@ -90,23 +45,13 @@ select {
     border-radius: 50%;
     margin: auto;
   }
-
-  /* Column container */
-  .content {
-    width: 80%;
-  }
-
-  .sidebyside input,select {
-    display: flex;
-  }
-
 }
 
 .save {
   flex: none;
 }
 
-#btn {
+button {
   background-color: #4caf50;
   width: 100%;
   color: black;
@@ -114,9 +59,4 @@ select {
   margin: 10px 0px;
   border: none;
   cursor: pointer;
-}
-
-/* change color to white */
-::-webkit-calendar-picker-indicator {
-  filter: invert(1);
 }

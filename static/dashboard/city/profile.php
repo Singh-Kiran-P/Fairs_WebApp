@@ -29,7 +29,7 @@ if (isset($_SESSION['loggedin'])) {
   <title>Home</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/city_main.css">
+  <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/city_profile.css">
 </head>
 
 <body>

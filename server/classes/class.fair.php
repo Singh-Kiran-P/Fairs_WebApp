@@ -107,6 +107,8 @@ class Fair
     $query->bindParam(":location", $location, PDO::PARAM_STR, 255);
     $query->bindParam(":totImg", $totImg, PDO::PARAM_INT, 255);
 
+
+
     if ($query->execute()) {
       return $conn->lastInsertId();
     } else {
@@ -147,8 +149,45 @@ class Fair
 
           array_push($list, $fairRow);
         }
-
         return $list;
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return NULL;
+  }
+
+  /**
+   * Give the fair with this id
+   *
+   * @param [int] $fairId
+   * @return [fairModel]
+   */
+  public function getFairModel($fairId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from fair where fair_id=:fairId");
+    $query->bindParam(":fairId", $fairId, PDO::PARAM_STR, 255);
+
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        $row = $query->fetch();
+        $Fair_Model = new Fair_Model();
+        $fair_id = $row['fair_id'];
+        $city_id = $row['city_id'];
+        $title = $row['title'];
+        $description = $row['description'];
+        $start_date = $row['start_date'];
+        $end_date = $row['end_date'];
+        $opening_hour = $row['opening_hour'];
+        $closing_hour = $row['closing_hour'];
+        $location = $row['location'];
+        $totImg = $row['totimg'];
+        $Fair_Model->setVar($fair_id, $city_id, $title, $description, $start_date, $end_date, $opening_hour, $closing_hour, $location, $totImg);
+        return $Fair_Model;
       }
     } else {
       return $query->errorInfo()[2];
@@ -195,28 +234,38 @@ class Fair
   }
 
   /**
-   * Add Zone slot to database
+   * Add Zone slots to database on every day when the fair is open
    *
    * @param [type] $fairId
    * @param [type] $title
 
    */
-  public function addZoneSlot($zoneId, $openingSlot, $closingSlot)
+  public function addZoneSlot($zoneId, $openingSlot, $closingSlot, $free_slot, $fairModel)
   {
     //connect to database
     $conn = Database::connect();
 
+    $start_date = new DateTime($fairModel['start_date']);
+    $end_date = new DateTime($fairModel['end_date']);
+    $nDays = $start_date->diff($end_date)->days;
 
-    $query = $conn->prepare("INSERT INTO zoneslots VALUES (DEFAULT,:zoneId,:openingSlot,:closingSlot)");
-    $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
-    $query->bindParam(":openingSlot", $openingSlot, PDO::PARAM_STR, 255);
-    $query->bindParam(":closingSlot", $closingSlot, PDO::PARAM_STR, 255);
+    for ($i = 0; $i <= $nDays; $i++) {
 
-    if ($query->execute()) {
-      return "";
-    } else {
-      return $query->errorInfo()[2];
+      $newDate = $start_date->format('Y-m-d');
+      $query = $conn->prepare("INSERT INTO zoneslots VALUES (DEFAULT,:zoneId,:openingSlot,:closingSlot,:free_slot,:date)");
+      $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
+      $query->bindParam(":openingSlot", $openingSlot, PDO::PARAM_STR, 255);
+      $query->bindParam(":closingSlot", $closingSlot, PDO::PARAM_STR, 255);
+      $query->bindParam(":date", $newDate, PDO::PARAM_STR, 255);
+      $query->bindParam(":free_slot", $free_slot, PDO::PARAM_STR, 255);
+
+      $start_date->modify('+1 day');
+      if (!$query->execute()) {
+        return $query->errorInfo()[2];
+      }
     }
+
+    return "Time slot succesfully added!";
   }
 
 

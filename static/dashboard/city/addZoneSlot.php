@@ -2,21 +2,25 @@
 require '../../../server/classes/class.fair.php';
 session_start();
 $errorMsg = "";
-
-if (isset($_GET['zoneId']))
-  $_SESSION['zoneId'] = $_GET['zoneId'];
+if (isset($_GET['zoneId']) && isset($_GET['free_slots'])) {
+  $zoneId = $_GET['zoneId'];
+  $free_slots = $_GET['free_slots'];
+}
 
 if (isset($_SESSION['loggedin'])) {
   if (isset($_POST['submit_addSlot'])) {
 
-    $zoneId = $_SESSION['zoneId'];
+    $zoneId = $_GET['zoneId'];
+    $free_slot = $_GET['free_slots'];
     $openingSlot = $_POST['openingSlot'];
     $closingSlot = $_POST['closingSlot'];
 
     $fair = new Fair();
-    $errorMsg = $fair->checkingZoneSlot($openingSlot, $closingSlot);
-    if ($errorMsg == "") {
-      $errorMsg = $fair->addZoneSlot($zoneId, $openingSlot, $closingSlot);
+    $Msg = $fair->checkingZoneSlot($openingSlot, $closingSlot);
+    $fairModel = $fair->getFairModel($_SESSION['fairId']);
+
+    if ($Msg == "") {
+      $Msg = $fair->addZoneSlot($zoneId, $openingSlot, $closingSlot, $free_slot, $fairModel->getVar());
     }
   }
   if (isset($_POST['submit'])) {
@@ -48,12 +52,12 @@ if (isset($_SESSION['loggedin'])) {
   </header>
 
   <!-- The flexible grid (content) -->
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?zoneId=<?php echo $zoneId ?>&free_slots=<?php echo $free_slots ?>" method="post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
 
     <div class="mainCol1 g">
       <center>
 
-        <h1 class="topTitle">Add Zone <?php if (isset($_GET['fairId'])) echo "to " . $_GET['fairId']  ?></h1>
+        <h1 class="topTitle">Add Zone timeslots <?php if (isset($_GET['fairId'])) echo "to " . $_GET['fairId']  ?></h1>
 
 
         <!-- time slots -->
@@ -68,8 +72,8 @@ if (isset($_SESSION['loggedin'])) {
 
         <p id="error">
           <?php
-          if (isset($_POST['submit'])) {
-            echo $errorMsg;
+          if (isset($_POST['submit_addSlot'])) {
+            echo $Msg;
           }
           ?>
         </p>

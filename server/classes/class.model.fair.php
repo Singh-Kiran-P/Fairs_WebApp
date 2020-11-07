@@ -28,18 +28,18 @@ class Fair_Model
 
   public function getVar()
   {
-    $out = [
-      ["fair_id" => $this->m_fair_id],
-      ["city_id" => $this->m_city_id],
-      ["title" => $this->m_title],
-      ["description" => $this->m_description],
-      ["start_date" => $this->m_start_date],
-      ["end_date" => $this->m_end_date],
-      ["opening_hour" => $this->m_opening_hour],
-      ["closing_hour" => $this->m_closing_hour],
-      ["location" => $this->m_location],
-      ["tot_Img" => $this->m_tot_Img],
-    ];
+    $out = array(
+      "fair_id" => $this->m_fair_id,
+      "city_id" => $this->m_city_id,
+      "title" => $this->m_title,
+      "description" => $this->m_description,
+      "start_date" => $this->m_start_date,
+      "end_date" => $this->m_end_date,
+      "opening_hour" => $this->m_opening_hour,
+      "closing_hour" => $this->m_closing_hour,
+      "location" => $this->m_location,
+      "tot_Img" => $this->m_tot_Img,
+    );
 
     return $out;
   }

@@ -30,7 +30,7 @@ if (isset($_SESSION['loggedin'])) {
       $fair->uploadFiles($files, $zoneId, "zone","img");
       $fair->uploadFiles($video, $zoneId, "zone","video");
     }
-    header("Location: addZoneSlot.php?zoneId=".$zoneId);
+    header("Location: addZoneSlot.php?zoneId=".$zoneId."&free_slots=".$open_spots);
   }
 } else {
   header("Location: ../unauthorized.php");

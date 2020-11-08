@@ -2,6 +2,8 @@
 session_start();
 
 include '../../server/classes/class.accounts.php';
+include '../../server/classes/class.upload.php';
+include '../../server/config/config.php';
 if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
   $telephone = $_POST['telephone'];
   $desc = $_POST['desc'];
@@ -16,7 +18,9 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
     //upload img
     $_SESSION['typeImg'] = "profile";
     $_SESSION["fileToUpload"] = $fileToUpload;
-    require_once('../../server/io/upload.php');
+
+    Upload::uploadFiles($fileToUpload,$userId,"profile","img");
+
   } catch (\Throwable $th) {
     echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
   }

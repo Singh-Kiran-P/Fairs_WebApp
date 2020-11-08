@@ -45,7 +45,7 @@ if (isset($_SESSION['loggedin'])) {
   <!-- Profile foto -->
   <div class="profileImg">
     <?php
-    echo "<img class='topImg' src='/~kiransingh/project/server/uploads/profile/user_$username.jpg' alt=''>"
+    echo "<img class='topImg' src='/~kiransingh/project/server/uploads/profile_img/$userId.jpg' alt=''>"
     ?>
   </div>
 

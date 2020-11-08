@@ -1,8 +1,24 @@
 <?php
-require '../../../server/classes/class.fair.php';
+include_once '../../../server/classes/class.fair.php';
 session_start();
-
 if (isset($_SESSION['loggedin'])) {
+  $fairId = $_GET['fair_id'];
+  $fair = new Fair();
+  $zones = $fair->getFairZones($fairId);
+  $zoneSlectorHTML = "";
+  $dateSlectorHTML = "";
+
+  foreach ($zones as $z) {
+    $zone = '<option value="' . $z["zoneId"] . '">' . $z["title"] . '</option>';
+    $zoneSlectorHTML .= $zone;
+  }
+
+  $dates = $fair->getZonesDate($fairId);
+
+  foreach ($dates as $d) {
+    $date = '<option value="' . $d . '">' . $d . '</option>';
+    $dateSlectorHTML .= $date;
+  }
 } else {
   header("Location: ../unauthorized.php");
 }
@@ -36,130 +52,22 @@ if (isset($_SESSION['loggedin'])) {
         <h1 class="topTitle">Zone timeslots of <?php echo $_GET['fair_Title']; ?> </h1>
 
         <div class="sidebyside">
-          <select name="users" onchange="showUser(this.value)">
+          <select name="zoneId" onchange="showTimeSlot(this.value)">
             <option value="">Select a Zone:</option>
-            <option value="1">Peter Griffin</option>
-            <option value="2">Lois Griffin</option>
-            <option value="3">Joseph Swanson</option>
-            <option value="4">Glenn Quagmire</option>
+            <?php echo $zoneSlectorHTML; ?>
           </select>
-          <select name="users" onchange="showUser(this.value)">
+          <select name="date" onchange="showTimeSlotByDate(this.value)">
             <option value="">Select a Date:</option>
-            <option value="1">Peter Griffin</option>
-            <option value="2">Lois Griffin</option>
-            <option value="3">Joseph Swanson</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
-            <option value="4">Glenn Quagmire</option>
+            <?php echo $dateSlectorHTML; ?>
           </select>
         </div>
         <table class="zoneTimeslotstable">
-          <tr>
-            <th>Date</th>
-            <th>Start time</th>
-            <th>End time</th>
-            <th>Open</th>
-          </tr>
-          <tr>
-            <td>Jill</td>
-            <td>Smith</td>
-            <td>50</td>
-            <td>50</td>
-          </tr>
-          <tr>
-            <td>Eve</td>
-            <td>Jackson</td>
-            <td>94</td>
-            <td>94</td>
-          </tr>
         </table>
-        <p id="error">
-          <?php
-          if (isset($_POST['submit'])) {
-            echo $errorMsg;
-          }
-          ?>
-        </p>
+        <p id="error"><?php
+                      if (isset($_POST['submit'])) {
+                        echo $errorMsg;
+                      }
+                      ?></p>
 
       </center>
     </div>
@@ -167,6 +75,6 @@ if (isset($_SESSION['loggedin'])) {
 
 </body>
 <!-- Script -->
-<script src="addFair.js"></script>
+<script src="fairOverView.js"></script>
 
 </html>

@@ -67,7 +67,6 @@ class Fair
     return $msg;
   }
 
-
   private function _checkIfNotDupplicate($cityId, $title, $startDate, $location)
   {
     //connect to database
@@ -88,7 +87,6 @@ class Fair
 
     return "";
   }
-
 
   public  function addFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, $totImg)
   {
@@ -197,6 +195,70 @@ class Fair
   }
 
   /**
+   * Get de list of zones
+   *
+   * @param [type] $zoneId
+   * @return array of zones with [zoneId,title]
+   */
+  public function getFairZones($fairId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from zones where fair_id=:fair_id");
+    $query->bindParam(":fair_id", $fairId, PDO::PARAM_STR, 255);
+
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $zone = array(
+            "zoneId" => $row['zone_id'],
+            "title" => $row['title']
+          );
+
+          array_push($list, $zone);
+        }
+        return $list;
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return NULL;
+  }
+
+  /**
+   * Get de date by zoneId
+   *
+   * @param [type] $zoneId
+   * @return array of zones with [zoneId,title]
+   */
+  public function getZonesDate($fairId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select DISTINCT start_date from zoneslots where zone_id =(select zone_id from zones where fair_id = :fairId);");
+    $query->bindParam(":fairId", $fairId, PDO::PARAM_STR, 255);
+
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          array_push($list, $row['start_date']);
+        }
+        return $list;
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return NULL;
+  }
+
+
+  /**
    * Add Zone to database
    *
    * @param [type] $fairId
@@ -268,9 +330,6 @@ class Fair
     return "Time slot succesfully added!";
   }
 
-
-
-
   public  function uploadFiles($files, $id, $type, $ex)
   {
     // Count total files
@@ -286,9 +345,91 @@ class Fair
     }
   }
 
-  public  function update()
+
+  /**
+   * This function gets the zone time slots from the database and echo's html table rows
+   * So that the front-end AJAX can pick it up.
+   * @param [int] $zoneId
+   * @echo html table rows
+   * @return errorMsg
+   */
+  public function showZoneTimeSlots($zoneId)
   {
     //connect to database
     $conn = Database::connect();
+
+    $query = $conn->prepare("select * from zoneslots where zone_id = :zoneId;");
+    $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
+
+    $html_out = "";
+
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) { // There is atleast 1 row of timeslots
+        while ($row = $query->fetch()) {
+          $slotDate = $row['start_date'];
+          $opening_slot = $row['opening_slot'];
+          $closing_slot = $row['closing_slot'];
+          $openSlots = $row['free_slots'];
+
+          $html_out .= "<tr>";
+          $html_out .= "<td>$slotDate</td>";
+          $html_out .= "<td>$opening_slot</td>";
+          $html_out .= "<td>$closing_slot</td>";
+          $html_out .= "<td>$openSlots</td>";
+          $html_out .= "</tr>";
+        }
+
+        // echo html table rows
+        echo $html_out;
+      } else { // No timeslots for this zone in de database
+        echo "No timeslots for this zone in de database";
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+  }
+
+  /**
+   * This function gets the zone time slots from the database by date and echo's html table rows
+   * So that the front-end AJAX can pick it up.
+   * @param [int] $zoneId
+   * @param date $date
+   * @echo html table rows
+   * @return errorMsg
+   */
+  public function showZoneTimeSlotsByDate($zoneId, $date)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from zoneslots where zone_id = :zoneId and start_date = :date;");
+    $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
+    $query->bindParam(":date", $date, PDO::PARAM_STR, 255);
+
+    $html_out = "";
+
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) { // There is atleast 1 row of timeslots
+        while ($row = $query->fetch()) {
+          $slotDate = $row['start_date'];
+          $opening_slot = $row['opening_slot'];
+          $closing_slot = $row['closing_slot'];
+          $openSlots = $row['free_slots'];
+
+          $html_out .= "<tr>";
+          $html_out .= "<td>$slotDate</td>";
+          $html_out .= "<td>$opening_slot</td>";
+          $html_out .= "<td>$closing_slot</td>";
+          $html_out .= "<td>$openSlots</td>";
+          $html_out .= "</tr>";
+        }
+        // echo html table rows
+        echo $html_out;
+      } else { // No timeslots for this zone in de database
+        echo "No timeslots for this zone in de database";
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
   }
 }

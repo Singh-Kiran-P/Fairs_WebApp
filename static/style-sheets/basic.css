@@ -14,7 +14,7 @@ nav menu from
   color: white;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
@@ -25,15 +25,16 @@ select {
   border: 2px solid #00d900;
 }
 
-table, th {
+table,
+th {
   border-collapse: collapse;
   background-color: #181a1b;
   border: 2px solid #282b2c;
   padding: 15px;
-
 }
 
-tr,td{
+tr,
+td {
   background-color: #282b2c;
   padding: 10px;
   text-align: center;
@@ -91,6 +92,8 @@ header {
 img {
   max-width: 100%;
 }
+
+
 
 .logo {
   margin-right: auto;

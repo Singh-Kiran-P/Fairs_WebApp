@@ -238,9 +238,22 @@ class Fair
   {
     //connect to database
     $conn = Database::connect();
+    $zoneId = 0;
 
-    $query = $conn->prepare("select DISTINCT start_date from zoneslots where zone_id =(select zone_id from zones where fair_id = :fairId);");
+    $query = $conn->prepare("select zone_id from zones where fair_id = :fairId order BY zone_id DESC;");
     $query->bindParam(":fairId", $fairId, PDO::PARAM_STR, 255);
+
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        $row = $query->fetch();
+        $zoneId = $row['zone_id'];
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    $query = $conn->prepare("select DISTINCT start_date from zoneslots where zone_id =:zoneId;");
+    $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
 
     $list = array();
     if ($query->execute()) {
@@ -328,6 +341,27 @@ class Fair
     }
 
     return "Time slot succesfully added!";
+  }
+
+  public function getAllZones($fairId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from zones where fair_id = :fairId order BY zone_id DESC;");
+    $query->bindParam(":fairId", $fairId, PDO::PARAM_STR, 255);
+
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          array_push($list, ["zone_id" => $row['zone_id'], "freeSlots" => $row['open_spots']]);
+        }
+        return $list;
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
   }
 
   public  function uploadFiles($files, $id, $type, $ex)

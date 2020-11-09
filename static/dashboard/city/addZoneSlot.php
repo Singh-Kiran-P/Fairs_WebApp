@@ -19,8 +19,9 @@ if (isset($_SESSION['loggedin'])) {
     $Msg = $fair->checkingZoneSlot($openingSlot, $closingSlot);
     $fairModel = $fair->getFairModel($_SESSION['fairId']);
 
-    if ($Msg == "") {
-      $Msg = $fair->addZoneSlot($zoneId, $openingSlot, $closingSlot, $free_slot, $fairModel->getVar());
+    $zones = $fair->getAllZones($_SESSION['fairId']);
+    foreach ($zones as $z) {
+      $Msg = $fair->addZoneSlot($z['zone_id'], $openingSlot, $closingSlot, $z['freeSlots'], $fairModel->getVar());
     }
   }
   if (isset($_POST['submit'])) {

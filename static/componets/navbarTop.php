@@ -1,5 +1,4 @@
 <nav class="topNavbar">
-
   <!-- Navigation Bar -->
   <div class="logo">
     <?php

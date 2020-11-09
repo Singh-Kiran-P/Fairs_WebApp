@@ -26,11 +26,22 @@ if (isset($_SESSION['loggedin'])) {
     $errorMsg = $fair->checkingAddZone($fairId, $title, $desc, $open_spots, $location, $attractions);
     if ($errorMsg == "") {
 
-      $zoneId = $fair->addZone($fairId, $title, $desc, $open_spots, $location, $attractions,count($files['name']),count($video['name']));
-      $fair->uploadFiles($files, $zoneId, "zone","img");
-      $fair->uploadFiles($video, $zoneId, "zone","video");
+      $zoneId = $fair->addZone($fairId, $title, $desc, $open_spots, $location, $attractions, count($files['name']), count($video['name']));
+      $fair->uploadFiles($files, $zoneId, "zone", "img");
+      $fair->uploadFiles($video, $zoneId, "zone", "video");
+
     }
-    header("Location: addZoneSlot.php?zoneId=".$zoneId."&free_slots=".$open_spots);
+
+    //reset form
+    $title = "";
+    $open_spots = "";
+
+    $desc = "";
+    $location = "";
+    $attractions = "";
+  }
+  if (isset($_POST['submit_Save'])) {
+    header("Location: addZoneSlot.php?zoneId=" .  $_GET['zoneId'] . "&free_slots=" . $_GET['open_spots']);
   }
 } else {
   header("Location: ../unauthorized.php");
@@ -58,7 +69,7 @@ if (isset($_SESSION['loggedin'])) {
   </header>
 
   <!-- The flexible grid (content) -->
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?zoneId=<?php if(isset($zoneId)) echo $zoneId ?>&open_spots=<?php if(isset($_POST['open_spots'])) echo $_POST['open_spots'] ?>&fairId=<?php if(isset($_SESSION['fairId'])) echo $_SESSION['fairId'] ?>"  method="post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
 
     <div class="mainCol1 g">
       <center>
@@ -91,12 +102,14 @@ if (isset($_SESSION['loggedin'])) {
         </p>
 
       </center>
+      <button type="submit" name="submit" id="btn">Add</button>
+
 
     </div>
 
 
 
-    <button type="submit" name="submit" id="btn">Save</button>
+    <button type="submit" name="submit_Save" id="btn">Save</button>
 
   </form>
 

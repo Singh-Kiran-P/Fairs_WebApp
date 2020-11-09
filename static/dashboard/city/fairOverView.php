@@ -7,17 +7,19 @@ if (isset($_SESSION['loggedin'])) {
   $zones = $fair->getFairZones($fairId);
   $zoneSlectorHTML = "";
   $dateSlectorHTML = "";
-
-  foreach ($zones as $z) {
-    $zone = '<option value="' . $z["zoneId"] . '">' . $z["title"] . '</option>';
-    $zoneSlectorHTML .= $zone;
+  if (count($zones) > 0) {
+    foreach ($zones as $z) {
+      $zone = '<option value="' . $z["zoneId"] . '">' . $z["title"] . '</option>';
+      $zoneSlectorHTML .= $zone;
+    }
   }
 
   $dates = $fair->getZonesDate($fairId);
-
-  foreach ($dates as $d) {
-    $date = '<option value="' . $d . '">' . $d . '</option>';
-    $dateSlectorHTML .= $date;
+  if (count($dates) > 0) {
+    foreach ($dates as $d) {
+      $date = '<option value="' . $d . '">' . $d . '</option>';
+      $dateSlectorHTML .= $date;
+    }
   }
 } else {
   header("Location: ../unauthorized.php");

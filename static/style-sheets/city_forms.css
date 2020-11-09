@@ -30,9 +30,8 @@
   flex-wrap: wrap;
 }
 
-.w60{
+.w60 {
   width: 60%;
-
 }
 
 textarea {
@@ -67,14 +66,13 @@ button,
   background-color: #1b4958;
 }
 
-
 select {
   width: 150px;
   margin: 10px;
 }
 
 /* table of zone slots on fairoverview */
-.zoneTimeslotstable{
+.zoneTimeslotstable {
   width: 100%;
 }
 
@@ -96,16 +94,15 @@ select {
     width: 80%;
   }
 
-  .sidebyside input,select {
+  .sidebyside input,
+  select {
     display: flex;
   }
-
 }
 
 .save {
   flex: none;
 }
-
 #btn {
   background-color: #4caf50;
   width: 100%;
@@ -114,6 +111,7 @@ select {
   margin: 10px 0px;
   border: none;
   cursor: pointer;
+  font-size: medium;
 }
 
 /* change color to white */

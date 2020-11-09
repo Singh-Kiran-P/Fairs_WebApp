@@ -22,7 +22,10 @@
 #form {
   flex: 1 1 auto;
 
-  background-color: #1b4958;
+  /*   background-color: #1b4958;
+ */
+  background-color: black;
+
   border-radius: 75px;
   margin-left: auto;
 }
@@ -36,11 +39,12 @@ button {
   cursor: pointer;
 }
 
-select{
+select {
   display: inline-block;
 }
 
-input,textarea {
+input,
+textarea {
   margin: 8px 0;
   width: 250px;
   padding: 12px 20px;
@@ -49,7 +53,7 @@ input,textarea {
   box-sizing: border-box;
 }
 
-.hidden{
+.hidden {
   display: none;
 }
 

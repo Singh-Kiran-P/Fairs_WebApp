@@ -12,7 +12,7 @@ if (isset($_POST['isset'])) {
   $redirectTo = $user->login($email, $password);
 
   $out = "";
-  if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true )
+  if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)
     header('Location: ' . $redirectTo);
   else // no redirect -> user does not exites
     $out = "User does not exites!!";

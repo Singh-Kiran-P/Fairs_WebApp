@@ -105,8 +105,6 @@ class Fair
     $query->bindParam(":location", $location, PDO::PARAM_STR, 255);
     $query->bindParam(":totImg", $totImg, PDO::PARAM_INT, 255);
 
-
-
     if ($query->execute()) {
       return $conn->lastInsertId();
     } else {
@@ -364,21 +362,51 @@ class Fair
     }
   }
 
-  public  function uploadFiles($files, $id, $type, $ex)
+  public function uploadFiles($files, $id, $type, $ex)
   {
     // Count total files
     $countfiles = count($files['name']);
 
+    $count = 0;
     // Looping all files
     for ($i = 0; $i < $countfiles; $i++) {
       $filename = $files['name'][$i];
 
       // Upload file
       $ext = pathinfo($filename, PATHINFO_EXTENSION);
-      move_uploaded_file($files['tmp_name'][$i], __DIR__ . '/../uploads/' . $type . '_' . $ex . '/' . $id . '_' . $i . '.' . $ext);
+      if (move_uploaded_file($files['tmp_name'][$i], __DIR__ . '/../uploads/' . $type . '_' . $ex . '/' . $id . '_' . $count . '.' . $ext))
+        $count++;
     }
+    return $count;
   }
 
+  public function updateDbFileCount($id, $i, $v, $table)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+
+    if ($table == "fair") {
+      $query = $conn->prepare("UPDATE fair SET totimg=:imgCount WHERE fair_id=:id");
+
+      $query->bindParam(":id", $id, PDO::PARAM_STR, 255);
+      $query->bindParam(":imgCount", $i, PDO::PARAM_STR, 255);
+    }
+    if ($table == "zones") {
+      $query = $conn->prepare("UPDATE zones SET totimg=:imgCount,totvideo=:vCount WHERE zone_id=:id");
+
+      $query->bindParam(":id", $id, PDO::PARAM_STR, 255);
+      $query->bindParam(":imgCount", $i, PDO::PARAM_STR, 255);
+      $query->bindParam(":vCount", $v, PDO::PARAM_STR, 255);
+    }
+
+
+
+
+    if (!$query->execute()) {
+      return $query->errorInfo()[2];
+    }
+  }
 
   /**
    * This function gets the zone time slots from the database and echo's html table rows

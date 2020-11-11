@@ -19,10 +19,13 @@ if (isset($_SESSION['loggedin'])) {
     $errorMsg = $fair->checkingAddFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location);
     if ($errorMsg == "") {
 
-      $fairId = $fair->addFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, count($files['name']));
-      $fair->uploadFiles($files, $fairId,"fair","img");
+      $fairId = $fair->addFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, 0);
+      $i = $fair->uploadFiles($files, $fairId, "fair", "img");
+      $fair->updateDbFileCount($fairId, $i, 0, "fair");
 
-      header("Location: addZone.php?fairId=" . $fairId);
+
+
+      header("Location: addZone.php?fairId=" . $fairId . "&title=" . $title);
     }
   }
 } else {

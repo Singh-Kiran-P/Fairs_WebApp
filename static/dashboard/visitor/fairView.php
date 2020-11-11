@@ -1,19 +1,27 @@
 <?php
 include_once '../../../server/classes/class.fair.php';
+include_once '../../../server/classes/class.searchFair.php';
 include_once '../../../server/classes/class.model.fair.php';
 session_start();
 
 
 if (isset($_SESSION['loggedin'])) {
-  $fairId = $_GET['fairId'];
+  $fairId = $_GET['fair_id'];
   $fairmodel = new Fair();
+  $search = new SearchFair();
+
+  $imgCount = $search->totCountFiles($fairId, "fair");
+
 
   // $listOfFairs is a array of FairModels
   $fairRow = $fairmodel->getFairModel($fairId);
 
+  $outHTML = "";
   if ($fairRow != null) {
-
-    $html_List_of_Faris = "";
+    $s = $fairRow->getVar();
+    for ($i = 0; $i < $imgCount; $i++) {
+      $outHTML .= "<img width='300'  alt='fair images' src='../../../server/uploads/fair_img/" . $fairId . "_" . $i . ".jpg'></img>";
+    }
   }
 } else {
   header("Location: ../unauthorized.php");
@@ -41,10 +49,7 @@ if (isset($_SESSION['loggedin'])) {
 
   <div class="content">
     <center>
-      <p>fqsdfqsf = sdsqf</p>
-      <p>fqsdfqsf = sdsqf</p>
-      <p>fqsdfqsf = sdsqf</p>
-      <p>fqsdfqsf = sdsqf</p>
+      <?php echo $outHTML; ?>
     </center>
   </div>
 

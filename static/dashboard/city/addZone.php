@@ -2,9 +2,11 @@
 require '../../../server/classes/class.fair.php';
 session_start();
 $errorMsg = "";
-
-if (isset($_GET['fairId']))
+$tileFair = "";
+if (isset($_GET['fairId']) && isset($_GET['title'])) {
   $_SESSION['fairId'] = $_GET['fairId'];
+  $tileFair = $_GET['title'];
+}
 
 if (isset($_SESSION['loggedin'])) {
   if (isset($_POST['submit'])) {
@@ -26,10 +28,11 @@ if (isset($_SESSION['loggedin'])) {
     $errorMsg = $fair->checkingAddZone($fairId, $title, $desc, $open_spots, $location, $attractions);
     if ($errorMsg == "") {
 
-      $zoneId = $fair->addZone($fairId, $title, $desc, $open_spots, $location, $attractions, count($files['name']), count($video['name']));
-      $fair->uploadFiles($files, $zoneId, "zone", "img");
-      $fair->uploadFiles($video, $zoneId, "zone", "video");
+      $zoneId = $fair->addZone($fairId, $title, $desc, $open_spots, $location, $attractions, 0, 0);
+      $i = $fair->uploadFiles($files, $zoneId, "zone", "img");
+      $v = $fair->uploadFiles($video, $zoneId, "zone", "video");
 
+      $fair->updateDbFileCount($zoneId,$i,$v,"zones");
     }
 
     //reset form
@@ -69,12 +72,12 @@ if (isset($_SESSION['loggedin'])) {
   </header>
 
   <!-- The flexible grid (content) -->
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?zoneId=<?php if(isset($zoneId)) echo $zoneId ?>&open_spots=<?php if(isset($_POST['open_spots'])) echo $_POST['open_spots'] ?>&fairId=<?php if(isset($_SESSION['fairId'])) echo $_SESSION['fairId'] ?>"  method="post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?zoneId=<?php if (isset($zoneId)) echo $zoneId ?>&open_spots=<?php if (isset($_POST['open_spots'])) echo $_POST['open_spots'] ?>&fairId=<?php if (isset($_SESSION['fairId'])) echo $_SESSION['fairId'] ?>" method="post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
 
     <div class="mainCol1 g">
       <center>
 
-        <h1 class="topTitle">Add Zone <?php if (isset($_GET['fairId'])) echo "to " . $_GET['fairId']  ?></h1>
+        <h1 class="topTitle">Add Zone <?php echo $tileFair;  ?></h1>
 
         <input type="text" name="title" placeholder="Title" value="<?php if (isset($_POST['title'])) echo $_POST['title']; ?>" required>
 

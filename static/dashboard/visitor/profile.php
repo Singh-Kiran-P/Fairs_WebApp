@@ -37,7 +37,7 @@ if (isset($_SESSION['loggedin'])) {
   <header>
     <!-- navbar -->
     <?php
-    $typeNav = "searchFair";
+    $typeNav = "profile";
     include '../../componets/navbarTopVisitor.php';
     ?>
   </header>

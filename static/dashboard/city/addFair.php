@@ -1,5 +1,6 @@
 <?php
 require '../../../server/classes/class.fair.php';
+require '../../../server/classes/class.upload.php';
 session_start();
 
 if (isset($_SESSION['loggedin'])) {
@@ -20,7 +21,7 @@ if (isset($_SESSION['loggedin'])) {
     if ($errorMsg == "") {
 
       $fairId = $fair->addFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, 0);
-      $i = $fair->uploadFiles($files, $fairId, "fair", "img");
+      $i = Upload::uploadFiles($files, $fairId, "fair", "img");
       $fair->updateDbFileCount($fairId, $i, 0, "fair");
 
 

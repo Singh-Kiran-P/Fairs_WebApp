@@ -1,5 +1,6 @@
 <?php
 include_once '../../../server/classes/class.fair.php';
+include_once '../../../server/classes/class.upload.php';
 include_once '../../../server/classes/class.searchFair.php';
 include_once '../../../server/classes/class.model.fair.php';
 session_start();
@@ -20,7 +21,9 @@ if (isset($_SESSION['loggedin'])) {
   if ($fairRow != null) {
     $s = $fairRow->getVar();
     for ($i = 0; $i < $imgCount; $i++) {
-      $outHTML .= "<img width='300'  alt='fair images' src='../../../server/uploads/fair_img/" . $fairId . "_" . $i . ".jpg'></img>";
+      $toSearchFile = $fairId . "_" . $i;
+      $profilePic = Upload::getUploadedFilePath($toSearchFile,"fair_img");
+      $outHTML .= "<img width='300'  alt='fair images' src='../../../server/uploads/fair_img/".$profilePic."'></img>";
     }
   }
 } else {

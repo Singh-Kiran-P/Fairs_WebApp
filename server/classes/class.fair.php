@@ -362,24 +362,6 @@ class Fair
     }
   }
 
-  public function uploadFiles($files, $id, $type, $ex)
-  {
-    // Count total files
-    $countfiles = count($files['name']);
-
-    $count = 0;
-    // Looping all files
-    for ($i = 0; $i < $countfiles; $i++) {
-      $filename = $files['name'][$i];
-
-      // Upload file
-      $ext = pathinfo($filename, PATHINFO_EXTENSION);
-      if (move_uploaded_file($files['tmp_name'][$i], __DIR__ . '/../uploads/' . $type . '_' . $ex . '/' . $id . '_' . $count . '.' . $ext))
-        $count++;
-    }
-    return $count;
-  }
-
   public function updateDbFileCount($id, $i, $v, $table)
   {
     //connect to database

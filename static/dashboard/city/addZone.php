@@ -1,5 +1,6 @@
 <?php
 require '../../../server/classes/class.fair.php';
+require '../../../server/classes/class.upload.php';
 session_start();
 $errorMsg = "";
 $tileFair = "";
@@ -29,8 +30,8 @@ if (isset($_SESSION['loggedin'])) {
     if ($errorMsg == "") {
 
       $zoneId = $fair->addZone($fairId, $title, $desc, $open_spots, $location, $attractions, 0, 0);
-      $i = $fair->uploadFiles($files, $zoneId, "zone", "img");
-      $v = $fair->uploadFiles($video, $zoneId, "zone", "video");
+      $i = Upload::uploadFiles($files, $zoneId, "zone", "img");
+      $v = Upload::uploadFiles($video, $zoneId, "zone", "video");
 
       $fair->updateDbFileCount($zoneId,$i,$v,"zones");
     }

@@ -1,0 +1,80 @@
+@import "basic.css";
+.black {
+  background-color: black;
+}
+.content {
+  flex: 50%;
+  width: 85%;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+  /* background-color: black; */
+}
+
+/* ------------------ MapBox -------------------- */
+
+.mapboxgl-popup-content {
+  background-color: black !important;
+}
+.mapboxgl-popup-content a {
+  font-weight: bold;
+  font-size: 16px;
+  color: #9ba5e8;
+}
+
+.suggestions {
+  background-color: black !important;
+  color: white !important;
+}
+.mapboxgl-ctrl-geocoder .suggestions > .active > a{
+  background-color: #5a3fc0 !important;
+
+}
+.mapboxgl-ctrl-geocoder .suggestions > li > a:hover {
+  background-color: #5a3fc0 !important;
+
+}
+
+/* Marker */
+.marker {
+  background-image: url("../img/mapbox-icon.png");
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.geocoder-dropdown-item {
+  padding: 5px;
+}
+.geocoder-dropdown-icon {
+  margin-right: 10px;
+}
+.geocoder-dropdown-text {
+  color: #5a3fc0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: larger;
+}
+
+#map-container {
+  position: relative;
+  height: 450px;
+  border-radius: 10px;
+}
+
+#map {
+  border-radius: 35px;
+
+  position: relative;
+  height: inherit;
+  width: inherit;
+}
+
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+  /* Column container */
+  .content {
+    width: 95%;
+  }
+}

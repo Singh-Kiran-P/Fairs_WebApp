@@ -51,7 +51,17 @@ body {
   margin: 0;
   /* position: relative; */
   min-width: 400px;
-  background-image: url("../img/bgImg.jpg");
+
+
+  background: rgb(119, 83, 235);
+  background: radial-gradient(
+    circle,
+    rgba(119, 83, 235, 1) 35%,
+    rgba(66, 100, 251, 1) 100%
+  );
+
+
+  /*  background-image: url("../img/bgImg.jpg"); */
   background-size: 100%;
 }
 

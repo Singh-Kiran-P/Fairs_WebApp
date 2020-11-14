@@ -45,7 +45,7 @@ if (isset($_SESSION['loggedin'])) {
   <header>
     <!-- navbar -->
     <?php
-    $typeNav = "searchFair";
+    $typeNav = "searchFairByName";
     include '../../componets/navbarTopVisitor.php';
     ?>
   </header>
@@ -73,6 +73,6 @@ if (isset($_SESSION['loggedin'])) {
 
 </body>
 <!-- Script -->
-<script src="searchByName.js"></script>
+<script src="searchFairByName.js"></script>
 
 </html>

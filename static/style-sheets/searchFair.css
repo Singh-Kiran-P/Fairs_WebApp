@@ -22,6 +22,16 @@
   font-size: medium;
 }
 
+.btnShow {
+  background-color: #4caf50;
+  color: black;
+  padding: 10px;
+  margin: 10px 0px;
+  border: none;
+  cursor: pointer;
+  font-size: medium;
+}
+
 input,
 textarea,
 .content a {
@@ -34,4 +44,18 @@ textarea,
 
 td {
   border: 1px solid white;
+}
+
+.side input {
+  width: 35%;
+}
+
+/* change color to white */
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+@media screen and (max-width: 700px) {
+  .side input {
+    width: 80%;
+  }
 }

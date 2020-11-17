@@ -1,5 +1,8 @@
 <?php
-/* https://www.kodingmadesimple.com/2016/02/get-json-from-url-in-php.html#:~:text=The%20php%20function%20file_get_contents(%24,you%20can%20parse%20json%20response. */
+/* https://www.kodingmadesimple.com/2016/02/get-json-from-url-in-php.html#:~:text=The%20php%20function%20file_get_contents(%24,you%20can%20parse%20json%20response.
+
+https://www.intelliwolf.com/find-nearest-location-from-array-of-coordinates-php/
+*/
 
 include_once "class.database.php";
 
@@ -38,7 +41,7 @@ class SearchFair
           $closing_hour = $row['closing_hour'];
           $location = $row['location'];
 
-          $coordinates = $this->getLocationCordinaats($location);
+          $coordinates = $this->getLocationCoordinates($location);
           if (is_string($coordinates)) {
             continue;
           }
@@ -47,6 +50,7 @@ class SearchFair
             "type" => "Feature",
             "properties" => [
               "title" => $title,
+              "fair_id" => $fair_id,
               "description" =>
               '<a href="../fairOverView.php?fair_id=' . $fair_id . '" target="_blank">Go to fair info</a> This fair is going to take place from ' . $start_date . ' to ' . $end_date . '. These are the hourser ' . $opening_hour . ' to ' . $closing_hour,
               "icon" =>  "amusement-park"
@@ -67,12 +71,12 @@ class SearchFair
 
     return NULL;
   }
-  private function getLocationCordinaats($place)
+  public function getLocationCoordinates($place)
   {
     // get the env variables
     require __DIR__ . '/../config/config.php';
     //set map api url
-    $url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" . $place . ".json?access_token=" . $mapBoxKey . "&limit=1";
+    $url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" . $place . ".json?access_token=" . $mapBoxKey . "&limit=1&country=be";
 
     //call api
     $json = file_get_contents($url);
@@ -114,6 +118,98 @@ class SearchFair
 
     return NULL;
   }
+
+  /**
+   * Gives back a list of fairs by period
+   *
+   * @param [type] $d1 startDate
+   * @param [type] $d2 endDate
+   * @return List
+   */
+  public function searchFairByPeriod($d1, $d2)
+  {
+    //connect to database
+    $conn = Database::connect();
+    $query = $conn->prepare("select * from fair where start_date >= :d1 and end_date <=:d2");
+    $query->bindParam(":d1", $d1, PDO::PARAM_STR, 255);
+    $query->bindParam(":d2", $d2, PDO::PARAM_STR, 255);
+
+
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $fair = array(
+            "fairId" => $row['fair_id'],
+            "title" => $row['title'],
+          );
+
+          array_push($list, $fair);
+        }
+        return $list;
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+  }
+
+  /**
+   * Return a array sorted by location
+   *
+   * @param [type] $baseLocation
+   * @return void
+   */
+  public function searchSortFairsByLocation($baseLocation, $closest)
+  {
+    //get all Fairs
+    $allFairs = $this->getGeoJsonOfAllFairs()['features'];
+
+    // get baseLocation coordinates
+    $base_correction = $this->getLocationCoordinates($baseLocation);
+
+    $distances = array();
+
+    foreach ($allFairs as $features) {
+      $a = $base_correction[0] - $features['geometry']['coordinates'][0];
+      $b = $base_correction[1] - $features['geometry']['coordinates'][1];
+      $distance = sqrt(($a ** 2) + ($b ** 2));
+      $fair = array(
+        "fairId" => $features['properties']['fair_id'],
+        "title" =>  $features['properties']['title'],
+        "distance" =>  $distance
+      );
+      array_push($distances, $fair);
+    }
+
+    $cmp_closest = function (array $a, array $b) {
+      if ($a['distance'] < $b['distance']) {
+        return -1;
+      } else if ($a['distance'] > $b['distance']) {
+        return 1;
+      } else {
+        return 0;
+      }
+    };
+
+    $cmp_farthest = function (array $a, array $b) {
+      if ($a['distance'] > $b['distance']) {
+        return -1;
+      } else if ($a['distance'] < $b['distance']) {
+        return 1;
+      } else {
+        return 0;
+      }
+    };
+
+    if ($closest)
+      usort($distances, $cmp_closest);
+    else
+      usort($distances, $cmp_closest);
+
+    return $distances;
+  }
+
+
 
   public function totCountFiles($id, $table)
   {

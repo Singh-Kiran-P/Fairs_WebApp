@@ -5,12 +5,13 @@ require '../../../server/classes/class.searchFair.php';
 session_start();
 $outputHTML = "";
 if (isset($_SESSION['loggedin'])) {
-  if (isset($_GET['title'])) {
+  if (isset($_POST['startDate']) && isset($_POST['endDate'])) {
     $search = new SearchFair();
 
 
-    $title = $_GET['title'];
-    $listOfFairs = $search->searchByName($title);
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    $listOfFairs = $search->searchFairByPeriod($startDate, $endDate);
 
     $outputHTML = '<tr><th>Fairs</th></tr>';
     if ($listOfFairs != null) {
@@ -54,11 +55,14 @@ if (isset($_SESSION['loggedin'])) {
   <div class=content>
     <div class="mainCol1 g">
       <center>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method=" post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
-          <h1 class="topTitle">Search By Name <?php if (isset($_GET['fairId'])) echo "to " . $_GET['fairId']  ?></h1>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
+          <h1 class="topTitle">Search By Period <?php if (isset($_GET['fairId'])) echo "to " . $_GET['fairId']  ?></h1>
 
           <div class="side">
-            <input type="text" name="title" placeholder="Search.." value="<?php if (isset($_GET['title'])) echo $_GET['title']; ?>" required onkeyup="showResult(this.value)" autocomplete="off">
+            <input  type="text" name="startDate" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['startDate'])) echo $_POST['startDate']; ?>" required>
+            <input type="text" name="endDate" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['endDate'])) echo $_POST['endDate']; ?>" required>
+            <button type="submit" name="submit" class="btnShow">Show</button>
+
           </div>
           <div>
             <table id="livesearch">
@@ -72,7 +76,5 @@ if (isset($_SESSION['loggedin'])) {
   </div>
 
 </body>
-<!-- Script -->
-<script src="searchFairByName.js"></script>
 
 </html>

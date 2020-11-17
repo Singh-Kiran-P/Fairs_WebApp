@@ -31,9 +31,9 @@ if (!isset($_SESSION['loggedin'])) {
   <div class="content">
     <center>
       <H2>Search BY</H2>
-      <button onclick="location.href='searchFairByName.php'" id="btn">Fair name</button>
-      <button onclick="location.href='searchFairByMap.php'" id="btn">Map</button>
-      <button onclick="location.href='searchFairByPeriod.php'" id="btn">Period</button>
+      <a href="searchFairByName.php" id="btn">Fair name</a>
+      <a href="searchFairByMap.php" id="btn">Map</a>
+      <a href="searchFairByPeriod.php" id="btn">Period</a>
 
     </center>
 

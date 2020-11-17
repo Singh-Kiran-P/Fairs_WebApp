@@ -14,7 +14,7 @@ if (isset($_SESSION['loggedin'])) {
     if ($listOfFairs != null) {
       foreach ($listOfFairs as $fair) {
         $out = '<tr><td>';
-        $out .= '<a href="fairView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
+        $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
         $out .= '</td></tr>';
         $outputHTML .= $out;
       }

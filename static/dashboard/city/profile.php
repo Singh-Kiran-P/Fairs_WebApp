@@ -16,6 +16,14 @@ if (isset($_SESSION['loggedin'])) {
   $name = $account->getName();
 
   $desc = $account->getShort_desc();
+  $showDesc = substr($desc, 0, (strlen($desc) - 1) * (1/3));
+  $moreDesc = substr($desc, (strlen($desc) - 1) * (1/3) + 1, (strlen($desc) - 1));
+  $outHTML_desc = '';
+  //check if desc not null
+  if (strlen($desc) != 0)
+    $outHTML_desc = '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
+
+
   $telephone = $account->getTelephone();
 } else {
   header("Location: ../unauthorized.php");
@@ -57,18 +65,34 @@ if (isset($_SESSION['loggedin'])) {
         Name
         <input type="text" placeholder="Name" value="<?php echo $name; ?>" disabled>
         Email
-        <input type="text" placeholder="Email" value="<?php echo $email; ?>">
+        <input type="text" placeholder="Email" value="<?php echo $email; ?>" disabled>
         Type
         <input type="text" placeholder="Type" value="<?php echo $type; ?>" disabled>
         Telephone Number
-        <input type="text" placeholder="Telephone" value="<?php echo $telephone; ?>">
+        <input type="text" placeholder="Telephone" value="<?php echo $telephone; ?>" disabled>
         Username
-        <input type="text" placeholder="Username" value="<?php echo $username; ?>">
+        <input type="text" placeholder="Username" value="<?php echo $username; ?>" disabled>
+        Description
+        <div class="desc">
+          <?php echo $outHTML_desc; ?>
+          <button id="btn_More">Read more</button>
+        </div>
       </center>
     </div>
-
   </div>
 
 </body>
+
+<!-- Linking Events -->
+<script>
+  var btn = document.getElementById("btn_More");
+  btn.addEventListener("click", (event) => {
+    showMore()
+  })
+</script>
+
+<!-- Extrenal scripts -->
+<script src="../ShowMore.js"></script>
+
 
 </html>

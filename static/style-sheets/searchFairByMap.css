@@ -1,6 +1,6 @@
 @import "basic.css";
 .black {
-  background-color: black;
+  background-color: #141516;
 }
 .content {
   flex: 50%;
@@ -15,7 +15,7 @@
 /* ------------------ MapBox -------------------- */
 
 .mapboxgl-popup-content {
-  background-color: black !important;
+  background-color: #141516 !important;
 }
 .mapboxgl-popup-content a {
   font-weight: bold;

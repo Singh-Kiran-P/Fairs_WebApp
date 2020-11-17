@@ -227,17 +227,55 @@ class Fair
   }
 
   /**
+   * Get de zones info
+   *
+   * @param [type] $zoneId
+   * @return array of zone info
+   */
+  public function getZone($zoneId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from zones where zone_id=:zone_id");
+    $query->bindParam(":zone_id", $zoneId, PDO::PARAM_STR, 255);
+
+    $zone = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        $row = $query->fetch();
+        $zoneInfo = array(
+          "zoneId" => $row['zone_id'],
+          "title" => $row['title'],
+          "description" => $row['description'],
+          "attractions" => $row['attractions'],
+          "location" => $row['location'],
+          "totimg" => $row['totimg'],
+          "totvideo" => $row['totvideo'],
+          "open_spots" => $row['open_spots']
+        );
+
+        array_push($zone, $zoneInfo);
+
+        return $zone;
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return NULL;
+  }
+  /**
    * Get de date by zoneId
    *
    * @param [type] $zoneId
    * @return array of zones with [zoneId,title]
    */
-  public function getZonesDate($fairId)
+  public function getZonesDate($zoneId)
   {
     //connect to database
     $conn = Database::connect();
-    $zoneId = 0;
-
+    /*
     $query = $conn->prepare("select zone_id from zones where fair_id = :fairId order BY zone_id DESC;");
     $query->bindParam(":fairId", $fairId, PDO::PARAM_STR, 255);
 
@@ -249,7 +287,7 @@ class Fair
     } else {
       return $query->errorInfo()[2];
     }
-
+ */
     $query = $conn->prepare("select DISTINCT start_date from zoneslots where zone_id =:zoneId;");
     $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
 

@@ -9,32 +9,30 @@
   margin-bottom: 20px;
 }
 
-textarea {
-  height: 100%;
-}
-
 input,
-textarea {
+.desc {
   margin: 8px 0;
   width: 70%;
   padding: 12px 20px;
   display: block;
   box-sizing: border-box;
+
 }
 
 .mainCol1 {
   flex: 50%;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   flex-direction: column;
   /*   background-color: #1b4958; */
-  background-color: black;
+  background-color: #141516;
   padding-bottom: 20px;
 }
 .mainCol2 {
   flex: 50%;
   /* background-color: #1b4958; */
-  background-color: black;
+  background-color:#141516;
 }
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
@@ -58,9 +56,12 @@ textarea {
 button {
   background-color: #4caf50;
   width: 100%;
-  color: black;
+  color: #141516;
   padding: 15px;
   margin: 10px 0px;
   border: none;
   cursor: pointer;
 }
+
+
+#more {display: none;}

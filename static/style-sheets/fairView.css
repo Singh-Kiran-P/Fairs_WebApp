@@ -3,25 +3,102 @@
   /* background-color: #1b4958; */
   margin-top: 0;
   width: 80%;
-  background-color: black;
+  background-color: #141516;
 }
 
-.fairImg {
+.zoneTimeslotstable {
+  width: 100%;
+  background-color: #141516;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 200px;
+}
+.desc {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+input,
+.desc {
+  margin: 8px 0;
+  width: 70%;
+  padding: 12px 20px;
+  display: block;
+  box-sizing: border-box;
+}
+button {
+  background-color: #4caf50;
+  width: 100%;
+  color: black;
+  padding: 15px;
+  margin: 10px 0px;
+  border: none;
+  cursor: pointer;
+}
+
+.Img,
+.sidebyside,
+.video video {
   display: flex;
   width: 90%;
   margin: auto;
   margin-top: 20px;
   flex-wrap: wrap;
 }
+.ZoneBtn {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+.ZoneBtn a {
+  background-color: #4caf50;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 15px;
+  padding-left: 15px;
+  color: black;
+}
 
-.fairImg img {
+.Img img {
   margin: 5px;
   width: 20%;
 }
 
 @media screen and (max-width: 700px) {
-  .fairImg img {
+  .Img img {
     margin: 5px;
     width: 90%;
   }
+}
+
+.info {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.infoZone {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+/* .in,
+.dropBox_Dates {
+  display: none;
+}
+ */
+#more {
+  display: none;
 }

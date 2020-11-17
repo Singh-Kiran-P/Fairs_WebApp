@@ -16,7 +16,7 @@ if (isset($_SESSION['loggedin'])) {
     $s = $fairRow->getVar();
 
     $html_List_of_Faris .= '
-    <a href="fairOverView.php?fair_id=' . $fairRow->getVar()['fair_id'] . '&fair_Title=' . $fairRow->getVar()['title'] . '" class="card">
+    <a href="../fairOverView.php?fair_id=' . $fairRow->getVar()['fair_id'] . '&fair_Title=' . $fairRow->getVar()['title'] . '" class="card">
     <center class="title"> <label for="Title">' . $fairRow->getVar()['title'] . '</label></center>
     <center class="title"> <label for="Location">' . $fairRow->getVar()['location'] . '</label></center>
     <div class="time">

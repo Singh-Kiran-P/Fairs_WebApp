@@ -7,11 +7,12 @@
   height: 100%;
   flex-direction: column;
   /* background-color: #1b4958; */
-  background-color: black;
+  background-color: #141516;
 }
 
 #btn {
   background-color: #4caf50;
+  display: block;
   width: 40%;
   color: black;
   padding: 15px;
@@ -22,15 +23,15 @@
 }
 
 input,
-textarea {
+textarea,
+.content a {
   margin: 8px 0;
   width: 80%;
   padding: 12px 20px;
-  display: block;
+  /*   display: block;*/
   box-sizing: border-box;
 }
 
-td{
+td {
   border: 1px solid white;
-
 }

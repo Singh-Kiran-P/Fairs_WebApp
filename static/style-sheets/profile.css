@@ -5,7 +5,8 @@
   margin: auto;
 }
 .topImg {
-  border-radius: 50%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 textarea {
@@ -15,7 +16,7 @@ textarea {
 input,
 textarea {
   margin: 8px 0;
-  width: 90%;
+  width: 70%;
   padding: 12px 20px;
   display: block;
   box-sizing: border-box;
@@ -28,6 +29,7 @@ textarea {
   flex-direction: column;
   /*   background-color: #1b4958; */
   background-color: black;
+  padding-bottom: 20px;
 }
 .mainCol2 {
   flex: 50%;

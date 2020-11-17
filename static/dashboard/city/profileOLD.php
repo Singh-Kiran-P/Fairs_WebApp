@@ -42,32 +42,33 @@ if (isset($_SESSION['loggedin'])) {
     ?>
   </header>
 
-
+  <!-- Profile foto -->
+  <div class="profileImg">
+    <?php
+    echo "<img class='topImg' src='/~kiransingh/project/server/uploads/profile_img/$userId.jpg' alt=''>"
+    ?>
+  </div>
 
   <!-- The flexible grid (content) -->
-  <div class="content">
+  <form action="" method="post" class="content" id="form">
     <div class="mainCol1 g">
-      <!-- Profile foto -->
-      <div class="profileImg">
-        <?php
-        echo "<img class='topImg' src='/~kiransingh/project/server/uploads/profile_img/$userId.jpg' alt=''>"
-        ?>
-      </div>
       <center>
-        Name
         <input type="text" placeholder="Name" value="<?php echo $name; ?>" disabled>
-        Email
         <input type="text" placeholder="Email" value="<?php echo $email; ?>">
-        Type
         <input type="text" placeholder="Type" value="<?php echo $type; ?>" disabled>
-        Telephone Number
         <input type="text" placeholder="Telephone" value="<?php echo $telephone; ?>">
-        Username
+      </center>
+    </div>
+    <div class="mainCol2 b">
+      <center>
         <input type="text" placeholder="Username" value="<?php echo $username; ?>">
+        <input type="text" placeholder="Password" value="">
+        <textarea type="" name="desc" placeholder="Give a short discription of your city" form="form" required><?php echo $desc; ?></textarea>
       </center>
     </div>
 
-  </div>
+    <button type="submit" id="btn">Save</button>
+  </form>
 
 </body>
 

@@ -1,9 +1,27 @@
 @import "basic.css";
 .content {
   /* background-color: #1b4958; */
+  margin-top: 0;
+  width: 80%;
   background-color: black;
 }
 
-img{
+.fairImg {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.fairImg img {
   margin: 5px;
+  width: 20%;
+}
+
+@media screen and (max-width: 700px) {
+  .fairImg img {
+    margin: 5px;
+    width: 90%;
+  }
 }

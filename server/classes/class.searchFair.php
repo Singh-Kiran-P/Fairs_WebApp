@@ -48,7 +48,7 @@ class SearchFair
             "properties" => [
               "title" => $title,
               "description" =>
-              '<a href="fairView?fair_id=' . $fair_id . '" target="_blank">Go to fair info</a> This fair is going to take place from ' . $start_date . ' to ' . $end_date . '. These are the hourser ' . $opening_hour . ' to ' . $closing_hour,
+              '<a href="fairView.php?fair_id=' . $fair_id . '" target="_blank">Go to fair info</a> This fair is going to take place from ' . $start_date . ' to ' . $end_date . '. These are the hourser ' . $opening_hour . ' to ' . $closing_hour,
               "icon" =>  "amusement-park"
             ],
             "geometry" => [

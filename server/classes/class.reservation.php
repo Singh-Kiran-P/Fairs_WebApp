@@ -21,7 +21,6 @@ class Reservation
     $query->bindParam(":opening_slot", $reservationTimeSlot, PDO::PARAM_STR, 255);
     $query->bindParam(":resDate", $reservationDate, PDO::PARAM_STR, 255);
 
-
     if ($query->execute()) {
       if ($query->rowCount() > 0) {
         $row = $query->fetch();
@@ -29,7 +28,7 @@ class Reservation
         if ($row['free_slots'] - $reservationPeople >= 0) {
           return ['zoneslot_id' => $row['zoneslot_id'], 'free' => $row['free_slots'], 'msg' => ''];
         } else {
-          return "One this" . $reservationDate . " and" . $reservationTimeSlot . "is reservation not available";
+          return ['zoneslot_id' => $row['zoneslot_id'], 'msg' => "One this" . $reservationDate . " and" . $reservationTimeSlot . "is reservation not available. "];
         }
       } else {
         return ['msg' => "Cannot reserver on this date and timeslot"];
@@ -39,16 +38,20 @@ class Reservation
     }
   }
 
-  public function updateZoneslot($zoneSlot_id, $freeSlots, $reservationPeople)
+  public function updateZoneslot($zoneSlot_id,$reservationPeople, $add = false)
   {
 
     //connect to database
     $conn = Database::connect();
 
     $query = $conn->prepare("UPDATE zoneslots SET free_slots=:vCount WHERE zoneslot_id=:id");
-    $n = $freeSlots - $reservationPeople;
+    if ($add)
+      $query = $conn->prepare("UPDATE zoneslots SET free_slots=free_slots+:vCount WHERE zoneslot_id=:id");
+    else
+      $query = $conn->prepare("UPDATE zoneslots SET free_slots=free_slots-:vCount WHERE zoneslot_id=:id");
+
     $query->bindParam(":id", $zoneSlot_id, PDO::PARAM_STR, 255);
-    $query->bindParam(":vCount", $n, PDO::PARAM_STR, 255);
+    $query->bindParam(":vCount", $reservationPeople, PDO::PARAM_STR, 255);
 
     if ($query->execute()) {
       return ['msg' => ""];
@@ -57,11 +60,12 @@ class Reservation
     }
   }
 
-  public function book($userId, $fairId, $zonneSlotId,$reservationPeople)
+  public function book($userId, $fairId, $zonneSlotId, $reservationPeople)
   {
     //connect to database
     $conn = Database::connect();
 
+    $this->removeFromWaitingList($userId, $zonneSlotId);
 
     $query = $conn->prepare("INSERT INTO reservations VALUES (DEFAULT,:userId,:zonneSlotId,:fairId,:nPeople,true,null,null)");
     $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
@@ -76,13 +80,94 @@ class Reservation
     }
   }
 
+  public function cancelReservation($reservationId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("DELETE FROM reservations where reservation_id = :reservationId");
+    $query->bindParam(":reservationId", $reservationId, PDO::PARAM_STR, 255);
+
+    if ($query->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function removeFromWaitingList($userId, $zonneSlotId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("DELETE FROM waitinglist where user_id = :userId and zoneSlot_id = :zonneSlotId");
+    $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
+    $query->bindParam(":zonneSlotId", $zonneSlotId, PDO::PARAM_STR, 255);
+
+    if ($query->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public function addToWaitingList($zoneSlot_id, $userId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+
+    $query = $conn->prepare("INSERT INTO waitingList VALUES (:userId,:zonneSlotId,DEFAULT)");
+    $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
+    $query->bindParam(":zonneSlotId", $zoneSlot_id, PDO::PARAM_STR, 255);
+
+
+    if ($query->execute()) {
+      return ['msg' => "You are added to the waiting list for this zone! Once there is a free place we will notify you."];
+    } else {
+      return ['msg' => $query->errorInfo()[2]];
+    }
+  }
+
+  public function getWaitingList($userId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select z.zone_id, f.fair_id, zs.free_slots, zs.start_date, f.title as fair_title,z.title as zone_tile,zs.opening_slot,zs.closing_slot
+    from waitinglist, zones z,zoneslots zs,fair f where z.fair_id = f.fair_id and zs.zone_id = z.zone_id and zs.zoneslot_id in (select zoneslot_id from waitinglist where waitinglist.user_id = :userId );");
+
+    $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
+
+    $waitingList = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $waitingListInfo = [
+            "zone_id" => $row['zone_id'],
+            "fair_id" => $row['fair_id'],
+            "free_slots" => $row['free_slots'],
+            "date" => $row['start_date'],
+            "fairTitle" => $row['fair_title'],
+            "zoneTitle" => $row['zone_tile'],
+            "opening_slot" => $row['opening_slot'],
+            "closing_slot" => $row['closing_slot'],
+          ];
+          array_push($waitingList, $waitingListInfo);
+        }
+        return $waitingList;
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+  }
+
   public function getReservations($userId)
   {
     //connect to database
     $conn = Database::connect();
 
 
-    $query = $conn->prepare("select r.reservation_id, r.nOfPeople,zs.start_date,f.fair_id,z.zone_id, f.title as fair_title,z.title as zone_tile,zs.opening_slot,zs.closing_slot from zones z,reservations r,zoneslots zs,fair f where r.fair_id = f.fair_id and r.zoneslot_id = zs.zoneslot_id and zs.zone_id = z.zone_id and r.user_id = :userId");
+    $query = $conn->prepare("select r.zoneslot_id, r.reservation_id, r.nOfPeople,zs.start_date,f.fair_id,z.zone_id, f.title as fair_title,z.title as zone_tile,zs.opening_slot,zs.closing_slot from zones z,reservations r,zoneslots zs,fair f where r.fair_id = f.fair_id and r.zoneslot_id = zs.zoneslot_id and zs.zone_id = z.zone_id and r.user_id = :userId");
 
     $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
 
@@ -94,6 +179,7 @@ class Reservation
             "reservation_id" => $row['reservation_id'],
             "nOfPeople" => $row['nofpeople'],
             "fair_id" => $row['fair_id'],
+            "zoneslot_id" => $row['zoneslot_id'],
             "zone_id" => $row['zone_id'],
             "date" => $row['start_date'],
             "fairTitle" => $row['fair_title'],

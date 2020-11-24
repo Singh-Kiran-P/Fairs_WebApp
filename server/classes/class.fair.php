@@ -462,7 +462,7 @@ class Fair
         }
 
         // echo html table rows
-        echo $html_out;
+        return $html_out;
       } else { // No timeslots for this zone in de database
         echo "No timeslots for this zone in de database";
       }

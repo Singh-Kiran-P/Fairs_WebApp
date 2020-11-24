@@ -57,9 +57,6 @@ if (isset($_SESSION['loggedin'])) {
     if (strlen($desc) != 0)
       $outHTML_desc = '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
 
-
-
-
     // Add list of dates
     $dateSlectorHTML = "";
     $dates = $fair->getZonesDate($zoneId);
@@ -69,6 +66,10 @@ if (isset($_SESSION['loggedin'])) {
         $dateSlectorHTML .= $date;
       }
     }
+
+    $zoneInfoTableHeading =
+      "<tr><th>Date</th><th>Start time</th><th>End time</th><th>Open</th></tr>";
+    $zoneInfoTableHeading .= $fair->showZoneTimeSlots($zoneId);
   }
 } else {
   header("Location: ../unauthorized.php");
@@ -146,8 +147,11 @@ if (isset($_SESSION['loggedin'])) {
     <!-- show video -->
     <?php echo $outHTML_Video; ?>
     <!-- Zone Time slots info -->
-    <?php if ($_SESSION['type'] == 'city')
-      echo '<table class="zoneTimeslotstable"></table>';
+    <?php if ($_SESSION['type'] == 'city') {
+      echo '<table class="zoneTimeslotstable">';
+      echo $zoneInfoTableHeading;
+      echo '</table>';
+    }
     ?>
 
 

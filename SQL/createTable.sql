@@ -126,8 +126,8 @@ CREATE TABLE zones (
  );
  */
 -- zoneSlots ------------------------------------------------
-CREATE TABLE zoneSlots (
-  zoneSlot_id serial PRIMARY KEY,
+CREATE TABLE zoneslots (
+  zoneslot_id serial PRIMARY KEY,
   zone_id INT NOT NULL,
   opening_slot TIME NOT NULL,
   closing_slot TIME NOT NULL,
@@ -197,17 +197,16 @@ CREATE TABLE reservations (
 );
 
 -- waitingList-----------------------------------------------
--- CREATE TABLE waitingList (
---   user_id INT NOT NULL,
---   zone_id INT NOT NULL,
---   kermis_id INT NOT NULL,
---   going boolean (50) NOT NULL DEFAULT 'f',
---   review_rating INT,
---   review_description VARCHAR (500),
---   FOREIGN KEY (kermis_id) REFERENCES kermis (kermis_id),
---   FOREIGN KEY (zone_id) REFERENCES zones (zone_id),
---   FOREIGN KEY (user_id) REFERENCES accounts (user_id)
--- );
+DROP TABLE IF EXISTS waitingList;
+
+CREATE TABLE waitingList (
+  user_id INT NOT NULL,
+  zoneslot_id INT NOT NULL,
+  placement serial,
+  FOREIGN KEY (zoneslot_id) REFERENCES zoneslots (zoneslot_id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE
+);
+
 -- messaging
 -- CREATE TABLE messaging (
 --   reservation_id serial PRIMARY KEY,

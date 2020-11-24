@@ -51,12 +51,46 @@ if (isset($_SESSION['loggedin'])) {
       $outHTML_reservations .= '          <span> <i class="fa fa-thumbs-up"></i></span>';
       $outHTML_reservations .= '        </a>';
       $outHTML_reservations .= '        <!-- Cancel reservation -->';
-      $outHTML_reservations .= '        <a class="reservation_btn" href="../../../server/dashboard/visitor/cancelReservation.php?reservationId=' . $item['reservation_id'] . '">';
+      $outHTML_reservations .= '        <a class="reservation_btn" href="../../../server/dashboard/visitor/cancelReservation.php?reservationId=' . $item['reservation_id'] . '&zoneslot_id=' . $item['zoneslot_id'] . '&people=' . $item['nOfPeople'] . '">';
       $outHTML_reservations .= '          <span> <i class="fa fa-close"></i></span>';
       $outHTML_reservations .= '        </a>';
       $outHTML_reservations .= '      </td>';
       $outHTML_reservations .= '   </tr>';
     }
+    $outHTML_reservations .= '   </table>';
+  }
+
+  /* Make the waitingList table */
+  $outHTML_waitingList = '';
+
+  $waitingList = $reservation->getWaitingList($_SESSION["userId"]);
+
+  if ($waitingList != null) {
+    $outHTML_waitingList .= '<h2 class="title">Waiting List</h2>';
+    $outHTML_waitingList .= '<table>';
+    $outHTML_waitingList .= '  <tr>';
+    $outHTML_waitingList .= '    <th>Fair Title</th>';
+    $outHTML_waitingList .= '    <th>Zone Title</th>';
+    $outHTML_waitingList .= '    <th>Free spots</th>';
+    $outHTML_waitingList .= '    <th>Date/Time</th>';
+    $outHTML_waitingList .= '    <th>Actions</th>';
+    $outHTML_waitingList .= '  </tr>';
+
+    foreach ($waitingList as $item) {
+      $outHTML_waitingList .= '  <tr>';
+      $outHTML_waitingList .= '      <td>' . $item['fairTitle'] . '</td>';
+      $outHTML_waitingList .= '      <td>' . $item['zoneTitle'] . '</td>';
+      $outHTML_waitingList .= '      <td>' . $item['free_slots'] . '</td>';
+      $outHTML_waitingList .= '      <td>On ' . $item['date'] . ' from ' . $item['opening_slot'] . ' To ' . $item['closing_slot'] . '</td>';
+      $outHTML_waitingList .= '      <td class="actions">';
+      $outHTML_waitingList .= '        <!-- Go to fair info -->';
+      $outHTML_waitingList .= '        <a class="reservation_btn" href="../ZoneOverView.php?zoneId=' . $item['zone_id'] . '&fairId=' . $item['fair_id'] . '">';
+      $outHTML_waitingList .= '          <span> <i class="fa fa-fighter-jet "></i></span>';
+      $outHTML_waitingList .= '        </a>';
+      $outHTML_waitingList .= '      </td>';
+      $outHTML_waitingList .= '   </tr>';
+    }
+    $outHTML_waitingList .= '   </table>';
   }
 } else {
   header("Location: ../unauthorized.php");
@@ -119,6 +153,11 @@ if (isset($_SESSION['loggedin'])) {
   <!-- Reservations -->
   <center class="reservations">
     <?php echo $outHTML_reservations; ?>
+  </center>
+
+  <!-- Waiting List -->
+  <center class="reservations">
+    <?php echo $outHTML_waitingList; ?>
   </center>
   </div>
 </body>

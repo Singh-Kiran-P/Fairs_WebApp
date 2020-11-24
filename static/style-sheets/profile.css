@@ -64,6 +64,8 @@ button {
 }
 
 .actions {
+  flex-direction: row ;
+
   align-items: center;
   justify-content: center;
 }
@@ -111,6 +113,8 @@ td {
     margin: auto !important;
     width: 10px;
     display: flex;
+    flex-direction: column;
+
     align-items: center;
     justify-content: center;
   }
@@ -120,8 +124,8 @@ td {
     background-color: DodgerBlue; /* Blue background */
     border: none; /* Remove borders */
     color: white; /* White text */
-    padding: 6px 8px; /* Some padding */
-    font-size: 10px; /* Set a font size */
+    padding: 8px 10px; /* Some padding */
+    font-size: 14px; /* Set a font size */
     cursor: pointer; /* Mouse pointer on hover */
     margin: 2px;
   }

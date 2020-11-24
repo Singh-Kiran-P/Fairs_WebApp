@@ -1,6 +1,5 @@
 <?php
 /* Code for handeling AJAX request for city fair zone timeslots  */
-
 require '../../../server/classes/class.fair.php';
 session_start();
 
@@ -17,9 +16,9 @@ if (isset($_SESSION['loggedin'])) {
   if (isset($_GET['zoneId'])) {
     $zoneId = $_GET['zoneId'];
 
-    $fair->showZoneTimeSlots($zoneId);
-    return;
+    $table = $fair->showZoneTimeSlots($zoneId);
+    return $table;
   }
 } else {
-  header('Location: '.$rootURL.'/~kiransingh/project/static/dashboard/unauthorized.php');
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }

@@ -185,13 +185,14 @@ DROP TABLE IF EXISTS reservations;
 CREATE TABLE reservations (
   reservation_id serial PRIMARY KEY,
   user_id INT NOT NULL,
-  zone_id INT NOT NULL,
+  zoneslot_id INT NOT NULL,
   fair_id INT NOT NULL,
+  nOfPeople INT NOT NULL,
   going boolean NOT NULL DEFAULT 'f',
   review_rating INT,
   review_description VARCHAR (500),
   FOREIGN KEY (fair_id) REFERENCES fair (fair_id) ON DELETE CASCADE,
-  FOREIGN KEY (zone_id) REFERENCES zones (zone_id) ON DELETE CASCADE,
+  FOREIGN KEY (zoneslot_id) REFERENCES zoneslots (zoneslot_id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE
 );
 

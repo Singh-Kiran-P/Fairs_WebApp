@@ -52,7 +52,7 @@ class SearchFair
               "title" => $title,
               "fair_id" => $fair_id,
               "description" =>
-              '<a href="../fairOverView.php?fair_id=' . $fair_id . '" target="_blank">Go to fair info</a> This fair is going to take place from ' . $start_date . ' to ' . $end_date . '. These are the hourser ' . $opening_hour . ' to ' . $closing_hour,
+              '<a href="../fairOverView.php?fair_id=' . $fair_id . '" target="_blank">Go to fair info</a><br> This fair is going to take place from <br> ' . $start_date . '&nbsp;&nbsp;&nbsp;&nbsp;TO&nbsp;&nbsp;&nbsp;&nbsp;' . $end_date . '<br> Opening Hours: <br>' . $opening_hour . '&nbsp;&nbsp;&nbsp;&nbsp;TO&nbsp;&nbsp;&nbsp;&nbsp;' . $closing_hour,
               "icon" =>  "amusement-park"
             ],
             "geometry" => [
@@ -204,7 +204,7 @@ class SearchFair
     if ($closest)
       usort($distances, $cmp_closest);
     else
-      usort($distances, $cmp_closest);
+      usort($distances, $cmp_farthest);
 
     return $distances;
   }

@@ -1,5 +1,7 @@
 function showTimeSlot(zoneId) {
-  window.location.href = "ZoneOverView.php?zoneId=" + zoneId;
+  var fairId = document.getElementsByName("fairId")[0].value;
+
+  window.location.href = "ZoneOverView.php?zoneId=" + zoneId + "&fairId=" + fairId;
 }
 
 function checkInput() {

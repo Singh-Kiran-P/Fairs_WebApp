@@ -11,7 +11,7 @@ if (isset($_SESSION['loggedin'])) {
     $zoneId = $_GET['zoneId'];
 
     $json = $fair->getZone($zoneId);
-    echo json_encode($json[0]);
+    echo json_encode($json);
   }
 } else {
   header('Location: '.$rootURL.'/~kiransingh/project/static/dashboard/unauthorized.php');

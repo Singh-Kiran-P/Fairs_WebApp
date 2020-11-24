@@ -240,12 +240,13 @@ class Fair
     $query = $conn->prepare("select * from zones where zone_id=:zone_id");
     $query->bindParam(":zone_id", $zoneId, PDO::PARAM_STR, 255);
 
-    $zone = array();
+
     if ($query->execute()) {
       if ($query->rowCount() > 0) {
         $row = $query->fetch();
         $zoneInfo = array(
           "zoneId" => $row['zone_id'],
+          "fairId" => $row['fair_id'],
           "title" => $row['title'],
           "description" => $row['description'],
           "attractions" => $row['attractions'],
@@ -255,9 +256,8 @@ class Fair
           "open_spots" => $row['open_spots']
         );
 
-        array_push($zone, $zoneInfo);
 
-        return $zone;
+        return $zoneInfo;
       }
     } else {
       return $query->errorInfo()[2];

@@ -8,7 +8,7 @@ if (isset($_SESSION['loggedin'])) {
   if (isset($_GET['zoneId'])) {
     $zoneId = $_GET['zoneId'];
     $fair = new Fair();
-    $zone = $fair->getZone($zoneId)[0];
+    $zone = $fair->getZone($zoneId);
 
     // process Img
     $outHTML_Img = "";
@@ -101,9 +101,19 @@ if (isset($_SESSION['loggedin'])) {
     ?>
   </header>
 
+  <!-- reservation btn for the visitor -->
+  <?php if ($_SESSION['type'] == 'visitor') {
+    $outHTML = '<form action="visitor/reservation.php" method="post" class="content">';
+    $outHTML .= '<input type="hidden" name="zoneId" value="' . $_GET['zoneId'] . '">';
+    $outHTML .= '<input type="hidden" name="fairId" value="' . $_GET['fairId'] . '">';
+    $outHTML .= '<button type="submit">Book Tickets</button>';
+    $outHTML .= '</form>';
+    echo $outHTML;
+  }
+  ?>
+
   <!-- The flexible grid (content) -->
   <div class="content">
-
     <div class="Img">
       <center>
         <?php echo $outHTML_Img; ?>
@@ -125,7 +135,7 @@ if (isset($_SESSION['loggedin'])) {
           //drop box Dates
           echo '<select name="date" class="dropBox_Dates" onchange="showTimeSlotByDate(this.value)">';
           echo '<option value="">Select a Date:</option>';
-          echo '<?php echo $dateSlectorHTML; ?>';
+          echo $dateSlectorHTML;
           echo '</select>';
         }
         ?>
@@ -146,6 +156,9 @@ if (isset($_SESSION['loggedin'])) {
     <!-- Error msg -->
     <p id="error"><?php if (isset($_POST['submit'])) echo $errorMsg; ?></p>
 
+
+
+  </div>
   </div>
 
 </body>

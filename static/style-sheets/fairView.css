@@ -46,7 +46,7 @@ button {
   margin-top: 20px;
   flex-wrap: wrap;
 }
-.ZoneBtn {
+.ZoneBtn .ReservationBtn {
   display: flex;
   width: 100%;
   align-items: flex-end;
@@ -55,7 +55,7 @@ button {
   padding: 10px;
   flex-wrap: wrap;
 }
-.ZoneBtn a {
+.ZoneBtn .ReservationBtn  a {
   background-color: #4caf50;
   padding-top: 15px;
   padding-bottom: 15px;

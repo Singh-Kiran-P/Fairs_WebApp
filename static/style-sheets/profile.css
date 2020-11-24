@@ -16,7 +16,6 @@ input,
   padding: 12px 20px;
   display: block;
   box-sizing: border-box;
-
 }
 
 .mainCol1 {
@@ -32,21 +31,7 @@ input,
 .mainCol2 {
   flex: 50%;
   /* background-color: #1b4958; */
-  background-color:#141516;
-}
-
-/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 700px) {
-  .mainCol1,
-  .mainCol2 {
-    flex: 100%;
-  }
-  /* profile Img center */
-  .profileImg {
-    width: 30%;
-    border-radius: 50%;
-    margin: auto;
-  }
+  background-color: #141516;
 }
 
 .save {
@@ -64,4 +49,86 @@ button {
 }
 
 
-#more {display: none;}
+.reservations {
+  margin-top: 0;
+  flex: 50%;
+  width: 60%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  /*   background-color: #1b4958; */
+  background-color: #141516;
+  padding-bottom: 20px;
+}
+
+.actions {
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style buttons */
+.reservation_btn {
+  background-color: DodgerBlue; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 6px 6px; /* Some padding */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  margin: 5px;
+}
+
+/* Darker background on mouse-over */
+.reservation_btn:hover {
+  background-color: RoyalBlue;
+}
+
+tr,
+td {
+  width: auto !important;
+  size: 20px !important;
+  margin: 0 !important;
+}
+
+#more {
+  display: none;
+}
+
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+  .mainCol1,
+  .mainCol2 {
+    flex: 100%;
+  }
+  /* profile Img center */
+  .profileImg {
+    width: 30%;
+    border-radius: 50%;
+    margin: auto;
+  }
+  .actions {
+    margin: auto !important;
+    width: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Style buttons */
+  .reservation_btn {
+    background-color: DodgerBlue; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 6px 8px; /* Some padding */
+    font-size: 10px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    margin: 2px;
+  }
+
+  /* Column container */
+  .reservations {
+    width: 100%;
+    float: 100%;
+  }
+}

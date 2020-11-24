@@ -67,7 +67,6 @@ if (isset($_SESSION['loggedin'])) {
           <div>
             <table id="livesearch">
               <?php echo $outputHTML ?>
-
             </table>
           </div>
         </form>

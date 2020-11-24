@@ -93,6 +93,7 @@ if (isset($_SESSION['loggedin'])) {
     </div>
     <div class="info">
       <center>
+        <input type="hidden" name="fairId" value="<?php echo $fairId; ?>" >
         Title
         <input type="text" placeholder="Name" value="<?php echo $title; ?>" disabled>
         start_date

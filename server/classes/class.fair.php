@@ -48,8 +48,21 @@ class Fair
    */
   public function checkingAddZone($fairId, $title, $desc, $open_spots, $location, $attractions)
   {
-    $msg = "";
-    return $msg;
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from zones where fair_id=:fairId and title=:title");
+    $query->bindParam(":fairId", $fairId, PDO::PARAM_STR, 255);
+    $query->bindParam(":title", $title, PDO::PARAM_STR, 255);
+
+    if ($query->execute()) {
+      if ($query->rowCount() > 0)
+        return "You already have a zone with the same title in this fair";
+      else
+        return "";
+    } else {
+      return $query->errorInfo()[2];
+    }
   }
 
   /**

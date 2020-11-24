@@ -133,7 +133,7 @@ class Reservation
     //connect to database
     $conn = Database::connect();
 
-    $query = $conn->prepare("select z.zone_id, f.fair_id, zs.free_slots, zs.start_date, f.title as fair_title,z.title as zone_tile,zs.opening_slot,zs.closing_slot
+    $query = $conn->prepare("select z.zone_id, f.fair_id, zs.zoneslot_id, zs.free_slots, zs.start_date, f.title as fair_title,z.title as zone_tile,zs.opening_slot,zs.closing_slot
     from waitinglist, zones z,zoneslots zs,fair f where z.fair_id = f.fair_id and zs.zone_id = z.zone_id and zs.zoneslot_id in (select zoneslot_id from waitinglist where waitinglist.user_id = :userId );");
 
     $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
@@ -145,6 +145,7 @@ class Reservation
           $waitingListInfo = [
             "zone_id" => $row['zone_id'],
             "fair_id" => $row['fair_id'],
+            "zoneslot_id" => $row['zoneslot_id'],
             "free_slots" => $row['free_slots'],
             "date" => $row['start_date'],
             "fairTitle" => $row['fair_title'],

@@ -87,6 +87,9 @@ if (isset($_SESSION['loggedin'])) {
       $outHTML_waitingList .= '        <a class="reservation_btn" href="../ZoneOverView.php?zoneId=' . $item['zone_id'] . '&fairId=' . $item['fair_id'] . '">';
       $outHTML_waitingList .= '          <span> <i class="fa fa-fighter-jet "></i></span>';
       $outHTML_waitingList .= '        </a>';
+      $outHTML_waitingList .= '        <a class="reservation_btn" href="../../../server/dashboard/visitor/removeFromWaitingList.php?userId=' . $_SESSION['userId'] . '&zoneslot_id=' . $item['zoneslot_id'] . '">';
+      $outHTML_waitingList .= '          <span> <i class="fa fa-close "></i></span>';
+      $outHTML_waitingList .= '        </a>';
       $outHTML_waitingList .= '      </td>';
       $outHTML_waitingList .= '   </tr>';
     }

@@ -4,7 +4,7 @@ include_once '../../server/classes/class.upload.php';
 include_once '../../server/classes/class.searchFair.php';
 include_once '../../server/classes/class.model.fair.php';
 session_start();
-if (isset($_SESSION['loggedin'])) {
+if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_SESSION['loggedin']) && isset($_SESSION['type'])) {
   if (isset($_GET['zoneId'])) {
     $zoneId = $_GET['zoneId'];
     $fair = new Fair();
@@ -72,8 +72,10 @@ if (isset($_SESSION['loggedin'])) {
     $zoneInfoTableHeading .= $fair->showZoneTimeSlots($zoneId);
   }
 } else {
-  header("Location: ../unauthorized.php");
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
+
+
 ?>
 
 

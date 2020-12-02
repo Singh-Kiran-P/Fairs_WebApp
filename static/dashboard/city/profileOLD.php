@@ -4,22 +4,25 @@ require '../../../server/classes/class.accounts.php';
 
 session_start();
 
-if (isset($_SESSION['loggedin'])) {
-  $userId = $_SESSION['userId'];
-  $type = $_SESSION['type'];
-  $account = new Accounts();
-  $account->init($userId, $type);
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type'])) {
+  if ($_SESSION['type'] == "city") {
+    $userId = $_SESSION['userId'];
+    $type = $_SESSION['type'];
+    $account = new Accounts();
+    $account->init($userId, $type);
 
-  $username = $account->getUsername();
-  $email = $account->getEmail();
-  $type = $account->getType();
-  $name = $account->getName();
+    $username = $account->getUsername();
+    $email = $account->getEmail();
+    $type = $account->getType();
+    $name = $account->getName();
 
-  $desc = $account->getShort_desc();
-  $telephone = $account->getTelephone();
-} else {
-  header("Location: ../unauthorized.php");
+    $desc = $account->getShort_desc();
+    $telephone = $account->getTelephone();
+  } else {
+    header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
+  }
 }
+
 ?>
 
 <!DOCTYPE html>

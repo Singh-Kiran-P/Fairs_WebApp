@@ -9,7 +9,8 @@ if (isset($_GET['fairId']) && isset($_GET['title'])) {
   $tileFair = $_GET['title'];
 }
 
-if (isset($_SESSION['loggedin'])) {
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "city") {
+
   if (isset($_POST['submit'])) {
 
     $fairId = $_SESSION['fairId'];
@@ -33,7 +34,7 @@ if (isset($_SESSION['loggedin'])) {
       $i = Upload::uploadFiles($files, $zoneId, "zone", "img");
       $v = Upload::uploadFiles($video, $zoneId, "zone", "video");
 
-      $fair->updateDbFileCount($zoneId,$i,$v,"zones");
+      $fair->updateDbFileCount($zoneId, $i, $v, "zones");
     }
 
     //reset form
@@ -48,8 +49,10 @@ if (isset($_SESSION['loggedin'])) {
     header("Location: addZoneSlot.php?zoneId=" .  $_GET['zoneId'] . "&free_slots=" . $_GET['open_spots']);
   }
 } else {
-  header("Location: ../unauthorized.php");
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
+
+
 ?>
 
 

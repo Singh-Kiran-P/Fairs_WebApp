@@ -3,7 +3,8 @@ require '../../../server/classes/class.fair.php';
 require '../../../server/classes/class.upload.php';
 session_start();
 
-if (isset($_SESSION['loggedin'])) {
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "city") {
+
   if (isset($_POST['submit'])) {
     $cityId = $_SESSION['cityId'];
 
@@ -30,8 +31,10 @@ if (isset($_SESSION['loggedin'])) {
     }
   }
 } else {
-  header("Location: ../unauthorized.php");
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
+
+
 ?>
 
 

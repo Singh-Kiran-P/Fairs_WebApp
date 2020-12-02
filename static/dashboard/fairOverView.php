@@ -6,7 +6,7 @@ include_once '../../server/classes/class.model.fair.php';
 session_start();
 
 
-if (isset($_SESSION['loggedin'])) {
+if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_SESSION['loggedin']) && isset($_SESSION['type'])) {
   $fairId = $_GET['fair_id'];
   $fairmodel = new Fair();
   $search = new SearchFair();
@@ -56,8 +56,10 @@ if (isset($_SESSION['loggedin'])) {
   if (strlen($desc) != 0)
     $outHTML_desc = '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
 } else {
-  header("Location: ../unauthorized.php");
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +95,7 @@ if (isset($_SESSION['loggedin'])) {
     </div>
     <div class="info">
       <center>
-        <input type="hidden" name="fairId" value="<?php echo $fairId; ?>" >
+        <input type="hidden" name="fairId" value="<?php echo $fairId; ?>">
         Title
         <input type="text" placeholder="Name" value="<?php echo $title; ?>" disabled>
         start_date

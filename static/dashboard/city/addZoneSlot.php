@@ -7,7 +7,9 @@ if (isset($_GET['zoneId']) && isset($_GET['free_slots'])) {
   $free_slots = $_GET['free_slots'];
 }
 
-if (isset($_SESSION['loggedin'])) {
+
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "city") {
+
   if (isset($_POST['submit_addSlot'])) {
 
     $zoneId = $_GET['zoneId'];
@@ -28,8 +30,10 @@ if (isset($_SESSION['loggedin'])) {
     header("Location: listOfFair.php");
   }
 } else {
-  header("Location: ../unauthorized.php");
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
+
+
 ?>
 
 

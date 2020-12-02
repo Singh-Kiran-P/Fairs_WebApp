@@ -4,29 +4,46 @@ require '../../../server/classes/class.searchFair.php';
 
 session_start();
 $outputHTML = "";
-if (isset($_SESSION['loggedin'])) {
-  if (isset($_GET['title'])) {
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "visitor") {
+
+  if (isset($_GET['location']) && isset($_GET['filter'])) {
     $search = new SearchFair();
+    $baseLocation = $_GET['location'];
+    $filter = $_GET['filter'];
+    $listOfFairs = [];
+    $errorMsg = "";
+    if ($baseLocation != "") {
+      if ($filter == "closest")
+        $listOfFairs = $search->searchSortFairsByLocation($baseLocation, true);
+      if ($filter == "farthest")
+        $listOfFairs = $search->searchSortFairsByLocation($baseLocation, false);
 
-
-    $title = $_GET['title'];
-    $listOfFairs = $search->searchByName($title);
-
-    $outputHTML = '<tr><th>Fairs</th></tr>';
-    if ($listOfFairs != null) {
-      foreach ($listOfFairs as $fair) {
-        $out = '<tr><td>';
-        $out .= '<a href="fairView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
-        $out .= '</td></tr>';
-        $outputHTML .= $out;
+      $outputHTML = '<tr><th>Fairs</th><th>Location</th><th>Distance</th></tr>';
+      if ($listOfFairs != null) {
+        foreach ($listOfFairs as $fair) {
+          $out = '<tr><td>';
+          $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
+          $out .= '</td>';
+          $out .= '<td>';
+          $out .=  $fair['location'];
+          $out .= '</td>';
+          $out .= '<td>';
+          $out .=  $fair['distance_txt'];
+          $out .= '</td></tr>';
+          $outputHTML .= $out;
+        }
+      } else {
+        $outputHTML = "No record found";
       }
-    } else {
-      $outputHTML = "No record found";
+    } else { //loaction  = ""
+      $errorMsg = "Location cannot be empty";
     }
   }
 } else {
-  header("Location: ../unauthorized.php");
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
+
+
 ?>
 
 
@@ -69,10 +86,40 @@ if (isset($_SESSION['loggedin'])) {
         <div id="map">
         </div>
       </div>
+      <div class="mainCol">
+        <H1>Use Fair location filter</H1>
+        <!-- search location filter -->
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get">
+          <input type="text" name="location" id="" placeholder="Location ez. 'Hasselt' or 3500" value="" />
+          <select name="filter" id="">
+            <option value="closest">Filter On:</option>
+            <option value="closest">closest</option>
+            <option value="farthest">farthest</option>
+          </select>
+          <button type="submit" name="" id="btn">Search</button>
+        </form>
+
+
+        <table class="search">
+          <?php echo $outputHTML ?>
+        </table>
+
+        <p id="error">
+          <?php
+
+          if (isset($errorMsg)) echo $errorMsg;
+
+          ?>
+        </p>
+      </div>
     </center>
   </div>
   <!-- Script -->
   <script src="searchFairByMap.js"></script>
 </body>
+
+<table class="search">
+
+</table>
 
 </html>

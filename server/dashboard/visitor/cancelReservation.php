@@ -3,7 +3,8 @@
 require '../../../server/classes/class.reservation.php';
 session_start();
 
-if (isset($_SESSION['loggedin'])) {
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "visitor") {
+
   $reservation = new Reservation();
 
   if (isset($_GET['reservationId']) && isset($_GET['people']) && isset($_GET['zoneslot_id'])) {

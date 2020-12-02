@@ -12,6 +12,50 @@
   /* background-color: black; */
 }
 
+.mainCol {
+  flex: 50%;
+  display: flex;
+  height: 100%;
+
+  flex-direction: column;
+  /* background-color: #1b4958; */
+  background-color: #141516;
+}
+.search {
+  width: 60%;
+  margin: auto;
+}
+.mainCol input,
+textarea,
+button,
+.topTitle {
+  margin: 8px 0;
+  width: 70%;
+  padding: 12px 20px;
+  box-sizing: border-box;
+}
+
+td {
+  border-bottom: 1px solid white;
+}
+
+a{
+  color: dodgerblue;
+  font-weight: bold;
+}
+
+#btn {
+  background-color: #4caf50;
+  display: block;
+  width: 20%;
+  color: black;
+  padding: 15px;
+  margin: 10px 0px;
+  border: none;
+  cursor: pointer;
+  font-size: medium;
+}
+
 /* ------------------ MapBox -------------------- */
 
 .mapboxgl-popup-content {
@@ -27,13 +71,11 @@
   background-color: black !important;
   color: white !important;
 }
-.mapboxgl-ctrl-geocoder .suggestions > .active > a{
+.mapboxgl-ctrl-geocoder .suggestions > .active > a {
   background-color: #5a3fc0 !important;
-
 }
 .mapboxgl-ctrl-geocoder .suggestions > li > a:hover {
   background-color: #5a3fc0 !important;
-
 }
 
 /* Marker */
@@ -64,7 +106,8 @@
 }
 
 #map {
-  border-radius: 35px;
+  border-top-left-radius: 35px;
+  border-top-right-radius: 35px;
 
   position: relative;
   height: inherit;
@@ -76,5 +119,10 @@
   /* Column container */
   .content {
     width: 95%;
+  }
+
+  .search {
+    width: 80%;
+    margin: auto;
   }
 }

@@ -1,7 +1,9 @@
 <?php
 require '../../../server/classes/class.searchFair.php';
-
-$s = new SearchFair();
-$msg = $s->getGeoJsonOfAllFairs();
-echo json_encode($msg);
-
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "visitor") {
+  $s = new SearchFair();
+  $msg = $s->getGeoJsonOfAllFairs();
+  echo json_encode($msg);
+} else {
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
+}

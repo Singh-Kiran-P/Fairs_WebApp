@@ -8,7 +8,9 @@ if (isset($_POST['zoneId']) && isset($_POST['fairId'])) {
 }
 
 $outputHTML = "";
-if (isset($_SESSION['loggedin'])) {
+
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "visitor") {
+
   if (isset($_SESSION['zoneId']) && isset($_SESSION['fairId'])) {
     $reservation = new Reservation();
     $fair = new Fair();
@@ -39,8 +41,10 @@ if (isset($_SESSION['loggedin'])) {
     }
   }
 } else {
-  header("Location: ../unauthorized.php");
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
+
+
 ?>
 
 <!DOCTYPE html>

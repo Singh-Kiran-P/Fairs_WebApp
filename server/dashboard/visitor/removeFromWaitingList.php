@@ -2,8 +2,9 @@
 /* Code for handeling AJAX request for city fair zone timeslots  */
 require '../../../server/classes/class.reservation.php';
 session_start();
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "visitor") {
 
-if (isset($_SESSION['loggedin'])) {
+
   $reservation = new Reservation();
 
   if (isset($_GET['userId']) && isset($_GET['zoneslot_id'])) {

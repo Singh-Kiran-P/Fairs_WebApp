@@ -28,7 +28,7 @@ class Reservation
         if ($row['free_slots'] - $reservationPeople >= 0) {
           return ['zoneslot_id' => $row['zoneslot_id'], 'free' => $row['free_slots'], 'msg' => ''];
         } else {
-          return ['zoneslot_id' => $row['zoneslot_id'], 'msg' => "One this" . $reservationDate . " and" . $reservationTimeSlot . "is reservation not available. "];
+          return ['zoneslot_id' => $row['zoneslot_id'], 'msg' => "Can not book on " . $reservationDate . " booking is not available. "];
         }
       } else {
         return ['msg' => "Cannot reserver on this date and timeslot"];

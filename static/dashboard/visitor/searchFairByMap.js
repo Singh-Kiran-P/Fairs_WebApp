@@ -49,6 +49,7 @@ function initMap() {
   );
   xmlhttp.send();
 }
+
 function initGeoCoder(map, geoJSON) {
   function forwardGeocoder(query) {
     var matchingFeatures = [];
@@ -77,6 +78,11 @@ function initGeoCoder(map, geoJSON) {
     mapboxgl: mapboxgl,
   });
 
+
+  geocoder.on('results', function (results) {
+    console.log(results);
+  })
+
   map.addControl(geocoder);
 }
 
@@ -91,15 +97,17 @@ function addFairLocationsToMap(map, geoJSON) {
     new mapboxgl.Marker(el)
       .setLngLat(marker.geometry.coordinates)
       .setPopup(
-        new mapboxgl.Popup({ offset: 0 }) // add popups
-          .setHTML(
-            "<div>" +
-              "<h3>" +
-              marker.properties.title +
-              "</h3><p>" +
-              marker.properties.description +
-              "</p></div>"
-          )
+        new mapboxgl.Popup({
+          offset: 0
+        }) // add popups
+        .setHTML(
+          "<div>" +
+          "<h3>" +
+          marker.properties.title +
+          "</h3><p>" +
+          marker.properties.description +
+          "</p></div>"
+        )
       )
       .addTo(map);
   });

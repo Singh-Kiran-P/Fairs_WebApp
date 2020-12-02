@@ -4,30 +4,33 @@ require '../../../server/classes/class.searchFair.php';
 
 session_start();
 $outputHTML = "";
-if (isset($_SESSION['loggedin'])) {
-  if (isset($_POST['startDate']) && isset($_POST['endDate'])) {
-    $search = new SearchFair();
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "visitor") {
+
+    if (isset($_POST['startDate']) && isset($_POST['endDate'])) {
+      $search = new SearchFair();
 
 
-    $startDate = $_POST['startDate'];
-    $endDate = $_POST['endDate'];
-    $listOfFairs = $search->searchFairByPeriod($startDate, $endDate);
+      $startDate = $_POST['startDate'];
+      $endDate = $_POST['endDate'];
+      $listOfFairs = $search->searchFairByPeriod($startDate, $endDate);
 
-    $outputHTML = '<tr><th>Fairs</th></tr>';
-    if ($listOfFairs != null) {
-      foreach ($listOfFairs as $fair) {
-        $out = '<tr><td>';
-        $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
-        $out .= '</td></tr>';
-        $outputHTML .= $out;
+      $outputHTML = '<tr><th>Fairs</th></tr>';
+      if ($listOfFairs != null) {
+        foreach ($listOfFairs as $fair) {
+          $out = '<tr><td>';
+          $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
+          $out .= '</td></tr>';
+          $outputHTML .= $out;
+        }
+      } else {
+        $outputHTML = "No record found";
       }
-    } else {
-      $outputHTML = "No record found";
     }
+  } else {
+    header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
   }
-} else {
-  header("Location: ../unauthorized.php");
-}
+
+
 ?>
 
 
@@ -59,7 +62,7 @@ if (isset($_SESSION['loggedin'])) {
           <h1 class="topTitle">Search By Period <?php if (isset($_GET['fairId'])) echo "to " . $_GET['fairId']  ?></h1>
 
           <div class="side">
-            <input  type="text" name="startDate" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['startDate'])) echo $_POST['startDate']; ?>" required>
+            <input type="text" name="startDate" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['startDate'])) echo $_POST['startDate']; ?>" required>
             <input type="text" name="endDate" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['endDate'])) echo $_POST['endDate']; ?>" required>
             <button type="submit" name="submit" class="btnShow">Show</button>
 

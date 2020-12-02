@@ -4,18 +4,19 @@ include_once '../../../server/classes/class.model.fair.php';
 session_start();
 
 
-if (isset($_SESSION['loggedin'])) {
-  $cityId = $_SESSION['cityId'];
-  $fair = new Fair();
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "city") {
 
-  // $listOfFairs is a array of FairModels
-  $listOfFairs = $fair->getListOfFairs($cityId);
+    $cityId = $_SESSION['cityId'];
+    $fair = new Fair();
 
-  $html_List_of_Faris = "";
-  foreach ($listOfFairs as $fairRow) {
-    $s = $fairRow->getVar();
+    // $listOfFairs is a array of FairModels
+    $listOfFairs = $fair->getListOfFairs($cityId);
 
-    $html_List_of_Faris .= '
+    $html_List_of_Faris = "";
+    foreach ($listOfFairs as $fairRow) {
+      $s = $fairRow->getVar();
+
+      $html_List_of_Faris .= '
     <a href="../fairOverView.php?fair_id=' . $fairRow->getVar()['fair_id'] . '&fair_Title=' . $fairRow->getVar()['title'] . '" class="card">
     <center class="title"> <label for="Title">' . $fairRow->getVar()['title'] . '</label></center>
     <center class="title"> <label for="Location">' . $fairRow->getVar()['location'] . '</label></center>
@@ -28,10 +29,12 @@ if (isset($_SESSION['loggedin'])) {
       </div>
     </div>
   </a>';
+    }
+  } else {
+    header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
   }
-} else {
-  header("Location: ../unauthorized.php");
-}
+
+
 ?>
 
 <!DOCTYPE html>

@@ -6,7 +6,6 @@ https://www.intelliwolf.com/find-nearest-location-from-array-of-coordinates-php/
 
 include_once "class.database.php";
 
-
 class SearchFair
 {
   /**
@@ -51,6 +50,7 @@ class SearchFair
             "properties" => [
               "title" => $title,
               "fair_id" => $fair_id,
+              "location" => $location,
               "description" =>
               '<a href="../fairOverView.php?fair_id=' . $fair_id . '" target="_blank">Go to fair info</a><br> This fair is going to take place from <br> ' . $start_date . '&nbsp;&nbsp;&nbsp;&nbsp;TO&nbsp;&nbsp;&nbsp;&nbsp;' . $end_date . '<br> Opening Hours: <br>' . $opening_hour . '&nbsp;&nbsp;&nbsp;&nbsp;TO&nbsp;&nbsp;&nbsp;&nbsp;' . $closing_hour,
               "icon" =>  "amusement-park"
@@ -71,6 +71,7 @@ class SearchFair
 
     return NULL;
   }
+
   public function getLocationCoordinates($place)
   {
     // get the env variables
@@ -170,12 +171,18 @@ class SearchFair
     $distances = array();
 
     foreach ($allFairs as $features) {
-      $a = $base_correction[0] - $features['geometry']['coordinates'][0];
-      $b = $base_correction[1] - $features['geometry']['coordinates'][1];
-      $distance = sqrt(($a ** 2) + ($b ** 2));
+      $lat1 = $base_correction[0];
+      $lat2 = $features['geometry']['coordinates'][0];
+      $lng1 = $base_correction[1];
+      $lng2 = $features['geometry']['coordinates'][1];
+
+      $distance = $this->_getDistance($lat1, $lng1, $lat2, $lng2, "K");
+
       $fair = array(
         "fairId" => $features['properties']['fair_id'],
         "title" =>  $features['properties']['title'],
+        "location" =>  $features['properties']['location'],
+        "distance_txt" =>  round($distance, 5) . " km",
         "distance" =>  $distance
       );
       array_push($distances, $fair);
@@ -209,7 +216,37 @@ class SearchFair
     return $distances;
   }
 
+  /**
+   * This function is copied from https://www.geodatasource.com/developers/php
+   *
+   * @param [type] $lat1
+   * @param [type] $lng1
+   * @param [type] $lat2
+   * @param [type] $lng2
+   * @param [type] $unit
+   * @return void
+   */
+  public function _getDistance($lat1, $lng1, $lat2, $lng2, $unit)
+  {
+    if (($lat1 == $lat2) && ($lng1 == $lng2)) {
+      return 0;
+    } else {
+      $theta = $lng1 - $lng2;
+      $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+      $dist = acos($dist);
+      $dist = rad2deg($dist);
+      $miles = $dist * 60 * 1.1515;
+      $unit = strtoupper($unit);
 
+      if ($unit == "K") {
+        return ($miles * 1.609344);
+      } else if ($unit == "N") {
+        return ($miles * 0.8684);
+      } else {
+        return $miles;
+      }
+    }
+  }
 
   public function totCountFiles($id, $table)
   {
@@ -245,6 +282,7 @@ class SearchFair
 
     return NULL;
   }
+
   public function totVideo($id, $table)
   {
     //connect to database

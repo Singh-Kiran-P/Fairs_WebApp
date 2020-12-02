@@ -240,87 +240,6 @@ class Fair
   }
 
   /**
-   * Get de zones info
-   *
-   * @param [type] $zoneId
-   * @return array of zone info
-   */
-  public function getZone($zoneId)
-  {
-    //connect to database
-    $conn = Database::connect();
-
-    $query = $conn->prepare("select * from zones where zone_id=:zone_id");
-    $query->bindParam(":zone_id", $zoneId, PDO::PARAM_STR, 255);
-
-
-    if ($query->execute()) {
-      if ($query->rowCount() > 0) {
-        $row = $query->fetch();
-        $zoneInfo = array(
-          "zoneId" => $row['zone_id'],
-          "fairId" => $row['fair_id'],
-          "title" => $row['title'],
-          "description" => $row['description'],
-          "attractions" => $row['attractions'],
-          "location" => $row['location'],
-          "totimg" => $row['totimg'],
-          "totvideo" => $row['totvideo'],
-          "open_spots" => $row['open_spots']
-        );
-
-
-        return $zoneInfo;
-      }
-    } else {
-      return $query->errorInfo()[2];
-    }
-
-    return NULL;
-  }
-  /**
-   * Get de date by zoneId
-   *
-   * @param [type] $zoneId
-   * @return array of zones with [zoneId,title]
-   */
-  public function getZonesDate($zoneId)
-  {
-    //connect to database
-    $conn = Database::connect();
-    /*
-    $query = $conn->prepare("select zone_id from zones where fair_id = :fairId order BY zone_id DESC;");
-    $query->bindParam(":fairId", $fairId, PDO::PARAM_STR, 255);
-
-    if ($query->execute()) {
-      if ($query->rowCount() > 0) {
-        $row = $query->fetch();
-        $zoneId = $row['zone_id'];
-      }
-    } else {
-      return $query->errorInfo()[2];
-    }
- */
-    $query = $conn->prepare("select DISTINCT start_date from zoneslots where zone_id =:zoneId;");
-    $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
-
-    $list = array();
-    if ($query->execute()) {
-      if ($query->rowCount() > 0) {
-        while ($row = $query->fetch()) {
-          array_push($list, $row['start_date']);
-        }
-        return $list;
-      }
-    } else {
-      return $query->errorInfo()[2];
-    }
-
-    return NULL;
-  }
-
-
-  /**
    * Add Zone to database
    *
    * @param [type] $fairId
@@ -412,6 +331,87 @@ class Fair
       return $query->errorInfo()[2];
     }
   }
+
+    /**
+   * Get de zones info
+   *
+   * @param [type] $zoneId
+   * @return array of zone info
+   */
+  public function getZone($zoneId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from zones where zone_id=:zone_id");
+    $query->bindParam(":zone_id", $zoneId, PDO::PARAM_STR, 255);
+
+
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        $row = $query->fetch();
+        $zoneInfo = array(
+          "zoneId" => $row['zone_id'],
+          "fairId" => $row['fair_id'],
+          "title" => $row['title'],
+          "description" => $row['description'],
+          "attractions" => $row['attractions'],
+          "location" => $row['location'],
+          "totimg" => $row['totimg'],
+          "totvideo" => $row['totvideo'],
+          "open_spots" => $row['open_spots']
+        );
+
+
+        return $zoneInfo;
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return NULL;
+  }
+  /**
+   * Get de date by zoneId
+   *
+   * @param [type] $zoneId
+   * @return array of zones with [zoneId,title]
+   */
+  public function getZonesDate($zoneId)
+  {
+    //connect to database
+    $conn = Database::connect();
+    /*
+    $query = $conn->prepare("select zone_id from zones where fair_id = :fairId order BY zone_id DESC;");
+    $query->bindParam(":fairId", $fairId, PDO::PARAM_STR, 255);
+
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        $row = $query->fetch();
+        $zoneId = $row['zone_id'];
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+     */
+    $query = $conn->prepare("select DISTINCT start_date from zoneslots where zone_id =:zoneId;");
+    $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
+
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          array_push($list, $row['start_date']);
+        }
+        return $list;
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return NULL;
+  }
+
 
   public function updateDbFileCount($id, $i, $v, $table)
   {

@@ -4,29 +4,31 @@ require '../../../server/classes/class.searchFair.php';
 
 session_start();
 $outputHTML = "";
-if (isset($_SESSION['loggedin'])) {
-  if (isset($_GET['title'])) {
-    $search = new SearchFair();
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "visitor") {
 
+    if (isset($_GET['title'])) {
 
-    $title = $_GET['title'];
-    $listOfFairs = $search->searchByName($title);
+      $search = new SearchFair();
 
-    $outputHTML = '<tr><th>Fairs</th></tr>';
-    if ($listOfFairs != null) {
-      foreach ($listOfFairs as $fair) {
-        $out = '<tr><td>';
-        $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
-        $out .= '</td></tr>';
-        $outputHTML .= $out;
+      $title = $_GET['title'];
+      $listOfFairs = $search->searchByName($title);
+
+      $outputHTML = '<tr><th>Fairs</th></tr>';
+      if ($listOfFairs != null) {
+        foreach ($listOfFairs as $fair) {
+          $out = '<tr><td>';
+          $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
+          $out .= '</td></tr>';
+          $outputHTML .= $out;
+        }
+      } else {
+        $outputHTML = "No record found";
       }
-    } else {
-      $outputHTML = "No record found";
     }
+  } else {
+    header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
   }
-} else {
-  header("Location: ../unauthorized.php");
-}
+
 ?>
 
 

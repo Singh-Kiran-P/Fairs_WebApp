@@ -4,7 +4,9 @@ require '../../../server/classes/class.accounts.php';
 
 session_start();
 
-if (isset($_SESSION['loggedin'])) {
+
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "city") {
+
   $userId = $_SESSION['userId'];
   $type = $_SESSION['type'];
   $account = new Accounts();
@@ -16,8 +18,8 @@ if (isset($_SESSION['loggedin'])) {
   $name = $account->getName();
 
   $desc = $account->getShort_desc();
-  $showDesc = substr($desc, 0, (strlen($desc) - 1) * (1/3));
-  $moreDesc = substr($desc, (strlen($desc) - 1) * (1/3) + 1, (strlen($desc) - 1));
+  $showDesc = substr($desc, 0, (strlen($desc) - 1) * (1 / 3));
+  $moreDesc = substr($desc, (strlen($desc) - 1) * (1 / 3) + 1, (strlen($desc) - 1));
   $outHTML_desc = '';
   //check if desc not null
   if (strlen($desc) != 0)
@@ -26,8 +28,10 @@ if (isset($_SESSION['loggedin'])) {
 
   $telephone = $account->getTelephone();
 } else {
-  header("Location: ../unauthorized.php");
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
+
+
 ?>
 
 <!DOCTYPE html>

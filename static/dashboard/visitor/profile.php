@@ -5,7 +5,8 @@ require '../../../server/classes/class.accounts.php';
 
 session_start();
 
-if (isset($_SESSION['loggedin'])) {
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "visitor") {
+
   $userId = $_SESSION['userId'];
   $type = $_SESSION['type'];
   $account = new Accounts();
@@ -96,8 +97,10 @@ if (isset($_SESSION['loggedin'])) {
     $outHTML_waitingList .= '   </table>';
   }
 } else {
-  header("Location: ../unauthorized.php");
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
+
+
 ?>
 
 <!DOCTYPE html>

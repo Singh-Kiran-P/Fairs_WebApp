@@ -46,8 +46,6 @@
 
   </div>
 
-  <script src="/~kiransingh/project/static/scripts/main.js"></script>
-
 </body>
 
 

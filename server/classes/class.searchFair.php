@@ -131,7 +131,13 @@ class SearchFair
   {
     //connect to database
     $conn = Database::connect();
-    $query = $conn->prepare("select * from fair where start_date >= :d1 and end_date <=:d2");
+    $query = $conn->prepare(
+      "select * from fair " .
+        "Where" .
+        "(start_date BETWEEN :d1 AND :d2) OR " .
+        "(end_date BETWEEN :d1 AND :d2) OR " .
+        "(start_date <= :d1 AND end_date >= :d2)"
+    );
     $query->bindParam(":d1", $d1, PDO::PARAM_STR, 255);
     $query->bindParam(":d2", $d2, PDO::PARAM_STR, 255);
 
@@ -143,6 +149,8 @@ class SearchFair
           $fair = array(
             "fairId" => $row['fair_id'],
             "title" => $row['title'],
+            "start_date" => $row['start_date'],
+            "end_date" => $row['end_date'],
           );
 
           array_push($list, $fair);

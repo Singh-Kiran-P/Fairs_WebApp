@@ -1,7 +1,7 @@
 <?php
 class Database
 {
-  public static  function connect()
+  public static function connect()
   {
     // Connect to the Postgrs database
     try {

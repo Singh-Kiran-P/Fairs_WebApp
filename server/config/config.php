@@ -15,3 +15,10 @@ $rootURL = "http://uhasselt.me";
 
 //mapBox Key
 $mapBoxKey = "pk.eyJ1Ijoia2lyYW5zaW5naCIsImEiOiJja2hhZ2drY2IxZmU4MnBuejQ2ZGVoeGd5In0.gQH7wpT9LY26je46XhoXaw";
+
+
+//email
+$stmpHost = "mail.singh-kiran.educationhost.cloud";
+$username_email = "info@singh-kiran.educationhost.cloud";
+$password_email = "ohh0Choo";
+$emailFrom = "info@singh-kiran.educationhost.cloud";

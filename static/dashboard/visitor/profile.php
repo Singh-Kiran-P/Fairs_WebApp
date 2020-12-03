@@ -79,9 +79,16 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
     foreach ($waitingList as $item) {
       $outHTML_waitingList .= '  <tr>';
-      $outHTML_waitingList .= '      <td>' . $item['fairTitle'] . '</td>';
-      $outHTML_waitingList .= '      <td>' . $item['zoneTitle'] . '</td>';
-      $outHTML_waitingList .= '      <td>' . $item['free_slots'] . '</td>';
+
+      if ($item['free_slots'] > 0) {
+        $outHTML_waitingList .= '      <td class="open_spot">' . $item['fairTitle'] . '</td>';
+        $outHTML_waitingList .= '      <td class="open_spot">' . $item['zoneTitle'] . '</td>';
+        $outHTML_waitingList .= '      <td class="open_spot">' . $item['free_slots'] . '</td>';
+      } else {
+        $outHTML_waitingList .= '      <td >' . $item['fairTitle'] . '</td>';
+        $outHTML_waitingList .= '      <td>' . $item['zoneTitle'] . '</td>';
+        $outHTML_waitingList .= '      <td>' . $item['free_slots'] . '</td>';
+      }
       $outHTML_waitingList .= '      <td>On ' . $item['date'] . ' from ' . $item['opening_slot'] . ' To ' . $item['closing_slot'] . '</td>';
       $outHTML_waitingList .= '      <td class="actions">';
       $outHTML_waitingList .= '        <!-- Go to fair info -->';
@@ -113,9 +120,20 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/profile.css">
   <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Alertify JS -->
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+  <!-- Semantic UI theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+
+
+  <script src="profile.js"></script>
+
 </head>
 
-<body>
+<body onload="onLoad();">
 
   <header>
     <!-- navbar -->
@@ -134,6 +152,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
   <!-- The flexible grid (content) -->
   <form action="" method="post" class="content" id="form">
+    <!-- Messaging link -->
+    <a class="messaging_btn" href="message.php"><span> <i class="fa fa-comments" aria-hidden="true"></i></span></a>
 
     <div class="mainCol1 g">
       <center>

@@ -27,15 +27,30 @@ input,
   /*   background-color: #1b4958; */
   background-color: #141516;
   padding-bottom: 20px;
+  padding-top: 30px;
 }
 .mainCol2 {
   flex: 50%;
   /* background-color: #1b4958; */
   background-color: #141516;
+  padding-top: 30px;
 }
 
 .save {
   flex: none;
+}
+
+.messaging_btn {
+
+  float: left;
+  padding-right: 20px;
+  background-color: DodgerBlue; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 6px 6px; /* Some padding */
+  font-size: 20px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+
 }
 
 button {
@@ -47,7 +62,6 @@ button {
   border: none;
   cursor: pointer;
 }
-
 
 .reservations {
   margin-top: 0;
@@ -64,10 +78,15 @@ button {
 }
 
 .actions {
-  flex-direction: row ;
+  flex-direction: row;
 
   align-items: center;
   justify-content: center;
+}
+
+/* Alerty Js */
+.ajs-content {
+  color: black;
 }
 
 /* Style buttons */

@@ -6,29 +6,32 @@ session_start();
 $outputHTML = "";
 if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "visitor") {
 
-    if (isset($_POST['startDate']) && isset($_POST['endDate'])) {
-      $search = new SearchFair();
+  if (isset($_POST['startDate']) && isset($_POST['endDate'])) {
+    $search = new SearchFair();
 
 
-      $startDate = $_POST['startDate'];
-      $endDate = $_POST['endDate'];
-      $listOfFairs = $search->searchFairByPeriod($startDate, $endDate);
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    $listOfFairs = $search->searchFairByPeriod($startDate, $endDate);
 
-      $outputHTML = '<tr><th>Fairs</th></tr>';
-      if ($listOfFairs != null) {
-        foreach ($listOfFairs as $fair) {
-          $out = '<tr><td>';
-          $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
-          $out .= '</td></tr>';
-          $outputHTML .= $out;
-        }
-      } else {
-        $outputHTML = "No record found";
+    $outputHTML = '<tr><th>Fairs</th><th>Date</th></tr>';
+    if ($listOfFairs != null) {
+      foreach ($listOfFairs as $fair) {
+        $out = '<tr><td>';
+        $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
+        $out .= '</td>';
+        $out .= '<td>';
+        $out .= '<p>'. $fair['start_date'] .' TO ' . $fair['end_date'] . '</p>';
+        $out .= '</td></tr>';
+        $outputHTML .= $out;
       }
+    } else {
+      $outputHTML = "No record found";
     }
-  } else {
-    header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
   }
+} else {
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
+}
 
 
 ?>

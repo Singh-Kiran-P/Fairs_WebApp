@@ -1,3 +1,65 @@
+<?php
+require '../../../server/classes/class.messaging.php';
+require '../../../server/classes/class.accounts.php';
+
+session_start();
+if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "visitor"))
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
+
+$msgFrom = $_SESSION['userId'];
+
+$account = new Accounts();
+$listOfVisitors = $account->getAllVisitors();
+
+$outHTML_otherVisitors = '';
+if (count($listOfVisitors) > 0) {
+
+  foreach ($listOfVisitors as $visitor) {
+    if ($visitor['userId'] != $msgFrom)
+      $outHTML_otherVisitors .= '<option value="' . $visitor['userId'] . '">' . $visitor['name'] . '</option>';
+  }
+}
+
+
+
+$messaging = new Messaging();
+
+// process select user FORM
+if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "")) {
+  $msgTo = $_GET['msgTo'];
+  $listWithMessages = $messaging->getMessages($msgFrom, $msgTo);
+  $outHTML_MsgBox = $messaging->buildMsgBox($listWithMessages, $msgFrom, $msgTo);
+
+  if (count($listOfVisitors) > 0) {
+    $outHTML_otherVisitors = '';
+    foreach ($listOfVisitors as $visitor) {
+      if ($visitor['userId'] == $msgTo)
+        $outHTML_otherVisitors .= '<option value="' . $visitor['userId'] . '" selected>' . $visitor['name'] . '</option>';
+      else
+        $outHTML_otherVisitors .= '<option value="' . $visitor['userId'] . '">' . $visitor['name'] . '</option>';
+    }
+  }
+}
+
+if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "") && (isset($_POST['sendMsg']) && isset($_POST['msg'])&& $_POST['msg'] != "")) {
+
+  $msgFrom = $_SESSION['userId'];
+  $msgTo = $_GET['msgTo'];
+  $msg = $_POST['msg'];
+
+
+  //send msg
+  $messaging->sendMsg($msgFrom, $msgTo, $msg);
+
+  $listWithMessages = $messaging->getMessages($msgFrom, $msgTo);
+  $outHTML_MsgBox = $messaging->buildMsgBox($listWithMessages, $msgFrom, $msgTo);
+}
+
+
+?>
+
+
+
 <!-- HTML Code -->
 <!DOCTYPE html>
 <html lang="en">
@@ -22,41 +84,37 @@
   <div class="content">
 
     <div class="contacts">
-      <form action="" method="post">
-        <select name="" id="">
-          <option value="">user1</option>
-          <option value="">user2</option>
-          <option value="">user3</option>
-          <option value="">user4</option>
+      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get">
+        <select name="msgTo">
+          <option value="">Chose user ...</option>
+          <?php echo $outHTML_otherVisitors; ?>
         </select>
+        <input type="submit" name="choseUser" value="chat">
       </form>
     </div>
-    <div class="messageBox">
+
+    <div class="messageBox" <?php if (!isset($outHTML_MsgBox)) {
+                              echo " style='display: none'";
+                            } ?>>
       <div class="messages">
-
-        <div class="bubbleWrapper">
-          <div class="inlineContainer own">
-            <img class="inlineIcon" src="https://www.pinclipart.com/picdir/middle/205-2059398_blinkk-en-mac-app-store-ninja-icon-transparent.png">
-            <div class="ownBubble own">
-              The first rule of being a ninja is, 'Do no harm.'
-            </div>
-          </div><span class="own">08:55</span>
-        </div>
-
-        <div class="bubbleWrapper">
-          <div class="inlineContainer">
-            <img class="inlineIcon" src="https://www.pinclipart.com/picdir/middle/205-2059398_blinkk-en-mac-app-store-ninja-icon-transparent.png">
-            <div class="otherBubble other">
-              No ninjas!
-            </div>
-          </div><span class="other">08:41</span>
-        </div>
+        <?php echo $outHTML_MsgBox; ?>
       </div>
+
       <div class="sendMessage">
-        sdgfd
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?msgTo=<?php echo $msgTo ?>" method="post">
+          <input type="text" name="msg">
+
+          <input type="submit" name="sendMsg" value="send">
+          <a href="?msgTo=<?php echo $msgTo ?>">refresh</a>
+        </form>
       </div>
     </div>
   </div>
 </body>
+
+<script>
+  var elem = document.getElementsByClassName('messages')[0];
+  elem.scrollTop = elem.scrollHeight;
+</script>
 
 </html>

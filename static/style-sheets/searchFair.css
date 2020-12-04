@@ -23,7 +23,7 @@
 }
 a {
   color: dodgerblue;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 .btnShow {
   background-color: #4caf50;

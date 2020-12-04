@@ -247,6 +247,34 @@ class Accounts
     return false;
   }
 
+  public function getAllVisitors()
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from accounts where type = 'visitor'");
+
+    $listOfVisitors = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $visitor = array(
+            'userId' => $row['user_id'],
+            'name' => $row['name']
+          );
+
+          array_push($listOfVisitors, $visitor);
+        }
+      }
+      return $listOfVisitors;
+    } else {
+      return $query->errorInfo()[2];
+    }
+    return NULL;
+  }
+
+
+
   /* ___________________________ GETTER / SETTERS_________________________________ */
 
   public function getUserId()

@@ -207,16 +207,57 @@ CREATE TABLE waitingList (
   FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE
 );
 
--- messaging
--- CREATE TABLE messaging (
---   reservation_id serial PRIMARY KEY,
---   user_id INT NOT NULL,
---   zone_id INT NOT NULL,
---   kermis_id INT NOT NULL,
---   going boolean (50) NOT NULL DEFAULT 'f',
---   review_rating INT,
---   review_description VARCHAR (500),
---   FOREIGN KEY (kermis_id) REFERENCES kermis (kermis_id),
---   FOREIGN KEY (zone_id) REFERENCES zones (zone_id),
---   FOREIGN KEY (user_id) REFERENCES accounts (user_id)
--- );
+-- messaging-----------------------------------------------
+DROP TABLE IF EXISTS messaging;
+
+CREATE TABLE messaging (
+  message_id serial PRIMARY KEY,
+  msgFrom INT NOT NULL,
+  msgTo INT NOT NULL,
+  message TEXT,
+  send_dateTime TIMESTAMP NOT NULL,
+
+  FOREIGN KEY (user_sending) REFERENCES accounts (user_id),
+  FOREIGN KEY (user_receiving) REFERENCES accounts (user_id)
+);
+
+insert into messaging
+VALUES
+(DEFAULT,4,6,'Yo man Test 4-6',current_timestamp);
+
+insert into messaging
+VALUES
+(DEFAULT,4,6,'Yo man Test 4-6',current_timestamp);
+
+insert into messaging
+VALUES
+(DEFAULT,4,6,'Yo man Test 4-6',current_timestamp);
+
+insert into messaging
+VALUES
+(DEFAULT,4,6,'Yo man Test 4-6',current_timestamp);
+
+insert into messaging
+VALUES
+(DEFAULT,6,4,'Yo man T 6-4',current_timestamp);
+
+insert into messaging
+VALUES
+(DEFAULT,4,6,'Yo man Test 4-6',current_timestamp);
+
+insert into messaging
+VALUES
+(DEFAULT,6,4,'Yo man Test 6-4',current_timestamp);
+
+insert into messaging
+VALUES
+(DEFAULT,4,6,'Yo man Test 4-6',current_timestamp);
+
+insert into messaging
+VALUES
+(DEFAULT,4,6,'Yo man Test 4-6',current_timestamp);
+
+insert into messaging
+VALUES
+(DEFAULT,6,4,'Yo man Test 6-4',current_timestamp);
+

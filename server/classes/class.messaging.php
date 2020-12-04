@@ -1,0 +1,113 @@
+<?php
+include_once "class.database.php";
+
+
+
+/* Messaging class gets the messages of the users and the logic to do that*/
+
+class Messaging
+{
+
+  /**
+   * Get the messages
+   *
+   * @param [type] $userId_sender
+   * @param [type] $userId_reciever
+   * @return List with messages
+   * @return if error or no message return string with msg else ''
+   */
+  public function getMessages($msgFrom, $msgTo)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare(" select * from messaging
+                              where
+                              (msgFrom = :msgFrom and msgTo = :msgTo)
+                              OR (msgFrom = :msgTo and msgTo = :msgFrom)
+
+                              ORDER BY send_datetime ASC ");
+    $query->bindParam(":msgFrom", $msgFrom, PDO::PARAM_STR, 255);
+    $query->bindParam(":msgTo", $msgTo, PDO::PARAM_STR, 255);
+
+    $listWithMessages = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $singleMessage = array(
+            'msgFrom' => $row['msgfrom'],
+            'msgTo' => $row['msgto'],
+            'send_datetime' => $row['send_datetime'],
+            'message' => $row['message']
+          );
+
+          array_push($listWithMessages, $singleMessage);
+        }
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+    return $listWithMessages;
+  }
+
+  /**
+   * Send Msg
+   *
+   * @param [type] $msgFrom
+   * @param [type] $msgTo
+   * @return void
+   */
+  public function sendMsg($msgFrom, $msgTo, $msg)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+
+    $query = $conn->prepare(" insert into messaging
+                              VALUES
+                              (DEFAULT,:msgFrom,:msgTo,:msg,current_timestamp);");
+    $query->bindParam(":msgFrom", $msgFrom, PDO::PARAM_STR, 255);
+    $query->bindParam(":msgTo", $msgTo, PDO::PARAM_STR, 255);
+    $query->bindParam(":msg", $msg, PDO::PARAM_STR, 255);
+
+
+    if ($query->execute()) {
+      return '';
+    } else {
+      return $query->errorInfo()[2];
+    }
+  }
+
+  public function  buildMsgBox($listWithMessages, $msgFrom, $msgTo)
+  {
+    $outHTML = '';
+    foreach ($listWithMessages as $item) {
+
+      if ($item['msgFrom'] == $msgFrom) {
+        $currentUserMsgBubble = '';
+        $currentUserMsgBubble .= '<div class="bubbleWrapper">';
+        $currentUserMsgBubble .= '<div class="inlineContainer own">';
+        $currentUserMsgBubble .= '<img class="inlineIcon" src="https://www.pinclipart.com/picdir/middle/205-2059398_blinkk-en-mac-app-store-ninja-icon-transparent.png">';
+        $currentUserMsgBubble .= '<div class="ownBubble own">';
+        $currentUserMsgBubble .=  $item['message'];
+        $currentUserMsgBubble .= '</div>';
+        $currentUserMsgBubble .= '</div><span class="own">' . $item['send_datetime'] . '</span>';
+        $currentUserMsgBubble .= '</div>';
+        $outHTML .= $currentUserMsgBubble;
+      } else {
+        $otherUserMsgBubble = '';
+        $otherUserMsgBubble .= '<div class="bubbleWrapper">';
+        $otherUserMsgBubble .= '<div class="inlineContainer">';
+        $otherUserMsgBubble .= '<img class="inlineIcon" src="https://www.pinclipart.com/picdir/middle/205-2059398_blinkk-en-mac-app-store-ninja-icon-transparent.png">';
+        $otherUserMsgBubble .= '<div class="otherBubble other">';
+        $otherUserMsgBubble .= $item['message'];
+        $otherUserMsgBubble .= '</div>';
+        $otherUserMsgBubble .= '</div><span class="other">' . $item['send_datetime'] . '</span>';
+        $otherUserMsgBubble .= '</div>';
+        $outHTML .= $otherUserMsgBubble;
+      }
+    }
+
+    return $outHTML;
+  }
+}

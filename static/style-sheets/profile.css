@@ -53,6 +53,12 @@ input,
 
 }
 
+.notification{
+  margin-top: 20px;
+  border: 1px solid white;
+  padding: 10px;
+}
+
 button {
   background-color: #4caf50;
   width: 100%;

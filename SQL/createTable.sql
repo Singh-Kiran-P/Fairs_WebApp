@@ -196,6 +196,19 @@ CREATE TABLE reservations (
   FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE
 );
 
+-- Reviews --------------------------------------------------
+DROP TABLE IF EXISTS review;
+
+CREATE TABLE review (
+  review_id serial PRIMARY KEY,
+  zone_id INT NOT NULL,
+  user_id INT NOT NULL,
+  rating INT NOT NULL,
+  review TEXT ,
+  FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE,
+  FOREIGN KEY (zone_id) REFERENCES zones (zone_id) ON DELETE CASCADE
+);
+
 -- waitingList-----------------------------------------------
 DROP TABLE IF EXISTS waitingList;
 

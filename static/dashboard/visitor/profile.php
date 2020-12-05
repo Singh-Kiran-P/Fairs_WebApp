@@ -22,6 +22,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
   /* Make the reservation table */
   $outHTML_reservations = '';
+  $outHTML_notification = "";
   $reservation = new Reservation();
   $reservationList = $reservation->getReservations($_SESSION["userId"]);
 
@@ -37,6 +38,13 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     $outHTML_reservations .= '  </tr>';
 
     foreach ($reservationList as $item) {
+
+      // create notification
+      $today_dt = new DateTime(date("Y-m-d"));
+      $expire_dt = new DateTime($item['date']);
+      if ($expire_dt < $today_dt)
+        $outHTML_notification .= "If you liked " . $item['fairTitle'] . "'s zone " . $item['zoneTitle'] . ",you write a review by clicking on 👍<br>";
+
       $outHTML_reservations .= '  <tr>';
       $outHTML_reservations .= '      <td>' . $item['fairTitle'] . '</td>';
       $outHTML_reservations .= '      <td>' . $item['zoneTitle'] . '</td>';
@@ -176,9 +184,17 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
 
   </form>
+
+
   <!-- Reservations -->
   <center class="reservations">
-    <?php echo $outHTML_reservations; ?>
+    <?php
+    if ($outHTML_notification != "") {
+      echo "<div class='notification'>Notifications:<br>";
+      echo $outHTML_notification;
+      echo '</div>';
+    }
+    echo $outHTML_reservations; ?>
   </center>
 
   <!-- Waiting List -->

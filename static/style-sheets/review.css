@@ -1,0 +1,98 @@
+@import "basic.css";
+
+.content {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+  /* background-color: #1b4958; */
+  background-color: #181a1b;
+}
+
+.reviewFrom textarea,
+input {
+  border: none;
+}
+.review {
+  padding-bottom: 15px;
+}
+
+.reviewFrom input {
+  width: 30%;
+}
+.reviewFrom button {
+  float: right;
+  padding-top: 15px;
+  padding-right: 22%;
+}
+.reviewFrom i {
+  font-size: 40px;
+}
+
+.info {
+  padding-left: 20%;
+}
+.info p {
+  padding-left: 3%;
+}
+
+#btn {
+  background-color: #4caf50;
+  display: block;
+  width: 40%;
+  color: black;
+  padding: 15px;
+  margin: 10px 0px;
+  border: none;
+  cursor: pointer;
+  font-size: medium;
+}
+
+button {
+  background: transparent;
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  text-shadow: 0px 0px 0px transparent;
+}
+
+button:hover {
+  background: transparent;
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  text-shadow: 0px 0px 0px transparent;
+  cursor: pointer;
+}
+
+button:active {
+  outline: none;
+  border: none;
+}
+
+button:focus {
+  outline: 0;
+}
+
+input,
+textarea,
+.content a {
+  margin: 8px 0;
+  width: 80%;
+  padding: 12px 20px;
+  /*   display: block;*/
+  box-sizing: border-box;
+}
+
+.fa {
+  color: dodgerblue !important;
+}
+
+/* change color to white */
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+@media screen and (max-width: 700px) {
+  .side input {
+    width: 80%;
+  }
+}

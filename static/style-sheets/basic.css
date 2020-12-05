@@ -26,7 +26,7 @@ input,
 textarea,
 select,
 .desc {
-  background-color: #181a1b;
+  background-color: #34383a;
   border: 2px solid #00d900;
 }
 
@@ -197,6 +197,8 @@ img {
     transparent
   );
 }
+
+
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 700px) {

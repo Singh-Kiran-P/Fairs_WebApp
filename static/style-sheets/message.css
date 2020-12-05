@@ -22,9 +22,64 @@
 }
 
 .sendMessage {
-  height: 50px;
-  background-color: dodgerblue;
+
+  padding: 7px 9px;
+  background-color: #181a1b;
+
 }
+
+.sendMessage input {
+  height: 40px;
+  width:89%;
+  border: 1px solid #34383a;
+  border-radius: 20px;
+  padding-left: 10px;
+  background-color: #34383a;
+  color: white;
+
+}
+
+.sendMessage input:focus {
+  outline: none !important;
+}
+
+.sendMessage i {
+  font-size:20px;
+}
+
+
+.fa {
+  color: dodgerblue !important;
+}
+
+button {
+  background: transparent;
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  text-shadow: 0px 0px 0px transparent;
+}
+
+button:hover {
+  background: transparent;
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  text-shadow: 0px 0px 0px transparent;
+  cursor: pointer;
+}
+
+button:active {
+  outline: none;
+  border: none;
+
+}
+
+button:focus {
+  outline: 0;
+
+}
+
+
+
 
 .bubbleWrapper {
   padding: 10px 10px;

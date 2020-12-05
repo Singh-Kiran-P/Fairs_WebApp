@@ -1,3 +1,6 @@
+<!-- https://onaircode.com/html-css-chat-box-examples/ -->
+<!-- https://codepen.io/kristinak/pen/bXqayB -->
+
 <?php
 require '../../../server/classes/class.messaging.php';
 require '../../../server/classes/class.accounts.php';
@@ -41,7 +44,7 @@ if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "")) {
   }
 }
 
-if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "") && (isset($_POST['sendMsg']) && isset($_POST['msg'])&& $_POST['msg'] != "")) {
+if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "") && (isset($_POST['sendMsg']) && isset($_POST['msg']) && $_POST['msg'] != "")) {
 
   $msgFrom = $_SESSION['userId'];
   $msgTo = $_GET['msgTo'];
@@ -68,6 +71,8 @@ if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "") && (isset($_POST['sendMsg'])
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/message.css">
+  <!-- Add icon library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>Message</title>
 </head>
 
@@ -102,10 +107,11 @@ if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "") && (isset($_POST['sendMsg'])
 
       <div class="sendMessage">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?msgTo=<?php echo $msgTo ?>" method="post">
-          <input type="text" name="msg">
+          <input type="text" name="msg" id="enter" placeholder="Type a message...">
 
-          <input type="submit" name="sendMsg" value="send">
-          <a href="?msgTo=<?php echo $msgTo ?>">refresh</a>
+          <button type="submit" name="sendMsg"><i class="fa fa-paper-plane" aria-hidden="true"></i>
+          </button>
+          <a href="?msgTo=<?php echo $msgTo ?>"><i class="fa fa-refresh" aria-hidden="true"></i></a>
         </form>
       </div>
     </div>

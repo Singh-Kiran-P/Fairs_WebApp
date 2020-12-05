@@ -35,8 +35,10 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
             header('Location: ' . "profile.php");
         }
       } else { // not enough place, add user to a waiting list
-        $zoneslot_id = $msg['zoneslot_id'];
-        $msg['msg'] .= $reservation->addToWaitingList($zoneslot_id, $_SESSION['userId'])['msg'];
+        if (isset($msg['zoneslot_id'])) {
+          $zoneslot_id = $msg['zoneslot_id'];
+          $msg['msg'] .= $reservation->addToWaitingList($zoneslot_id, $_SESSION['userId'])['msg'];
+        }
       }
     }
   }

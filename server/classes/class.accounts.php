@@ -274,7 +274,6 @@ class Accounts
   }
 
 
-
   /* ___________________________ GETTER / SETTERS_________________________________ */
 
   public function getUserId()

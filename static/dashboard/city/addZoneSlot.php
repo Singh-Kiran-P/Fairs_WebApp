@@ -18,12 +18,14 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     $closingSlot = $_POST['closingSlot'];
 
     $fair = new Fair();
-    $Msg = $fair->checkingZoneSlot($openingSlot, $closingSlot);
-    $fairModel = $fair->getFairModel($_SESSION['fairId']);
+    $Msg = $fair->checkingZoneSlot($zoneId, $openingSlot, $closingSlot);
+    if ($Msg == '') {
+      $fairModel = $fair->getFairModel($_SESSION['fairId']);
 
-    $zones = $fair->getAllZones($_SESSION['fairId']);
-    foreach ($zones as $z) {
-      $Msg = $fair->addZoneSlot($z['zone_id'], $openingSlot, $closingSlot, $z['freeSlots'], $fairModel->getVar());
+      $zones = $fair->getAllZones($_SESSION['fairId']);
+      foreach ($zones as $z) {
+        $Msg = $fair->addZoneSlot($z['zone_id'], $openingSlot, $closingSlot, $z['freeSlots'], $fairModel->getVar());
+      }
     }
   }
   if (isset($_POST['submit'])) {
@@ -93,6 +95,6 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
 </body>
 <!-- Script -->
-<script src="addFair.js"></script>
+<script src="addZoneSlot.js"></script>
 
 </html>

@@ -10,25 +10,30 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
   $fileToUpload = $_FILES['fileToUpload'];
 
   $userId = $_SESSION['userId'];
-  try {
-    //Login as visitor to set the gernal variable
-    $user = new Accounts();
-    $user->init($userId, "visitor");
 
-    //upload img
-    $_SESSION['typeImg'] = "profile";
-    $_SESSION["fileToUpload"] = $fileToUpload;
+  //Login as visitor to set the gernal variable
+  $user = new Accounts();
+  $user->init($userId, "visitor");
 
-    Upload::uploadFiles($fileToUpload,$userId,"profile","img");
+  //upload img
+  $_SESSION['typeImg'] = "profile";
+  $_SESSION["fileToUpload"] = $fileToUpload;
 
-  } catch (\Throwable $th) {
-    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-  }
+  $errorMsg = Upload::checkFilesImg($fileToUpload);
+  if ($error['msg'] != '') //error while checking
+    $res =  $errorMsg['msg'];
+  else {
 
-  $res = $user->completeRegisteration($telephone, $desc);
+    $error = Upload::uploadFiles($fileToUpload, $userId, "profile", "img");
 
-  if ($res == "true") {
-    header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
+    if ($error['count'] != 0) // check if upload was successfull
+      $res = $user->completeRegisteration($telephone, $desc);
+    else
+      $res = $error['msg'];
+
+    if ($res == "true") {
+      header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
+    }
   }
 }
 ?>
@@ -58,10 +63,13 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
       <div id="form" class="completeRegisteration">
         <center>
           <h1> Complete Registeration </h1>
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" id="usrform" onsubmit="return validateForm()" >
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" id="usrform" onsubmit="return validateForm()">
             <input type="text" name="telephone" placeholder="Telephone" required>
             <textarea type="" name="desc" placeholder="Give a short discription of your city" form="usrform" required></textarea>
             Select image to upload: <input type="file" name="fileToUpload" id="fileToUpload" required>
+            <h5> (only JPG, JPEG, PNG & GIF files are allowed Max 5mb )</h5>
+
+
             <input name="isset" value="set" class="hidden">
             <input type="submit" value="Confirm" name="submit">
           </form>

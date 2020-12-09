@@ -29,7 +29,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
         $toSearchFile = $zoneId . "_" . $i;
         $video = Upload::getUploadedFilePath($toSearchFile, "zone_video");
         $ext = explode(".", $video);
-        if(count($ext) == 2)
+        if (count($ext) == 2)
           $outHTML_Video .= "<source  src='../../server/uploads/zone_video/" . $video . "' type='video/" . $ext[1] . "'>";
       }
     }
@@ -145,17 +145,30 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
         ?>
       </center>
 
+
+      <!-- show video -->
+      <?php echo $outHTML_Video; ?>
+
+
+      <!-- show reviews -->
+      <center>
+        <H3>Reviews</H3>
+      </center>
+
+
+
+      <!-- Zone Time slots info -->
+      <?php if ($_SESSION['type'] == 'city') {
+        echo '<table class="zoneTimeslotstable">';
+        echo $zoneInfoTableHeading;
+        echo '</table>';
+      }
+      ?>
+
+
     </div>
 
-    <!-- show video -->
-    <?php echo $outHTML_Video; ?>
-    <!-- Zone Time slots info -->
-    <?php if ($_SESSION['type'] == 'city') {
-      echo '<table class="zoneTimeslotstable">';
-      echo $zoneInfoTableHeading;
-      echo '</table>';
-    }
-    ?>
+
 
 
 

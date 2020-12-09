@@ -27,14 +27,24 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
 
     $fair = new Fair();
-    $errorMsg = $fair->checkingAddZone($fairId, $title, $desc, $open_spots, $location, $attractions);
-    if ($errorMsg == "") {
+    $errorMsgZone = $fair->checkingAddZone($fairId, $title, $desc, $open_spots, $location, $attractions);
+    $errorMsgUploadImg = Upload::checkFilesImg($files);
+    $errorMsgUploadVideo = Upload::checkFilesVideo($video);
+    if ($errorMsgZone == "" && $errorMsgUploadImg['msg'] == "" && $errorMsgUploadVideo['msg'] == "") {
 
       $zoneId = $fair->addZone($fairId, $title, $desc, $open_spots, $location, $attractions, 0, 0);
       $i = Upload::uploadFiles($files, $zoneId, "zone", "img");
       $v = Upload::uploadFiles($video, $zoneId, "zone", "video");
 
       $fair->updateDbFileCount($zoneId, $i, $v, "zones");
+      $errorMsg .= 'Zone is added successfully';
+    } else {
+      $errorMsg = $errorMsgZone;
+      if ($errorMsgUploadImg['msg'] != '')
+        $errorMsg .= '<br><br>Images error :' . $errorMsgUploadImg['msg'];
+
+      if ($errorMsgUploadVideo['msg'] != '')
+        $errorMsg .= '<br><br>Video error : ' . $errorMsgUploadVideo['msg'];
     }
 
     //reset form
@@ -90,15 +100,23 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
         <div>
           <div class="sidebyside">
-            <input type="text" name="open_spots" placeholder="Total free spots" value="<?php if (isset($_POST['open_spots'])) echo $_POST['open_spots']; ?>" required>
+            <input type="number" min="1" name="open_spots" placeholder="Total free spots" value="<?php if (isset($_POST['open_spots'])) echo $_POST['open_spots']; ?>" required>
 
             <input type="text" name="location" placeholder="Location" value="<?php if (isset($_POST['location'])) echo $_POST['location']; ?>" required>
           </div>
         </div>
 
         <!-- upload files -->
+        Images: <h5> (only JPG, JPEG, PNG & GIF files are allowed Max 5mb )</h5>
+
+
         <input type="file" name="file[]" class="inputfile" value="<?php if (isset($_POST['file'])) echo $_POST['file']; ?>" multiple>
-        <input type="file" name="video[]" class="inputfile" value="<?php if (isset($_POST['file'])) echo $_POST['file']; ?>" multiple>
+
+        Video's: <h6> (only MP4 and MK files are allowed Max 20mb )</h6>
+
+        <input type="file" name="video[]" class="inputfile" value="<?php if (isset($_POST['video'])) echo $_POST['video']; ?>" multiple>
+
+
 
         <p id="error">
           <?php
@@ -121,7 +139,9 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   </form>
 
 </body>
+
+
 <!-- Script -->
-<script src="addFair.js"></script>
+<script src="addZone.js"></script>
 
 </html>

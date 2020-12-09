@@ -15,7 +15,6 @@ class Upload
   public static function uploadFiles($files, $id, $type, $ex)
   {
 
-
     if ($type == "profile") {
       // Upload file
       $ext = pathinfo($files['name'], PATHINFO_EXTENSION);
@@ -39,6 +38,95 @@ class Upload
     }
   }
 
+  public static function checkFilesImg($files)
+  {
+    $msg = '';
+    // Count total files
+    $countfiles = count($files['name']);
+
+    $count = 0;
+    // Looping all files
+    for ($i = 0; $i < $countfiles; $i++) {
+      $uploadOk = 1;
+      $imageFileType = strtolower(pathinfo($files["name"][$i], PATHINFO_EXTENSION));
+      if ($imageFileType == '')
+        return ['msg' => 'No files provided'];
+
+      // Check if image file is a actual image or fake image
+      $check = getimagesize($files["tmp_name"][$i]);
+      if ($check == false) {
+        $msg .= "[" . $files["name"][$i] . "] is not an image.";
+        $uploadOk = 0;
+      }
+
+
+      // Check file size
+      if ($files["size"][$i] > 2000000) {
+        $msg .= "Sorry, file [" . $files["name"][$i] . "] is too large.";
+        $uploadOk = 0;
+      }
+
+      // Allow certain file formats
+      if (
+        $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif"
+      ) {
+        $msg .= "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+      }
+
+
+      // Check if $msg is set to a message by an error
+      if ($msg != '') {
+        return ['msg' => $msg];
+        // everything is oke
+      } else {
+        return ['msg' => ''];
+      }
+    }
+  }
+
+  public static function checkFilesVideo($files)
+  {
+    $msg = '';
+    // Count total files
+    $countfiles = count($files['name']);
+
+    $count = 0;
+    // Looping all files
+    for ($i = 0; $i < $countfiles; $i++) {
+      $uploadOk = 1;
+      $videoType = strtolower(pathinfo($files["name"][$i], PATHINFO_EXTENSION));
+      if ($videoType == '')
+        return ['msg' => 'No files provided'];
+
+
+
+      // Check file size
+      if ($files["size"][$i] > 20000000) {
+        $msg .= "Sorry, file [" . $files["name"][$i] . "] is too large.";
+        $uploadOk = 0;
+      }
+
+      // Allow certain file formats
+      if (
+        $videoType != "mp4" && $videoType != "mk"
+      ) {
+        $msg .= "Sorry, only mp4 and mk files are allowed.";
+        $uploadOk = 0;
+      }
+
+
+      // Check if $msg is set to a message by an error
+      if ($msg != '') {
+        return ['msg' => $msg];
+        // everything is oke
+      } else {
+        return ['msg' => ''];
+      }
+    }
+  }
+
   /**
    * Gives the right file with de right extension
    *
@@ -56,6 +144,5 @@ class Upload
       if (strpos($file, $fileName) !== false)
         return $file;
     }
-
   }
 }

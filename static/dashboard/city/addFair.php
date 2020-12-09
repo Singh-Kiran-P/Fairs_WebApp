@@ -21,13 +21,16 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     $errorMsg = $fair->checkingAddFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location);
     if ($errorMsg == "") {
 
-      $fairId = $fair->addFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, 0);
-      $i = Upload::uploadFiles($files, $fairId, "fair", "img");
-      $fair->updateDbFileCount($fairId, $i, 0, "fair");
-
-
-
-      header("Location: addZone.php?fairId=" . $fairId . "&title=" . $title);
+      //check files for uploading
+      $error = Upload::checkFilesImg($files);
+      if ($error['msg'] != '') //error while checking
+        $errorMsg = $error['msg'];
+      else {
+        $fairId = $fair->addFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location, 0);
+        $i = Upload::uploadFiles($files, $fairId, "fair", "img");
+        $fair->updateDbFileCount($fairId, $i, 0, "fair");
+        header("Location: addZone.php?fairId=" . $fairId . "&title=" . $title);
+      }
     }
   }
 } else {
@@ -69,6 +72,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
         <textarea type="" name="desc" placeholder="Give a short discription about this fair" form="form" required><?php if (isset($_POST['desc'])) echo $_POST['desc']; ?></textarea>
 
+        <h5> (only JPG, JPEG, PNG & GIF files are allowed Max 5mb )</h5>
         <input type="file" name="file[]" class="inputfile" value="<?php if (isset($_POST['file'])) echo $_POST['file']; ?>" multiple>
         <div>
           <div class="sidebyside">
@@ -99,6 +103,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   </form>
 
 </body>
+
 <!-- Script -->
 <script src="addFair.js"></script>
 

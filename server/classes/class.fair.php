@@ -74,10 +74,24 @@ class Fair
    * @param [time] $closingHour
    * @return [string] empty string if al is valid else the error msg
    */
-  public function checkingZoneSlot($openingSlot, $closingSlot)
+  public function checkingZoneSlot($zoneId, $openingSlot, $closingSlot)
   {
-    $msg = "";
-    return $msg;
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from zoneslots where zone_id=:zoneId and opening_slot=:open and closing_slot = :close");
+    $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
+    $query->bindParam(":open", $openingSlot, PDO::PARAM_STR, 255);
+    $query->bindParam(":close", $closingSlot, PDO::PARAM_STR, 255);
+
+    if ($query->execute()) {
+      if ($query->rowCount() > 0)
+        return "You already have a zoneslot with the same start end end time!";
+      else
+        return "";
+    } else {
+      return $query->errorInfo()[2];
+    }
   }
 
   private function _checkIfNotDupplicate($cityId, $title, $startDate, $location)

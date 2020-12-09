@@ -1,5 +1,6 @@
 <!-- https://onaircode.com/html-css-chat-box-examples/ -->
 <!-- https://codepen.io/kristinak/pen/bXqayB -->
+<!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown -->
 
 <?php
 require '../../../server/classes/class.messaging.php';
@@ -19,12 +20,11 @@ if (count($listOfVisitors) > 0) {
 
   foreach ($listOfVisitors as $visitor) {
     if ($visitor['userId'] != $msgFrom)
-      $outHTML_otherVisitors .= '<option value="' . $visitor['userId'] . '">' . $visitor['name'] . '</option>';
+      $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . $visitor['userId'] . '">' . $visitor['name'] . '</a>';
   }
 }
 
-
-
+$HTMLcurrentUser = "Choose User:";
 $messaging = new Messaging();
 
 // process select user FORM
@@ -36,10 +36,11 @@ if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "")) {
   if (count($listOfVisitors) > 0) {
     $outHTML_otherVisitors = '';
     foreach ($listOfVisitors as $visitor) {
-      if ($visitor['userId'] == $msgTo)
-        $outHTML_otherVisitors .= '<option value="' . $visitor['userId'] . '" selected>' . $visitor['name'] . '</option>';
-      else
-        $outHTML_otherVisitors .= '<option value="' . $visitor['userId'] . '">' . $visitor['name'] . '</option>';
+      if ($visitor['userId'] == $msgTo) {
+        $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . $visitor['userId'] . '" class="active">' . $visitor['name'] . '</a>';
+        $HTMLcurrentUser =  $visitor['name'];
+      } else
+        $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . $visitor['userId'] . '">' . $visitor['name'] . '</a>';
     }
   }
 }
@@ -86,17 +87,29 @@ if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "") && (isset($_POST['sendMsg'])
     ?>
   </header>
 
-  <div class="content">
 
-    <div class="contacts">
-      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get">
+
+  <div class="content">
+    <div class="dropdown">
+      <button onclick="myFunction()" class="dropbtn"><?php echo $HTMLcurrentUser; ?></button>
+      <div id="myDropdown" class="dropdown-content">
+        <?php echo $outHTML_otherVisitors; ?>
+
+      </div>
+    </div>
+
+    <!-- <div class="contacts"> -->
+    <!-- <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get">
         <select name="msgTo">
           <option value="">Chose user ...</option>
-          <?php echo $outHTML_otherVisitors; ?>
+
         </select>
         <input type="submit" name="choseUser" value="chat">
-      </form>
-    </div>
+      </form> -->
+
+
+    <!-- </div> -->
+
 
     <div class="messageBox" <?php if (!isset($outHTML_MsgBox)) {
                               echo " style='display: none'";
@@ -108,15 +121,21 @@ if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "") && (isset($_POST['sendMsg'])
       <div class="sendMessage">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?msgTo=<?php echo $msgTo ?>" method="post">
           <input type="text" name="msg" id="enter" placeholder="Type a message...">
-
-          <button type="submit" name="sendMsg"><i class="fa fa-paper-plane" aria-hidden="true"></i>
-          </button>
-          <a href="?msgTo=<?php echo $msgTo ?>"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+          <div class="buttons">
+            <button type="submit" name="sendMsg"><i class="fa fa-paper-plane" aria-hidden="true"></i>
+            </button>
+            <a href="?msgTo=<?php echo $msgTo ?>"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+          </div>
         </form>
       </div>
     </div>
   </div>
+
+
+
 </body>
+
+<script src="message.js"></script>
 
 <script>
   var elem = document.getElementsByClassName('messages')[0];

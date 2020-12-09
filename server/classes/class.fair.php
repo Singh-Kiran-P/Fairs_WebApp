@@ -542,31 +542,4 @@ class Fair
     }
   }
 
-  public function getInfoForReview($reservationId)
-  {
-    //connect to database
-    $conn = Database::connect();
-
-    $query = $conn->prepare("select f.title as fTitle,z.title as zTitle,z.zone_id
-    from reservations r,zones z,fair f,zoneslots zs
-    where r.zoneslot_id = zs.zoneslot_id and zs.zone_id = z.zone_id and z.fair_id = f.fair_id and r.reservation_id=:reservationId");
-    $query->bindParam(":reservationId", $reservationId, PDO::PARAM_STR, 255);
-
-
-    if ($query->execute()) {
-      if ($query->rowCount() > 0) {
-        $row = $query->fetch();
-        $info = array(
-          "zoneId" => $row['zone_id'],
-          "zoneTitle" => $row['ztitle'],
-          "fairTitle" => $row['ftitle'],
-        );
-        return $info;
-      }
-    } else {
-      return $query->errorInfo()[2];
-    }
-
-    return NULL;
-  }
 }

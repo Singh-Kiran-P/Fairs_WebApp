@@ -1,11 +1,58 @@
+/* https://www.w3schools.com/howto/howto_custom_select.asp */
 @import "basic.css";
 
-/* Contacts */
-.contacts {
-  flex: 30%;
-  display: flex;
-  background-color: red;
+
+.content{
+  flex-direction: column;
 }
+/* Contacts -----------------------------------------------------------*/
+.contacts {
+  flex: 20%;
+  display: flex;
+  background-color: dodgerblue;
+}
+
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 300px;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+/* ------------------------------------------------------------ */
 
 /* main chat box */
 .messageBox {
@@ -30,7 +77,7 @@
 
 .sendMessage input {
   height: 40px;
-  width:89%;
+  width:92%;
   border: 1px solid #34383a;
   border-radius: 20px;
   padding-left: 10px;
@@ -50,6 +97,14 @@
 
 .fa {
   color: dodgerblue !important;
+}
+
+.buttons{
+  margin-top: 10px;
+  float: right;
+}
+.buttons button{
+  padding-right: 20px;
 }
 
 button {
@@ -140,4 +195,7 @@ span.other {
   .content {
     width: 95%;
   }
+  .sendMessage input {
+
+    width:85%;
 }

@@ -1,6 +1,6 @@
 <?php
 
-require '../../../server/classes/class.accounts.php';
+require '../../../server/classes/class.review.php';
 require '../../../server/classes/class.fair.php';
 
 session_start();
@@ -10,14 +10,14 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
 
 
 $msg = "";
+$review = new Review();
+
 if (isset($_GET['reservationId'])) {
-  $fair = new Fair();
-  $info = $fair->getInfoForReview($_GET['reservationId']);
+  $info = $review->getInfoForReviewPage($_GET['reservationId']);
 }
 
 if (isset($_POST['review']) && isset($_POST['rating'])) {
-  $account = new Accounts();
-  $msg = $account->writeReview($info['zoneId'], $_SESSION['userId'], $_POST['review'], $_POST['rating']);
+  $msg = $review->writeReview($info['zoneId'], $_SESSION['userId'], $_POST['review'], $_POST['rating']);
 }
 
 ?>
@@ -47,13 +47,13 @@ if (isset($_POST['review']) && isset($_POST['rating'])) {
   <div class=content>
     <div class="review">
       <center>
-        <h2> Review for zone: <?php if(isset($info)) echo $info['zoneTitle']?></h2>
+        <h2> Review for zone: <?php if (isset($info)) echo $info['zoneTitle'] ?></h2>
       </center>
       <div class="info">
         Info:
         <ul>
-          <li>Fair Title:&nbsp <?php if(isset($info)) echo $info['fairTitle']?></li>
-          <li>Zone Title:&nbsp <?php if(isset($info)) echo $info['zoneTitle']?></li>
+          <li>Fair Title:&nbsp <?php if (isset($info)) echo $info['fairTitle'] ?></li>
+          <li>Zone Title:&nbsp <?php if (isset($info)) echo $info['zoneTitle'] ?></li>
         </ul>
 
         Write your review:

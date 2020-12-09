@@ -28,6 +28,8 @@
   width: 50%;
   margin: auto;
   flex-wrap: wrap;
+  background-color: #141516;
+
 }
 
 .w60 {

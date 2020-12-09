@@ -273,23 +273,6 @@ class Accounts
     return NULL;
   }
 
-  public function writeReview($zoneId,$userId, $review, $rating)
-  {
-    //connect to database
-    $conn = Database::connect();
-
-    $query = $conn->prepare("insert into review values (DEFAULT,:zoneId,:userId,:rating,:review)");
-    $query->bindParam(":zoneId", $zoneId, PDO::PARAM_STR, 255);
-    $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
-    $query->bindParam(":rating", $rating, PDO::PARAM_STR, 255);
-    $query->bindParam(":review", $review, PDO::PARAM_STR, 255);
-
-    if ($query->execute()) {
-      return "Your Review has been sent! ";
-    } else {
-      return $query->errorInfo()[2];
-    }
-  }
 
 
 

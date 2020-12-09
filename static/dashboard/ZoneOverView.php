@@ -1,8 +1,10 @@
 <?php
 include_once '../../server/classes/class.fair.php';
+include_once '../../server/classes/class.review.php';
 include_once '../../server/classes/class.upload.php';
 include_once '../../server/classes/class.searchFair.php';
 include_once '../../server/classes/class.model.fair.php';
+
 session_start();
 if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_SESSION['loggedin']) && isset($_SESSION['type'])) {
   if (isset($_GET['zoneId'])) {
@@ -71,6 +73,12 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
     $zoneInfoTableHeading =
       "<tr><th>Date</th><th>Start time</th><th>End time</th><th>Open</th></tr>";
     $zoneInfoTableHeading .= $fair->showZoneTimeSlots($zoneId);
+
+
+    //build reviews
+    $review = new Review();
+    $reviewInfo = $review->getReviewInfo($zoneId);
+    $outReview = $review->buildReviewHTML($reviewInfo);
   }
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
@@ -85,8 +93,10 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/fairView.css">
+  <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/zoneOverView.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Add icon library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>Add Fair</title>
 </head>
 
@@ -152,7 +162,15 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
 
       <!-- show reviews -->
       <center>
-        <H3>Reviews</H3>
+        <?php
+        if (isset($outReview) && $outReview != '') {
+          echo '<H3>Reviews</H3>';
+          echo $outReview;
+        }
+        ?>
+
+
+
       </center>
 
 

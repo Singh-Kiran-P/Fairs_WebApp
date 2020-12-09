@@ -36,11 +36,13 @@ if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "")) {
   if (count($listOfVisitors) > 0) {
     $outHTML_otherVisitors = '';
     foreach ($listOfVisitors as $visitor) {
-      if ($visitor['userId'] == $msgTo) {
-        $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . $visitor['userId'] . '" class="active">' . $visitor['name'] . '</a>';
-        $HTMLcurrentUser =  $visitor['name'];
-      } else
-        $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . $visitor['userId'] . '">' . $visitor['name'] . '</a>';
+      if ($visitor['userId'] != $msgFrom) {
+        if ($visitor['userId'] == $msgTo) {
+          $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . $visitor['userId'] . '" class="active">' . $visitor['name'] . '</a>';
+          $HTMLcurrentUser =  $visitor['name'];
+        } else
+          $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . $visitor['userId'] . '">' . $visitor['name'] . '</a>';
+      }
     }
   }
 }

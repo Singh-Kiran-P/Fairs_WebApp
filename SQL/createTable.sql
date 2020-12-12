@@ -229,9 +229,9 @@ CREATE TABLE messaging (
   msgTo INT NOT NULL,
   message TEXT,
   send_dateTime TIMESTAMP NOT NULL,
-
-  FOREIGN KEY (user_sending) REFERENCES accounts (user_id),
-  FOREIGN KEY (user_receiving) REFERENCES accounts (user_id)
+  openend BOOLEAN DEFAULT False,
+  FOREIGN KEY (msgFrom) REFERENCES accounts (user_id),
+  FOREIGN KEY (msgTo) REFERENCES accounts (user_id)
 );
 
 insert into messaging

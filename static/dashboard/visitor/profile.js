@@ -1,5 +1,9 @@
 function onLoad() {
   checkWaitingList();
+
+  checkIfNewMessages();
+  setInterval(checkIfNewMessages, 1000);
+
 }
 
 function checkWaitingList() {
@@ -11,9 +15,9 @@ function checkWaitingList() {
 
     list.forEach(element => {
       if (element['open'] > 0) {
-        alertify.warning(element['fairTitle'] + ' has ' + element['open'] + ' open spots!');
+        var msg = alertify.warning();
+        msg.delay(5).setContent(element['fairTitle'] + ' has ' + element['open'] + ' open spots!');
       }
-
     });
   }
 }
@@ -35,4 +39,27 @@ function createListOfOpenSpotWaitingList(fairInfo) {
   }
 
   return list;
+}
+
+/**
+ * Check every 5sec if there are new messages through AJAX request
+ */
+function checkIfNewMessages() {
+
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      msg = JSON.parse(this.responseText);
+      msg.forEach(element => {
+        var msg = alertify.warning('Default message');
+        msg.delay(5).setContent(element['msgCount'] + ' new messages from ' + element['msgFrom']);
+      });
+    }
+  };
+  xmlhttp.open(
+    "GET",
+    "../../../server/dashboard/visitor/message.php",
+    true
+  );
+  xmlhttp.send();
 }

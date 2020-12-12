@@ -31,7 +31,7 @@ class Reservation
           return ['zoneslot_id' => $row['zoneslot_id'], 'msg' => "Can not book on " . $reservationDate . " booking is not available. "];
         }
       } else {
-        return ['msg' => "Cannot reserver on this date and timeslot"];
+        return ['msg' => "You can not book on this date and timeslot"];
       }
     } else {
       return $query->errorInfo()[2];

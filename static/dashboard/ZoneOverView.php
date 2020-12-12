@@ -63,6 +63,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
     // Add list of dates
     $dateSlectorHTML = "";
     $dates = $fair->getZonesDate($zoneId);
+
     if (count($dates) > 0) {
       foreach ($dates as $d) {
         $date = '<option value="' . $d . '">' . $d . '</option>';

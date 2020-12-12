@@ -19,22 +19,23 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
   $_SESSION['typeImg'] = "profile";
   $_SESSION["fileToUpload"] = $fileToUpload;
 
-  $errorMsg = Upload::checkFilesImg($fileToUpload);
-  if ($error['msg'] != '') //error while checking
-    $res =  $errorMsg['msg'];
-  else {
+  //TO-DO BUG
+  // $errorMsg = Upload::checkFilesImg($fileToUpload);
+  // if ($errorMsg['msg'] != '') //error while checking
+  //   $res =  $errorMsg['msg'];
+  // else {
 
-    $error = Upload::uploadFiles($fileToUpload, $userId, "profile", "img");
+  $count = Upload::uploadFiles($fileToUpload, $userId, "profile", "img");
 
-    if ($error['count'] != 0) // check if upload was successfull
-      $res = $user->completeRegisteration($telephone, $desc);
-    else
-      $res = $error['msg'];
+  if ($count != 0) // check if upload was successfull
+    $res = $user->completeRegisteration($telephone, $desc);
+  else
+    $res = "upload was unsuccessfull";
 
-    if ($res == "true") {
-      header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
-    }
+  if ($res == "true") {
+    header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
   }
+  // }
 }
 ?>
 

@@ -51,6 +51,50 @@ class Messaging
   }
 
   /**
+   * Get msg that are not openend to push a notification to font-end user
+   *  for Ajax
+   * @param [int] $userId
+   */
+  public function getUnOpenendMsg($userId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select count(*) as msgCount,accounts.name from messaging,accounts where msgto = :msgTo and msgFrom = accounts.user_id  and openend = false group by accounts.name");
+    $query->bindParam(":msgTo", $userId, PDO::PARAM_STR, 255);
+
+    $Json = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $singleMessage = array(
+            'msgCount' => $row['msgcount'],
+            'msgFrom' => $row['name'],
+          );
+          array_push($Json,$singleMessage);
+        }
+
+        //echo for AJAX
+        echo json_encode($Json);
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+  }
+
+  public function msgOpenend($userId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("update messaging set openend = true where msgto=:userId;");
+    $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
+
+    if (!$query->execute()) {
+      return $query->errorInfo()[2];
+    }
+  }
+  /**
    * Send Msg
    *
    * @param [type] $msgFrom
@@ -65,7 +109,7 @@ class Messaging
 
     $query = $conn->prepare(" insert into messaging
                               VALUES
-                              (DEFAULT,:msgFrom,:msgTo,:msg,current_timestamp);");
+                              (DEFAULT,:msgFrom,:msgTo,:msg,current_timestamp,DEFAULT);");
     $query->bindParam(":msgFrom", $msgFrom, PDO::PARAM_STR, 255);
     $query->bindParam(":msgTo", $msgTo, PDO::PARAM_STR, 255);
     $query->bindParam(":msg", $msg, PDO::PARAM_STR, 255);

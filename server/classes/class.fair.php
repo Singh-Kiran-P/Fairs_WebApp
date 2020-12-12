@@ -417,13 +417,12 @@ class Fair
         while ($row = $query->fetch()) {
           array_push($list, $row['start_date']);
         }
-        return $list;
       }
     } else {
       return $query->errorInfo()[2];
     }
 
-    return NULL;
+    return  $list;
   }
 
 
@@ -491,7 +490,7 @@ class Fair
         // echo html table rows
         return $html_out;
       } else { // No timeslots for this zone in de database
-        echo "No timeslots for this zone in de database";
+        return "No timeslots for this zone in de database";
       }
     } else {
       return $query->errorInfo()[2];
@@ -541,5 +540,4 @@ class Fair
       return $query->errorInfo()[2];
     }
   }
-
 }

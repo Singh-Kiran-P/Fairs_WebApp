@@ -43,7 +43,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
 <html>
 
 <head>
-  <title>Login</title>
+  <title>Complete Registeration</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/~kiransingh/project/static/style-sheets/form.css">

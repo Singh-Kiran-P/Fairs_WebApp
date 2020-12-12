@@ -122,7 +122,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 <html>
 
 <head>
-  <title>Home</title>
+  <title>Profile</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/profile.css">
@@ -154,7 +154,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <!-- Profile foto -->
   <div class="profileImg">
     <?php
-    echo "<img class='topImg' src='/~kiransingh/project/server/uploads/profile_img/$userId.jpg' alt=''>"
+    //echo "<img class='topImg' src='/~kiransingh/project/server/uploads/profile_img/$userId.jpg' alt='Profile Img'>"
     ?>
   </div>
 

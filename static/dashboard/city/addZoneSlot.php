@@ -46,7 +46,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/addZone.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Fair</title>
+  <title>Add ZoneSlot</title>
 </head>
 
 <body>

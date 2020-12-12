@@ -17,8 +17,8 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
     if ($zone != null) {
       for ($i = 0; $i < $zone['totimg']; $i++) {
         $toSearchFile = $zoneId . "_" . $i;
-        $img = Upload::getUploadedFilePath($toSearchFile, "zone_img");
-        $outHTML_Img .= "<img alt='fair images' src='../../server/uploads/zone_img/" . $img . "'></img>";
+        $zoneImg = Upload::getUploadedFilePath($toSearchFile, "zone_img");
+        $outHTML_Img .= "<img alt='Zone images' src='../../server/uploads/zone_img/" . $zoneImg . "'></img>";
       }
     }
 
@@ -85,7 +85,6 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
 
-
 ?>
 
 
@@ -98,7 +97,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <title>Add Fair</title>
+  <title>ZoneOverView</title>
 </head>
 
 <body>

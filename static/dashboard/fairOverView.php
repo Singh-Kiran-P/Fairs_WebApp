@@ -23,8 +23,8 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
   if ($fairRow != null) {
     for ($i = 0; $i < $imgCount; $i++) {
       $toSearchFile = $fairId . "_" . $i;
-      $profilePic = Upload::getUploadedFilePath($toSearchFile, "fair_img");
-      $outHTML_Img .= "<img alt='fair images' src='../../server/uploads/fair_img/" . $profilePic . "'></img>";
+      $fairImg = Upload::getUploadedFilePath($toSearchFile, "fair_img");
+      $outHTML_Img .= "<img alt='fair image' src='../../server/uploads/fair_img/" . $fairImg . "'></img>";
     }
   }
 
@@ -69,7 +69,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/fairView.css">
-  <title>List Of Fairs</title>
+  <title>FairOverView</title>
 </head>
 
 <body>

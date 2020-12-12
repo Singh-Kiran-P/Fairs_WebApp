@@ -41,7 +41,6 @@ input,
 }
 
 .messaging_btn {
-
   float: left;
   padding-right: 20px;
   background-color: DodgerBlue; /* Blue background */
@@ -50,10 +49,9 @@ input,
   padding: 6px 6px; /* Some padding */
   font-size: 20px; /* Set a font size */
   cursor: pointer; /* Mouse pointer on hover */
-
 }
 
-.notification{
+.notification {
   margin-top: 20px;
   border: 1px solid white;
   padding: 10px;
@@ -67,6 +65,10 @@ button {
   margin: 10px 0px;
   border: none;
   cursor: pointer;
+}
+
+#linkinnotification {
+  color: dodgerBlue !important;
 }
 
 .reservations {

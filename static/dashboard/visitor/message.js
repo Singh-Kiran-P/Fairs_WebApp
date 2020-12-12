@@ -2,7 +2,7 @@
 
 function onLoad() {
   checkIfNewMessages();
-  setInterval(checkIfNewMessages, 2000);
+  setInterval(checkIfNewMessages, 1000);
 }
 
 /* When the user clicks on the button,
@@ -37,11 +37,8 @@ function checkIfNewMessages() {
       msg = JSON.parse(this.responseText);
       msg.forEach(element => {
         var msg = alertify.warning();
-        msg.delay(5).setContent(element['msgCount'] + ' new messages from ' + element['msgFrom']);
 
-
-        // alertify.message.delay(3).setContext(element['msgCount'] + ' new messages from ' + element['msgFrom']);
-
+        msg.delay(4).setContent(element['msgCount'] + ' new messages from <a  href="message.php?msgTo=' + element['user_id'] + '"><b  id="linkinnotification" >' + element['msgFrom'] + '</b></a>');
       });
     }
   };

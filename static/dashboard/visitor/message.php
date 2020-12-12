@@ -24,6 +24,7 @@ if (count($listOfVisitors) > 0) {
   }
 }
 
+
 $HTMLcurrentUser = "Choose User:";
 $messaging = new Messaging();
 

@@ -60,7 +60,7 @@ class Messaging
     //connect to database
     $conn = Database::connect();
 
-    $query = $conn->prepare("select count(*) as msgCount,accounts.name from messaging,accounts where msgto = :msgTo and msgFrom = accounts.user_id  and openend = false group by accounts.name");
+    $query = $conn->prepare("select accounts.user_id, count(*) as msgCount,accounts.name from messaging,accounts where msgto = :msgTo and msgFrom = accounts.user_id  and openend = false group by accounts.name,accounts.user_id");
     $query->bindParam(":msgTo", $userId, PDO::PARAM_STR, 255);
 
     $Json = array();
@@ -70,16 +70,17 @@ class Messaging
           $singleMessage = array(
             'msgCount' => $row['msgcount'],
             'msgFrom' => $row['name'],
+            'user_id' => $row['user_id'],
           );
-          array_push($Json,$singleMessage);
+          array_push($Json, $singleMessage);
         }
-
-        //echo for AJAX
-        echo json_encode($Json);
       }
     } else {
       return $query->errorInfo()[2];
     }
+
+    //echo for AJAX
+    echo json_encode($Json);
   }
 
   public function msgOpenend($userId)

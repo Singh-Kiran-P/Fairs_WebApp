@@ -68,6 +68,11 @@
 
 }
 
+#linkinnotification {
+  color: dodgerBlue !important;
+}
+
+
 .sendMessage {
 
   padding: 7px 9px;

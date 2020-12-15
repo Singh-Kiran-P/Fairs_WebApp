@@ -10,6 +10,7 @@
   background-color: #141516;
 }
 
+
 #btn {
   background-color: #4caf50;
   display: block;
@@ -43,6 +44,10 @@ textarea,
   padding: 12px 20px;
   /*   display: block;*/
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
 }
 
 td {

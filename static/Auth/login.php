@@ -1,8 +1,6 @@
 <?php
 session_start();
 include '../../server/classes/class.accounts.php';
-echo "<script>console.log('Debug Objects: " . "test" . "' );</script>";
-
 
 if (isset($_POST['isset'])) {
   $password = $_POST['password'];
@@ -46,7 +44,7 @@ if (isset($_POST['isset'])) {
       <!-- Login form -->
       <div id="form">
         <center>
-          <h1> Kermis Login Form </h1>
+          <h1>Login</h1>
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <input class="text" type="text" placeholder="Enter email" name="email" required>
             <input class="text" type="password" placeholder="Enter Password" name="password" required>

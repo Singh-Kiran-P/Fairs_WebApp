@@ -125,6 +125,8 @@ class Accounts
       $redirectTo = $rootURL . '/~kiransingh/project/static/dashboard/city/profile.php';
     } else if ($row['type'] === "visitor") {
       $redirectTo = $rootURL . '/~kiransingh/project/static/dashboard/visitor/searchFairs.php';
+    } else if ($row['type'] === "admin") {
+      $redirectTo = $rootURL . '/~kiransingh/project/static/dashboard/admin/actions.php';
     }
 
     return $redirectTo;

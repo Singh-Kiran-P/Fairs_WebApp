@@ -1,0 +1,105 @@
+@import "basic.css";
+
+* {
+  color: black;
+}
+
+.mainCol {
+  flex: 90%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  /*   background-color: #1b4958; */
+  background-color: white;
+  padding-bottom: 20px;
+  padding-top: 30px;
+}
+
+.heading {
+  padding-left: 10%;
+}
+
+.links {
+  padding-left: 12%;
+}
+
+.searchBox input {
+  height: 40px;
+  width: 92%;
+  border: 1px solid #34383a;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding-left: 10px;
+  background-color: #34383a;
+  color: white;
+}
+
+.searchBox {
+  display: flex;
+  flex: 100%;
+  flex-direction: row;
+}
+
+.searchBox select {
+  display: flex;
+  flex-direction: row;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: dodgerblue;
+}
+
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_autocomplete */
+/*the container must be positioned relative:*/
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9;
+}

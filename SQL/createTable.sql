@@ -196,6 +196,17 @@ CREATE TABLE reservations (
   FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE
 );
 
+-- notifications----------------------------------------------
+DROP TABLE IF EXISTS notifications;
+
+CREATE TABLE notifications (
+  notification_id serial PRIMARY KEY,
+  user_id INT NOT NULL,
+  msg INT NOT NULL,
+  active INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE
+);
+
 -- Reviews --------------------------------------------------
 DROP TABLE IF EXISTS review;
 
@@ -204,7 +215,7 @@ CREATE TABLE review (
   zone_id INT NOT NULL,
   user_id INT NOT NULL,
   rating INT NOT NULL,
-  review TEXT ,
+  review TEXT,
   FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE,
   FOREIGN KEY (zone_id) REFERENCES zones (zone_id) ON DELETE CASCADE
 );
@@ -233,4 +244,3 @@ CREATE TABLE messaging (
   FOREIGN KEY (msgFrom) REFERENCES accounts (user_id),
   FOREIGN KEY (msgTo) REFERENCES accounts (user_id)
 );
-

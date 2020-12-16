@@ -17,6 +17,15 @@ class Fair
    */
   public function checkingAddFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location)
   {
+    /* check if not emptys */
+    if ($title == "")
+      return "Title connot be empty";
+    if ($desc == "")
+      return "Description connot be empty";
+    if ($location == "")
+      return "Location connot be empty";
+
+
     /* check if startdate before current date  */
     if (strtotime($startDate) < mktime(0, 0, 0))
       return "Start date less then current date";
@@ -30,6 +39,9 @@ class Fair
     $opening = new DateTime($openingHour);
     if ($closing <= $opening)
       return "Clossing time cannot be less then openning time";
+
+
+
 
     /* check if there is a other fiar with the same title/startdate/location */
     $msg = $this->_checkIfNotDupplicate($cityId, $title, $startDate, $location);

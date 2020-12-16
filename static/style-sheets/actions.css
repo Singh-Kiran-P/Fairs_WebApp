@@ -1,20 +1,4 @@
-@import "basic.css";
-
-* {
-  color: black;
-}
-
-.mainCol {
-  flex: 90%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
-  /*   background-color: #1b4958; */
-  background-color: white;
-  padding-bottom: 20px;
-  padding-top: 30px;
-}
+@import "admin.css";
 
 .heading {
   padding-left: 10%;

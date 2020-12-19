@@ -1,5 +1,6 @@
 <?php
 include_once "class.database.php";
+include_once "class.upload.php";
 
 /* Admin class holds the Admin fuction and methodes*/
 class Admin
@@ -15,7 +16,7 @@ class Admin
     //connect to database
     $conn = Database::connect();
 
-    $query = $conn->prepare("select * from accounts,city where accounts.user_id = :id and accounts.user_id = city.city_id");
+    $query = $conn->prepare("select * from accounts,city where  city.city_id= :id and accounts.user_id = city.user_id");
     $query->bindParam(":id", $cityId, PDO::PARAM_STR, 255);
 
     $list = array();
@@ -55,19 +56,18 @@ class Admin
       $conn = Database::connect();
 
       /* Update Accounts table */
-      $query = $conn->prepare("UPDATE accounts SET name=:name,username=:username,email=:email,type=:type WHERE user_id=:id");
+      $query = $conn->prepare("UPDATE accounts SET name=:name,username=:username,email=:email WHERE user_id=:id");
 
       $query->bindParam(":id", $cityId, PDO::PARAM_STR, 255);
       $query->bindParam(":name", $data['name'], PDO::PARAM_STR, 255);
       $query->bindParam(":username", $data['username'], PDO::PARAM_STR, 255);
       $query->bindParam(":email", $data['email'], PDO::PARAM_STR, 255);
-      $query->bindParam(":type", $data['type'], PDO::PARAM_STR, 255);
 
       if (!$query->execute()) {
         return $query->errorInfo()[2];
       } else { //Update City table
 
-        $query = $conn->prepare("UPDATE city SET telephone=:telephone,short_description=:short_description WHERE user_id=:id");
+        $query = $conn->prepare("UPDATE city SET telephone=:telephone,short_description=:short_description WHERE city_id=:id");
 
         $query->bindParam(":id", $cityId, PDO::PARAM_STR, 255);
         $query->bindParam(":telephone", $data['telephone'], PDO::PARAM_STR, 255);
@@ -76,7 +76,7 @@ class Admin
           return $query->errorInfo()[2];
       }
 
-      return "Updated successfully";
+      return "";
     } else {
       return $res;
     }
@@ -90,6 +90,52 @@ class Admin
    */
   public function deleteCity($cityId)
   {
+    $allFairIds = $this->_getAllFairIdsOfCity($cityId);
+
+    //delete all fair of this city
+    foreach ($allFairIds as $item) {
+      $this->deleteFair($item['fairId'], $item['title']);
+    }
+
+    //delete city
+    //connect to database
+    $conn = Database::connect();
+
+    /* Delete fair */
+    $query = $conn->prepare("DELETE FROM accounts WHERE user_id =(select user_id from city where city_id =:id)");
+    $query->bindParam(":id", $cityId, PDO::PARAM_STR, 255);
+
+    if ($query->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private function _getAllFairIdsOfCity($cityId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from fair where city_id = :id");
+    $query->bindParam(":id", $cityId, PDO::PARAM_STR, 255);
+
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $data = [
+            "title" => $row['title'],
+            "fairId" => $row['fair_id'],
+          ];
+          array_push($list, $data);
+        }
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return $list;
   }
 
   /**
@@ -127,6 +173,14 @@ class Admin
     return $list;
   }
 
+  /**
+   * Update Fair data TO-DO
+   *  - update all zoneSlotes opening_slot and closing_slot  and star_date
+   *
+   * @param [type] $fairId
+   * @param [type] $data
+   * @return void
+   */
   public function updateFairData($fairId, $data)
   {
     $res = $this->_checkFairData($data);
@@ -138,7 +192,7 @@ class Admin
       /* Update Accounts table */
       $query = $conn->prepare("UPDATE accounts SET name=:name,username=:username,email=:email,type=:type WHERE user_id=:id");
 
-      $query->bindParam(":id", $visitorId, PDO::PARAM_STR, 255);
+      $query->bindParam(":id", $fairId, PDO::PARAM_STR, 255);
       $query->bindParam(":name", $data['name'], PDO::PARAM_STR, 255);
       $query->bindParam(":username", $data['username'], PDO::PARAM_STR, 255);
       $query->bindParam(":email", $data['email'], PDO::PARAM_STR, 255);
@@ -191,13 +245,16 @@ class Admin
    *  - delete all img and videos of all the zones of this fair
    *  - notify all visitors who had an reservation (using notity table)
    *
+   *
    * @param int $fairId
    * @return text msg
    */
   public function deleteFair($fairId, $title)
   {
+
     $reservationUsers = $this->_getAllReservationUsers($fairId);
     $allZonesIds = $this->_getAllZonesIds($fairId);
+    $nFairImg = $this->_getNOfFairImg($fairId);
     //connect to database
     $conn = Database::connect();
 
@@ -206,17 +263,43 @@ class Admin
     $query->bindParam(":id", $fairId, PDO::PARAM_STR, 255);
 
     if ($query->execute()) {
+
       //Notify visitors
       $this->_notifyVisitors($reservationUsers, $title);
 
       //Delete all img's en video's
-      $this->_deleteAllMedia($fairId, "fair_img");
+      $this->_deleteAllMedia($fairId, "fair_img", $nFairImg);
 
-      foreach ($allZonesIds  as $zoneId) {
-        $this->_deleteAllMedia($zoneId, "zone_img");
-        $this->_deleteAllMedia($zoneId, "zone_video");
+      foreach ($allZonesIds  as $zone) {
+        $this->_deleteAllMedia($zone['id'], "zone_img", $zone['nZoneImg']);
+        $this->_deleteAllMedia($zone['id'], "zone_video", $zone['nZoneVideo']);
       }
+    } else {
+      return false;
     }
+
+    return true;
+  }
+
+  private function _getNOfFairImg($fairId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from fair where fair_id = :id");
+    $query->bindParam(":id", $fairId, PDO::PARAM_STR, 255);
+
+    $n = 0;
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        $row = $query->fetch();
+        $n = $row['totimg'];
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return $n;
   }
 
   /**
@@ -230,8 +313,8 @@ class Admin
     //connect to database
     $conn = Database::connect();
 
-    $query = $conn->prepare("select * from fair where fair_id = :id");
-    $query->bindParam(":id", $cityId, PDO::PARAM_STR, 255);
+    $query = $conn->prepare("select * from reservations where fair_id = :id");
+    $query->bindParam(":id", $fairId, PDO::PARAM_STR, 255);
 
     $list = array();
     if ($query->execute()) {
@@ -265,7 +348,7 @@ class Admin
     if ($query->execute()) {
       if ($query->rowCount() > 0) {
         while ($row = $query->fetch()) {
-          array_push($list, ['zone_id' => $row['zone_id']]);
+          array_push($list, ['id' => $row['zone_id'], 'nZoneImg' => $row['totimg'], 'nZoneVideo' => $row['totvideo']]);
         }
       }
     } else {
@@ -303,10 +386,15 @@ class Admin
    * @param text $fairTitle
    * @return void
    */
-  private function _deleteAllMedia($id, $folder)
+  private function _deleteAllMedia($id, $folder, $n)
   {
-    foreach (glob($id . "*.*") as $filename) {
-      unlink(__DIR__ . '/../uploads/' . $folder . "/" . $filename);
+    for ($i = 0; $i < $n; $i++) {
+      $filename = Upload::getUploadedFilePath($id . "_" . $i, $folder);
+      try {
+        unlink(__DIR__ . '/../uploads/' . $folder . "/" . $filename);
+      } catch (\Throwable $th) {
+        return "error";
+      }
     }
   }
 
@@ -329,14 +417,13 @@ class Admin
     if ($query->execute()) {
       if ($query->rowCount() > 0) {
         $row = $query->fetch();
-        $data = [
+        $list = [
           "name" => $row['name'],
           "username" => $row['username'],
           "email" => $row['email'],
           "type" => $row['type'],
           "created_on" => $row['created_on']
         ];
-        array_push($list, $data);
       }
     } else {
       return $query->errorInfo()[2];
@@ -361,18 +448,17 @@ class Admin
       $conn = Database::connect();
 
       /* Update Accounts table */
-      $query = $conn->prepare("UPDATE accounts SET name=:name,username=:username,email=:email,type=:type WHERE user_id=:id");
+      $query = $conn->prepare("UPDATE accounts SET name=:name,username=:username,email=:email WHERE user_id=:id");
 
       $query->bindParam(":id", $visitorId, PDO::PARAM_STR, 255);
       $query->bindParam(":name", $data['name'], PDO::PARAM_STR, 255);
       $query->bindParam(":username", $data['username'], PDO::PARAM_STR, 255);
       $query->bindParam(":email", $data['email'], PDO::PARAM_STR, 255);
-      $query->bindParam(":type", $data['type'], PDO::PARAM_STR, 255);
 
       if (!$query->execute())
         return $query->errorInfo()[2];
 
-      return "Updated successfully";
+      return "";
     } else {
       return $res;
     }
@@ -393,11 +479,8 @@ class Admin
       return "Username connot be empty";
     if ($data['email'] == "")
       return "Email connot be empty";
-    if ($data['type'] == "")
-      return "Type connot be empty";
 
-    if ($data['type'] != "city" || $data['type'] != "visitor")
-      return "Type must be city or visitor";
+    return '';
   }
 
   /**
@@ -416,7 +499,7 @@ class Admin
     $query->bindParam(":id", $visitorId, PDO::PARAM_STR, 255);
 
     if (!$query->execute())
-      return false;
+      return $query->errorInfo()[2];
 
     return true;
   }

@@ -3,35 +3,48 @@ require '../../../server/classes/class.admin.php';
 
 session_start();
 
+
 if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "admin")) {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 } else { //user is an ADMIN
-  if (isset($_GET['cityId'])) {
-    $cityId = $_GET['cityId'];
+  $errorMsg = "";
+  $admin = new Admin();
+  $visitorId = "";
+  if (isset($_GET['visitorId'])) {
+    $visitorId = $_GET['visitorId'];
 
-    $admin = new Admin();
-    $data = $admin->getCityData($cityId);
+    $data = $admin->getVisitorData($visitorId);
 
     if (count($data) != 0) {
       $name = $data['name'];
       $username = $data['username'];
       $email = $data['email'];
-
       $createdOn = $data['created_on'];
-      $description = $data['short_description'];
-      $telephone = $data['telephone'];
-
-
-      $type = $data['type'];
-      $outHTML_Types = '';
-      if ($type == 'city') {
-        $outHTML_Types .= '<option value="city" selected>City</option>';
-        $outHTML_Types .= '<option value="visitor" >Visitor</option>';
-      } else if ($type == 'visitor') {
-        $outHTML_Types .= '<option value="visitor" selected>Visitor</option>';
-        $outHTML_Types .= '<option value="city" >City</option>';
-      }
+    } else {
+      header('Location: actions.php');
     }
+  }
+  if (isset($_POST['update'])) { // Process update
+    $dataUpdated = [
+      'name' => $_POST['name'],
+      'username' => $data['username'],
+      'email' => $_POST['email']
+    ];
+
+    $res = $admin->updateVisitorData($visitorId, $dataUpdated);
+    if ($res != '') { //error
+      $errorMsg = $res;
+    } else {
+      $errorMsg = "Updated successfully";
+    }
+  }
+
+  if (isset($_POST['delete'])) { // Process delete
+    if ($admin->deleteVisitor($visitorId))
+      header('Location: ' . __DIR__ . 'actions.php');
+
+    else
+      $errorMsg = "Not Deleted there was an error, pls try again";
   }
 }
 ?>
@@ -62,16 +75,16 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
 
     <div class="mainCol">
       <center>
-        <H2>Edit Data Of <?php if (isset($name)) echo $name; ?></H2>
+        <H2>Edit Data Of Visitor: <?php if (isset($name)) echo $name; ?></H2>
       </center>
       <div class="container">
-        <form action="editCityData.php" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?visitorId=<?php echo $visitorId; ?>" method="post">
           <div class="row">
             <div class="col-25">
               <label for="Name">Name</label>
             </div>
             <div class="col-75">
-              <input type="text" id="name" name="firstname" value="<?php if (isset($name)) echo $name; ?>">
+              <input type="text" id="name" name="name" required value="<?php if (isset($name)) echo $name; ?>">
             </div>
           </div>
           <div class="row">
@@ -79,7 +92,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="Username">Username</label>
             </div>
             <div class="col-75">
-              <input type="text" id="username" name="username" value="<?php if (isset($username)) echo $username; ?>">
+              <input type="text" id="username" name="username" disabled required value="<?php if (isset($username)) echo $username; ?>">
             </div>
           </div>
           <div class="row">
@@ -87,15 +100,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="Email">Email</label>
             </div>
             <div class="col-75">
-              <input type="text" id="email" name="email" value="<?php if (isset($email)) echo $email; ?>">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-25">
-              <label for="Telephone">Telephone</label>
-            </div>
-            <div class="col-75">
-              <input type="text" id="telephone" name="telephone" value="<?php if (isset($telephone)) echo $telephone; ?>">
+              <input type="email" id="email" name="email" required value="<?php if (isset($email)) echo $email; ?>">
             </div>
           </div>
           <div class="row">
@@ -103,8 +108,8 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="Type">Type</label>
             </div>
             <div class="col-75">
-              <select id="types" name="types">
-                <?php if (isset($outHTML_Types)) echo $outHTML_Types; ?>
+              <select id="type" name="type">
+                <option value="visitor" selected>Visitor</option>
               </select>
             </div>
           </div>
@@ -113,22 +118,20 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="createdOn">Created On</label>
             </div>
             <div class="col-75">
-              <input type="text" id="createdOn" name="createdOn"  value="<?php if (isset($createdOn)) echo $createdOn; ?>">
+              <input type="text" id="createdOn" name="createdOn" disabled required value="<?php if (isset($createdOn)) echo $createdOn; ?>">
             </div>
           </div>
-          <div class="row">
-            <div class="col-25">
-              <label for="description">Description</label>
-            </div>
-            <div class="col-75">
-              <textarea id="description" name="description"><?php if (isset($description)) echo $description; ?></textarea>
-            </div>
-          </div>
+
           <div class="row sendBtn">
-            <input class="btn_delete" type="submit" name="update" value="Delete">
-            <input class="btn_submit" type="submit" name="delete" value="Update">
+            <input class="btn_delete" type="submit" name="update" value="Update">
+            <input class="btn_submit" type="submit" name="delete" value="Delete">
           </div>
         </form>
+        <p id="error">
+          <?php
+          echo $errorMsg;
+          ?>
+        </p>
       </div>
 
     </div>

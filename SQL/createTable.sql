@@ -203,7 +203,6 @@ CREATE TABLE notifications (
   notification_id serial PRIMARY KEY,
   user_id INT NOT NULL,
   msg INT NOT NULL,
-  active INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE
 );
 
@@ -241,6 +240,6 @@ CREATE TABLE messaging (
   message TEXT,
   send_dateTime TIMESTAMP NOT NULL,
   openend BOOLEAN DEFAULT False,
-  FOREIGN KEY (msgFrom) REFERENCES accounts (user_id),
-  FOREIGN KEY (msgTo) REFERENCES accounts (user_id)
+  FOREIGN KEY (msgFrom) REFERENCES accounts (user_id) ON DELETE CASCADE,
+  FOREIGN KEY (msgTo) REFERENCES accounts (user_id) ON DELETE CASCADE
 );

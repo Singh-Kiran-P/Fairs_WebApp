@@ -16,6 +16,9 @@
   height: 200px;
 }
 
+input:disabled {
+  background-color: #f2f2f2;
+}
 .col-25 {
   float: left;
   width: 25%;
@@ -50,6 +53,12 @@ label {
   display: inline-block;
 }
 
+.sendBtn {
+  margin-top: 10px;
+}
+.hidden{
+  display: none;
+}
 .sendBtn input {
   background-color: #4caf50;
   color: white;
@@ -82,7 +91,7 @@ label {
   width: 10%;
 }
 
-#description{
+#description {
   height: 200px;
 }
 

@@ -3,9 +3,13 @@ require '../../../server/classes/class.admin.php';
 
 session_start();
 
+
 if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "admin")) {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 } else { //user is an ADMIN
+  $errorMsg = "";
+  $admin = new Admin();
+  $fairId = "";
   if (isset($_GET['fairId'])) {
     $fairId = $_GET['fairId'];
 
@@ -20,7 +24,31 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
       $opening_hour = $data['opening_hour'];
       $closing_hour = $data['closing_hour'];
       $location = $data['location'];
+    } else {
+      header('Location: actions.php');
     }
+  }
+  if (isset($_POST['update'])) { // Process update
+    $dataUpdated = [
+      'name' => $_POST['name'],
+      'username' => $data['username'],
+      'email' => $_POST['email']
+    ];
+
+    $res = $admin->updateVisitorData($visitorId, $dataUpdated);
+    if ($res != '') { //error
+      $errorMsg = $res;
+    } else {
+      $errorMsg = "Updated successfully";
+    }
+  }
+
+  if (isset($_POST['delete'])) { // Process delete
+    if ($admin->deleteFair($fairId,$data['title']))
+      header('Location: ' . __DIR__ . 'actions.php');
+
+    else
+      $errorMsg = "Not Deleted there was an error, pls try again";
   }
 }
 ?>
@@ -51,16 +79,24 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
 
     <div class="mainCol">
       <center>
-        <H2>Edit Data Of <?php if (isset($title)) echo $title; ?></H2>
+        <H2>Edit Data Of Fair: <?php if (isset($title)) echo $title; ?></H2>
       </center>
       <div class="container">
-        <form action="editCityData.php" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?fairId=<?php echo $fairId; ?>" method="post" onsubmit="return validateForm()">
           <div class="row">
             <div class="col-25">
-              <label for="Title">Title</label>
+              <label for="title">Title</label>
             </div>
             <div class="col-75">
-              <input type="text" id="title" name="title" value="<?php if (isset($title)) echo $title; ?>">
+              <input type="text" id="title" name="title" required value="<?php if (isset($title)) echo $title; ?>">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="location">Location</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="location" name="location" required value="<?php if (isset($location)) echo $location; ?>">
             </div>
           </div>
           <div class="row">
@@ -68,41 +104,37 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="start_date">Start Date</label>
             </div>
             <div class="col-75">
-              <input type="text" id="username" name="username" value="<?php if (isset($username)) echo $username; ?>">
+              <div class="hidden start_date_orginal ">
+                <?php if (isset($start_date)) echo $start_date; ?>
+              </div>
+              <input type="date" id="start_date" name="start_date" required value="<?php if (isset($start_date)) echo $start_date; ?>">
             </div>
           </div>
           <div class="row">
             <div class="col-25">
-              <label for="Email">Email</label>
+              <label for="start_date">End Date</label>
             </div>
             <div class="col-75">
-              <input type="text" id="email" name="email" value="<?php if (isset($email)) echo $email; ?>">
+              <div class="hidden end_date_orginal ">
+                <?php if (isset($end_date)) echo $end_date; ?>
+              </div>
+              <input type="date" id="end_date" name="end_date" required value="<?php if (isset($end_date)) echo $end_date; ?>">
             </div>
           </div>
           <div class="row">
             <div class="col-25">
-              <label for="Telephone">Telephone</label>
+              <label for="opening_hour">Opening Hour</label>
             </div>
             <div class="col-75">
-              <input type="text" id="telephone" name="telephone" value="<?php if (isset($telephone)) echo $telephone; ?>">
+              <input type="time" id="opening_hour" name="opening_hour" required value="<?php if (isset($opening_hour)) echo $opening_hour; ?>">
             </div>
           </div>
           <div class="row">
             <div class="col-25">
-              <label for="Type">Type</label>
+              <label for="closing_hour">Closing Hour</label>
             </div>
             <div class="col-75">
-              <select id="types" name="types">
-                <?php if (isset($outHTML_Types)) echo $outHTML_Types; ?>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-25">
-              <label for="createdOn">Created On</label>
-            </div>
-            <div class="col-75">
-              <input type="text" id="createdOn" name="createdOn" value="<?php if (isset($createdOn)) echo $createdOn; ?>">
+              <input type="time" id="closing_hour" name="closing_hour" required value="<?php if (isset($closing_hour)) echo $closing_hour; ?>">
             </div>
           </div>
           <div class="row">
@@ -110,14 +142,20 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="description">Description</label>
             </div>
             <div class="col-75">
-              <textarea id="description" name="description"><?php if (isset($description)) echo $description; ?></textarea>
+              <textarea id="description" required name="description"><?php if (isset($description)) echo $description; ?></textarea>
             </div>
           </div>
+
           <div class="row sendBtn">
-            <input class="btn_delete" type="submit" name="update" value="Delete">
-            <input class="btn_submit" type="submit" name="delete" value="Update">
+            <input class="btn_delete" type="submit" name="update" value="Update">
+            <input class="btn_submit" type="submit" name="delete" value="Delete">
           </div>
         </form>
+        <p id="error">
+          <?php
+          echo $errorMsg;
+          ?>
+        </p>
       </div>
 
     </div>
@@ -125,16 +163,9 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
 
 </body>
 
-<!-- Linking Events -->
-<script>
-  var btn = document.getElementById("btn_More");
-  btn.addEventListener("click", (event) => {
-    showMore()
-  })
-</script>
+<!-- Script -->
+<script src="checkFair.js"></script>
 
-<!-- Extrenal scripts -->
-<script src="../ShowMore.js"></script>
 
 
 </html>

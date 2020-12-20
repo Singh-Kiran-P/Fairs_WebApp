@@ -38,7 +38,7 @@ class Upload
     }
   }
 
-  public static function checkFilesImg($files)
+  public static function checkFilesImg($files, $single = false)
   {
     $msg = '';
     // Count total files
@@ -48,21 +48,31 @@ class Upload
     // Looping all files
     for ($i = 0; $i < $countfiles; $i++) {
       $uploadOk = 1;
-      $imageFileType = strtolower(pathinfo($files["name"][$i], PATHINFO_EXTENSION));
+
+      if ($single) {
+        $imageFileType = strtolower(pathinfo($files["name"], PATHINFO_EXTENSION));
+        $filename = $files["name"];
+        $tempName = $files["tmp_name"];
+      } else {
+        $imageFileType = strtolower(pathinfo($files["name"][$i], PATHINFO_EXTENSION));
+        $filename = $files["name"][$i];
+        $tempName = $files["tmp_name"][$i];
+      }
+
       if ($imageFileType == '')
         return ['msg' => 'No files provided'];
 
       // Check if image file is a actual image or fake image
-      $check = getimagesize($files["tmp_name"][$i]);
+      $check = getimagesize($tempName);
       if ($check == false) {
-        $msg .= "[" . $files["name"][$i] . "] is not an image.";
+        $msg .= "[" . $filename . "] is not an image.";
         $uploadOk = 0;
       }
 
 
       // Check file size
       if ($files["size"][$i] > 2000000) {
-        $msg .= "Sorry, file [" . $files["name"][$i] . "] is too large.";
+        $msg .= "Sorry, file [" . $filename . "] is too large.";
         $uploadOk = 0;
       }
 

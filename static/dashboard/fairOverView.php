@@ -41,7 +41,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
   // Add list of zones
   $zones = $fairmodel->getFairZones($fairId);
   $zoneSlectorHTML = "";
-  if (count($zones) > 0) {
+  if ($zones != null && count($zones) > 0) {
     foreach ($zones as $z) {
       $zone = '<option value="' . $z["zoneId"] . '">' . $z["title"] . '</option>';
       $zoneSlectorHTML .= $zone;

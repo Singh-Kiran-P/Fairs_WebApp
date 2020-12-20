@@ -40,9 +40,6 @@ class Fair
     if ($closing <= $opening)
       return "Clossing time cannot be less then openning time";
 
-
-
-
     /* check if there is a other fiar with the same title/startdate/location */
     $msg = $this->_checkIfNotDupplicate($cityId, $title, $startDate, $location);
 

@@ -22,7 +22,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     if ($errorMsg == "") {
 
       //check files for uploading
-      $error = Upload::checkFilesImg($files);
+      $error = Upload::checkFilesImg($files,false);
       if ($error['msg'] != '') //error while checking
         $errorMsg = $error['msg'];
       else {

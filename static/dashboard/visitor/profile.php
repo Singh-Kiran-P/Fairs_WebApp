@@ -2,6 +2,7 @@
 require '../../../server/classes/class.city.php';
 require '../../../server/classes/class.reservation.php';
 require '../../../server/classes/class.accounts.php';
+require '../../../server/classes/class.messaging.php';
 
 session_start();
 
@@ -111,6 +112,17 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     }
     $outHTML_waitingList .= '   </table>';
   }
+
+  // get Message List
+  $messaging = new Messaging();
+
+  $msg = $messaging->getUnOpenendMsg($_SESSION['userId'], "true");
+  $OUTHTML_MSG = "";
+  foreach ($msg as $m) {
+    $OUTHTML_MSG .= '<div class="msg">';
+    $OUTHTML_MSG .= $m['msgCount'] . ' new messages from <a href="message.php?msgTo=' . $m['user_id'] . '&opened=true"><b id="linkinnotification" >' . $m['msgFrom'] . '</b></a>';
+    $OUTHTML_MSG .= '</div>';
+  }
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
@@ -126,6 +138,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/profile.css">
+  <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/alert.css">
   <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -180,6 +193,10 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         Type:
         <input type="text" placeholder="Type" value="<?php echo $type; ?>" disabled>
       </center>
+      Meldingen:
+      <div id="alert-area">
+        <?php echo $OUTHTML_MSG; ?>
+      </div>
     </div>
 
 
@@ -202,6 +219,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     <?php echo $outHTML_waitingList; ?>
   </center>
   </div>
+
+
 </body>
 
 </html>

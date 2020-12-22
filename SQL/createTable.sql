@@ -240,6 +240,7 @@ CREATE TABLE messaging (
   message TEXT,
   send_dateTime TIMESTAMP NOT NULL,
   openend BOOLEAN DEFAULT False,
+  showed BOOLEAN DEFAULT False,
   FOREIGN KEY (msgFrom) REFERENCES accounts (user_id) ON DELETE CASCADE,
   FOREIGN KEY (msgTo) REFERENCES accounts (user_id) ON DELETE CASCADE
 );

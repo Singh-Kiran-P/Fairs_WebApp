@@ -25,6 +25,8 @@ if (count($listOfVisitors) > 0) {
 }
 
 
+
+
 $HTMLcurrentUser = "Choose User:";
 $messaging = new Messaging();
 
@@ -61,6 +63,23 @@ if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "") && (isset($_POST['sendMsg'])
   $listWithMessages = $messaging->getMessages($msgFrom, $msgTo);
   $outHTML_MsgBox = $messaging->buildMsgBox($listWithMessages, $msgFrom, $msgTo);
 }
+
+
+
+
+if (isset($_GET['opened']) && isset($_GET['msgTo'])) {
+  // set openend message in database to True
+  $messaging->msgOpenend($_GET['msgTo']);
+}
+
+$msg = $messaging->getUnOpenendMsg($_SESSION['userId'], "true");
+$OUTHTML_MSG = "";
+foreach ($msg as $m) {
+  $OUTHTML_MSG .= '<div class="msg">';
+  $OUTHTML_MSG .= $m['msgCount'] . ' new messages from <a href="message.php?msgTo=' . $m['user_id'] . '&opened=true"><b id="linkinnotification" >' . $m['msgFrom'] . '</b></a>';
+  $OUTHTML_MSG .= '</div>';
+}
+
 
 
 ?>
@@ -105,7 +124,6 @@ if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "") && (isset($_POST['sendMsg'])
       <button onclick="myFunction()" class="dropbtn"><?php echo $HTMLcurrentUser; ?></button>
       <div id="myDropdown" class="dropdown-content">
         <?php echo $outHTML_otherVisitors; ?>
-
       </div>
     </div>
 
@@ -140,8 +158,13 @@ if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "") && (isset($_POST['sendMsg'])
         </form>
       </div>
     </div>
-  </div>
+    <div id="alert-area">
+      Melding:
+      <?php echo $OUTHTML_MSG; ?>
 
+    </div>
+
+  </div>
 
 
 </body>

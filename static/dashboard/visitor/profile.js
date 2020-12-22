@@ -15,8 +15,15 @@ function checkWaitingList() {
 
     list.forEach(element => {
       if (element['open'] > 0) {
-        var msg = alertify.warning();
-        msg.delay(5).setContent(element['fairTitle'] + ' has ' + element['open'] + ' open spots!');
+        // var msg = alertify.warning();
+        // msg.delay(5).setContent(element['fairTitle'] + ' has ' + element['open'] + ' open spots!');
+        var d = document.createElement('div');
+        d.className = "msg";
+        d.innerHTML = element['fairTitle'] + ' has ' + element['open'] + ' open spots!';
+
+        var alert_area = document.getElementById("alert-area");
+        alert_area.appendChild(d);
+
       }
     });
   }
@@ -51,9 +58,16 @@ function checkIfNewMessages() {
     if (this.readyState == 4 && this.status == 200) {
       msg = JSON.parse(this.responseText);
       msg.forEach(element => {
-        var msg = alertify.warning();
+        // var msg = alertify.warning();
 
-        msg.delay(4).setContent(element['msgCount'] + ' new messages from <a  href="message.php?msgTo=' + element['user_id'] + '"><b  id="linkinnotification" >' + element['msgFrom'] + '</b></a>');
+        // msg.delay(4).setContent(element['msgCount'] + ' new messages from <a  href="message.php?msgTo=' + element['user_id'] + '"><b  id="linkinnotification" >' + element['msgFrom'] + '</b></a>');
+        var d = document.createElement('div');
+        d.className = "msg";
+        d.innerHTML = element['msgCount'] + ' new messages from <a  href="message.php?msgTo=' + element['user_id'] + '&opened=true"><b  id="linkinnotification" >' + element['msgFrom'] + '</b></a>';
+
+        var alert_area = document.getElementById("alert-area");
+        alert_area.appendChild(d);
+
 
       });
     }

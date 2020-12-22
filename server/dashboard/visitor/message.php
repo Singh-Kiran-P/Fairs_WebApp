@@ -6,11 +6,11 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   if (isset($_SESSION['userId'])) {
     $msg = new Messaging();
     //echo msg to font-end if there are msg that are not openend
-    $msg->getUnOpenendMsg($_SESSION['userId']);
-
-    // set openend message in database to True
-    $msg->msgOpenend($_SESSION['userId']);
+    $msg->getUnOpenendMsg($_SESSION['userId'], "false");
   }
+  // if (isset($_GET['openend']))
+  //   // set openend message in database to True
+  //   $msg->msgOpenend($_SESSION['userId']);
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }

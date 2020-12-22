@@ -55,13 +55,14 @@ class Messaging
    *  for Ajax
    * @param [int] $userId
    */
-  public function getUnOpenendMsg($userId)
+  public function getUnOpenendMsg($userId, $val)
   {
     //connect to database
     $conn = Database::connect();
 
-    $query = $conn->prepare("select accounts.user_id, count(*) as msgCount,accounts.name from messaging,accounts where msgto = :msgTo and msgFrom = accounts.user_id  and openend = false group by accounts.name,accounts.user_id");
+    $query = $conn->prepare("select accounts.user_id, count(*) as msgCount,accounts.name from messaging,accounts where msgto = :msgTo and msgFrom = accounts.user_id  and openend = false and showed = :showed group by accounts.name,accounts.user_id");
     $query->bindParam(":msgTo", $userId, PDO::PARAM_STR, 255);
+    $query->bindParam(":showed", $val, PDO::PARAM_STR, 255);
 
     $Json = array();
     if ($query->execute()) {
@@ -79,8 +80,25 @@ class Messaging
       return $query->errorInfo()[2];
     }
 
-    //echo for AJAX
-    echo json_encode($Json);
+    if ($val == "false") {
+      //echo for AJAX
+      echo json_encode($Json);
+      $this->setShowed($userId);
+    }
+    return $Json;
+  }
+
+  private function setShowed($id)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("update messaging set showed = true where msgTo=:userId;");
+    $query->bindParam(":userId", $id, PDO::PARAM_STR, 255);
+
+    if (!$query->execute()) {
+      return $query->errorInfo()[2];
+    }
   }
 
   public function msgOpenend($userId)
@@ -88,7 +106,7 @@ class Messaging
     //connect to database
     $conn = Database::connect();
 
-    $query = $conn->prepare("update messaging set openend = true where msgto=:userId;");
+    $query = $conn->prepare("update messaging set openend = true where msgfrom=:userId;");
     $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
 
     if (!$query->execute()) {

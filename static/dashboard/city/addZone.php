@@ -80,8 +80,6 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
-
-
 ?>
 
 
@@ -140,7 +138,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         <div>
           Time slots:
           <div class="sidebyside">
-            <input type="text" name="openingSlot" placeholder="Opening Slot" onfocus="(this.type='time')" onblur="(this.type='text')" <?php echo $disabled; ?> >
+            <input type="text" name="openingSlot" placeholder="Opening Slot" onfocus="(this.type='time')" onblur="(this.type='text')" <?php echo $disabled; ?>>
             <input type="text" name="closingSlot" placeholder="Closing Slot" onfocus="(this.type='time')" onblur="(this.type='text')" <?php echo $disabled; ?>>
           </div>
         </div>

@@ -24,6 +24,14 @@ input,
   word-wrap: break-word;
 }
 
+
+#alert-area {
+  padding-left: 9%;
+}
+#alert-area .msg {
+  margin: 2%;
+}
+
 .mainCol1 {
   flex: 50%;
   display: flex;

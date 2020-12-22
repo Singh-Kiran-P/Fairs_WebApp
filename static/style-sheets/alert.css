@@ -21,3 +21,10 @@
 .closebtn:hover {
   color: black;
 }
+
+#alert-area {
+  padding-left: 9%;
+}
+#alert-area .msg {
+  margin: 2%;
+}

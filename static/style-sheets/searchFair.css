@@ -50,14 +50,17 @@ a {
   text-decoration: none;
 }
 
-td {
+/* td {
   border: 1px solid white;
-}
+} */
 
 .side input {
   width: 35%;
 }
 
+table{
+  margin-top: 20px;
+}
 /* change color to white */
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);

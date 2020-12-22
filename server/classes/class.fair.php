@@ -74,6 +74,16 @@ class Fair
     }
   }
 
+  public function outdatedFair($fair_id)
+  {
+    $fairInfo = $this->getFairModel($fair_id);
+    $data = $fairInfo->getVar();
+    if ($data['start_date'] < mktime(0, 0, 0))
+      return true;
+    else
+      return false;
+  }
+
   /**
    * Check user input
    *

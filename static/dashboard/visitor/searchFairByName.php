@@ -6,28 +6,41 @@ session_start();
 $outputHTML = "";
 if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "visitor") {
 
-    if (isset($_GET['title'])) {
+  if (isset($_GET['title'])) {
 
-      $search = new SearchFair();
+    $search = new SearchFair();
 
-      $title = $_GET['title'];
-      $listOfFairs = $search->searchByName($title);
+    $listOfFairs = $search->searchByName($_GET['title'], true);
 
-      $outputHTML = '<tr><th>Fairs</th></tr>';
-      if ($listOfFairs != null) {
-        foreach ($listOfFairs as $fair) {
-          $out = '<tr><td>';
-          $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
-          $out .= '</td></tr>';
-          $outputHTML .= $out;
-        }
-      } else {
-        $outputHTML = "No record found";
+    if ($listOfFairs != null) {
+      $outputHTML = 'Up coming<tr><th>Fairs</th><th>Date</th</tr>';
+      foreach ($listOfFairs as $fair) {
+        $out = '<tr><td>';
+        $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a></td>';
+        $out .= '<td><p>' . $fair['start_date'] . ' TO ' . $fair['end_date'] . '</p>';
+        $out .= '</td></tr></table>';
+        $outputHTML .= $out;
+      }
+    } else {
+      $outputHTML = "No record found";
+    }
+
+    $listOfFairs = $search->searchByName($_GET['title'], false);
+
+    if ($listOfFairs != null) {
+      $outputHTML .= '<table>Old Fairs<tr><th>Fairs</th><th>Date</th</tr>';
+      foreach ($listOfFairs as $fair) {
+        $out = '<tr><td>';
+        $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a></td>';
+        $out .= '<td><p>' . $fair['start_date'] . ' TO ' . $fair['end_date'] . '</p>';
+        $out .= '</td></tr>';
+        $outputHTML .= $out;
       }
     }
-  } else {
-    header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
   }
+} else {
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
+}
 
 ?>
 
@@ -62,10 +75,9 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
           <div class="side">
             <input type="text" name="title" placeholder="Search.." value="<?php if (isset($_GET['title'])) echo $_GET['title']; ?>" required onkeyup="showResult(this.value)" autocomplete="off">
           </div>
-          <div>
+          <div id="result">
             <table id="livesearch">
               <?php echo $outputHTML ?>
-
             </table>
           </div>
         </form>

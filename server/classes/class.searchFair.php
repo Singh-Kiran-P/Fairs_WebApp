@@ -91,11 +91,15 @@ class SearchFair
     }
   }
 
-  public function searchByName($title)
+  public function searchByName($title, $oldFairs)
   {
     //connect to database
     $conn = Database::connect();
-    $query = $conn->prepare("select * from fair where upper(title) LIKE upper(:title)");
+    if ($oldFairs)
+      $query = $conn->prepare("select * from fair where upper(title) LIKE upper(:title) and start_date >= CURRENT_DATE");
+    else
+      $query = $conn->prepare("select * from fair where upper(title) LIKE upper(:title) and start_date < CURRENT_DATE");
+
     $parm = '%' . $title . '%';
     $query->bindParam(":title", $parm, PDO::PARAM_STR, 255);
 
@@ -107,6 +111,8 @@ class SearchFair
           $fair = array(
             "fairId" => $row['fair_id'],
             "title" => $row['title'],
+            "start_date" => $row['start_date'],
+            "end_date" => $row['end_date'],
           );
 
           array_push($list, $fair);

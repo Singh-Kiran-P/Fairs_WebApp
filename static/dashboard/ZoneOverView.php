@@ -117,12 +117,14 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
 
   <!-- reservation btn for the visitor -->
   <?php if ($_SESSION['type'] == 'visitor') {
-    $outHTML = '<form action="visitor/reservation.php" method="post" class="content">';
-    $outHTML .= '<input type="hidden" name="zoneId" value="' . $_GET['zoneId'] . '">';
-    $outHTML .= '<input type="hidden" name="fairId" value="' . $_GET['fairId'] . '">';
-    $outHTML .= '<button type="submit">Book Tickets</button>';
-    $outHTML .= '</form>';
-    echo $outHTML;
+    if (!$fair->outdatedFair($_GET['fairId'])) {
+      $outHTML = '<form action="visitor/reservation.php" method="post" class="content">';
+      $outHTML .= '<input type="hidden" name="zoneId" value="' . $_GET['zoneId'] . '">';
+      $outHTML .= '<input type="hidden" name="fairId" value="' . $_GET['fairId'] . '">';
+      $outHTML .= '<button type="submit">Book Tickets</button>';
+      $outHTML .= '</form>';
+      echo $outHTML;
+    }
   }
   ?>
 

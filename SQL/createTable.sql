@@ -167,17 +167,17 @@ CREATE TABLE zoneslots (
 
  --  */
 --attractions------------------------------------------------
-DROP TABLE IF EXISTS attractions;
+-- DROP TABLE IF EXISTS attractions;
 
-CREATE TABLE attractions (
-  attraction_id serial PRIMARY KEY,
-  zone_id INT NOT NULL,
-  fair_id INT NOT NULL,
-  title VARCHAR (50) NOT NULL,
-  description VARCHAR (50),
-  FOREIGN KEY (fair_id) REFERENCES fair (fair_id) ON DELETE CASCADE,
-  FOREIGN KEY (zone_id) REFERENCES zones (zone_id) ON DELETE CASCADE
-);
+-- CREATE TABLE attractions (
+--   attraction_id serial PRIMARY KEY,
+--   zone_id INT NOT NULL,
+--   fair_id INT NOT NULL,
+--   title VARCHAR (50) NOT NULL,
+--   description VARCHAR (50),
+--   FOREIGN KEY (fair_id) REFERENCES fair (fair_id) ON DELETE CASCADE,
+--   FOREIGN KEY (zone_id) REFERENCES zones (zone_id) ON DELETE CASCADE
+-- );
 
 -- reservations----------------------------------------------
 DROP TABLE IF EXISTS reservations;

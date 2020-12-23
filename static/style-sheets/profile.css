@@ -16,6 +16,7 @@ input,
   padding: 12px 20px;
   display: block;
   box-sizing: border-box;
+  word-wrap: break-word;
 }
 .desc {
   max-width: 700px;
@@ -23,7 +24,6 @@ input,
 #short_desc {
   word-wrap: break-word;
 }
-
 
 #alert-area {
   padding-left: 9%;

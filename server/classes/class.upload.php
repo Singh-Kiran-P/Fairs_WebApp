@@ -113,7 +113,7 @@ class Upload
 
 
       // Check file size
-      if ($files["size"][$i] > 20000000) {
+      if ($files["size"][$i] > 300000000) {
         $msg .= "Sorry, file [" . $files["name"][$i] . "] is too large.";
         $uploadOk = 0;
       }
@@ -151,8 +151,9 @@ class Upload
     $a = scandir($dir);
 
     foreach ($a as $file) {
-      if (strpos($file, $fileName) !== false)
+      if (strpos($file,  strval($fileName)) !== false) {
         return $file;
+      }
     }
   }
 }

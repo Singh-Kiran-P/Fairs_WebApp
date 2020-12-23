@@ -1,6 +1,7 @@
 <?php
 require '../../../server/classes/class.city.php';
 require '../../../server/classes/class.accounts.php';
+require '../../../server/classes/class.upload.php';
 
 session_start();
 
@@ -62,7 +63,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       <!-- Profile foto -->
       <div class="profileImg">
         <?php
-        echo "<img class='topImg' src='/~kiransingh/project/server/uploads/profile_img/$userId.jpg' alt='Profile foto'>"
+        $fileName = Upload::getUploadedFilePath($userId, "profile_img");
+        echo "<img class='topImg' src='/~kiransingh/project/server/uploads/profile_img/$fileName' alt='Profile foto'>"
         ?>
       </div>
       <center>

@@ -18,12 +18,11 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  word-wrap: break-word;
 }
-.ZoneBtn{
-
+.ZoneBtn {
   display: inline-block;
   float: right;
-
 }
 
 input,
@@ -33,6 +32,7 @@ input,
   padding: 12px 20px;
   display: block;
   box-sizing: border-box;
+  word-wrap: break-word;
 }
 button {
   background-color: #4caf50;
@@ -62,7 +62,7 @@ button {
   padding: 10px;
   flex-wrap: wrap;
 }
-.ZoneBtn .ReservationBtn  a {
+.ZoneBtn .ReservationBtn a {
   background-color: #4caf50;
   padding-top: 15px;
   padding-bottom: 15px;

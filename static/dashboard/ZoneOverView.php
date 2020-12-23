@@ -48,15 +48,14 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
     $outHTML_Info .=   ' <input type="text" placeholder="Username" value="' . $zone['location'] . '" disabled>';
     $outHTML_Info .=   ' <input type="hidden" placeholder="Username" value="' . $zone['zoneId'] . '" name="zoneId" >';
 
-
     // procces attractions
     $outHTML_Attraction = 'Attractions:';
     $attractions = explode(",", $zone['attractions']);
-    $outHTML_Attraction .= '<div class="att"><ul>';
+    $outHTML_Attraction .= '<center><div class="att"><ul>';
     foreach ($attractions as $att) {
-      $outHTML_Attraction .= '<li>' . $att . '</li>';
+      $outHTML_Attraction .= '<li>📷 ' . $att . '</li>';
     }
-    $outHTML_Attraction .= '</ul></div>';
+    $outHTML_Attraction .= '</ul></div></center>';
 
 
 

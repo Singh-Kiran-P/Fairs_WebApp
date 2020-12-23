@@ -63,6 +63,11 @@ class Fair
       $errorMsg .= "Open_sports can not be empty<br>";
     if ($location == "")
       $errorMsg .= "Location can not be empty<br>";
+    if ($open_spots >= 9999999)
+      $errorMsg .= "Error in open slots<br>";
+    if ($open_spots <= 1)
+      $errorMsg .= "Open spot must be greater than 1<br>";
+
     if ($errorMsg != "")
       return $errorMsg;
 

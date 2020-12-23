@@ -61,7 +61,7 @@ if (isset($_POST['review']) && isset($_POST['rating'])) {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?reservationId=<?php echo $_GET['reservationId']; ?>" method="post" class="reviewFrom">
           <textarea name="review" id="" cols="30" rows="10" required></textarea>
           <div>
-            Rating : <input type="number" max="5" name="rating" required>
+            Rating : <input type="number" min="1" max="5" name="rating" value="1" required>
             <button type="submit" name=""><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
           </div>
         </form>

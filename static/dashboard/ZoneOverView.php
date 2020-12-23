@@ -23,19 +23,20 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
     }
 
     // process video
-    $outHTML_Video = '<div class="video">';
+    $outHTML_Video = "";
+    if ($zone['totvideo'] > 0) {
 
-    $outHTML_Video .= '<video width="320" height="240" controls>';
-    if ($zone != null) {
       for ($i = 0; $i < $zone['totvideo']; $i++) {
+        $outHTML_Video .= '<div class="video">';
+        $outHTML_Video .= '<video width="320" height="240" controls>';
         $toSearchFile = $zoneId . "_" . $i;
         $video = Upload::getUploadedFilePath($toSearchFile, "zone_video");
         $ext = explode(".", $video);
         if (count($ext) == 2)
           $outHTML_Video .= "<source  src='../../server/uploads/zone_video/" . $video . "' type='video/" . $ext[1] . "'>";
+        $outHTML_Video .= '</video></div>';
       }
     }
-    $outHTML_Video .= '</video></div>';
     if ($zone['totvideo'] == 0)
       $outHTML_Video = '';
 
@@ -43,12 +44,24 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
     $outHTML_Info = '';
     $outHTML_Info .=   'Title';
     $outHTML_Info .=   '<input type="text" placeholder="Name" value="' . $zone['title'] . '" disabled>';
-    $outHTML_Info .=   'Attractions';
-    $outHTML_Info .=   '<input type="text" placeholder="Type" value="' . $zone['attractions'] . '" disabled>';
     $outHTML_Info .=   'Location';
     $outHTML_Info .=   ' <input type="text" placeholder="Username" value="' . $zone['location'] . '" disabled>';
     $outHTML_Info .=   ' <input type="hidden" placeholder="Username" value="' . $zone['zoneId'] . '" name="zoneId" >';
-    $outHTML_Info .=   'Description';
+
+
+    // procces attractions
+    $outHTML_Attraction = 'Attractions:';
+    $attractions = explode(",", $zone['attractions']);
+    $outHTML_Attraction .= '<div class="att"><ul>';
+    foreach ($attractions as $att) {
+      $outHTML_Attraction .= '<li>' . $att . '</li>';
+    }
+    $outHTML_Attraction .= '</ul></div>';
+
+
+
+    $outHTML_Info .= $outHTML_Attraction;
+    $outHTML_Info .= 'Description';
 
 
     //show more information
@@ -58,7 +71,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
     $outHTML_desc = '';
     //check if desc not null
     if (strlen($desc) != 0)
-      $outHTML_desc = '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
+      $outHTML_desc .= '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
 
     // Add list of dates
     $dateSlectorHTML = "";

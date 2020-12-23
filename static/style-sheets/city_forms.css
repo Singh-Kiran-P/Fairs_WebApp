@@ -58,7 +58,9 @@ button,
   padding: 12px 20px;
   box-sizing: border-box;
 }
-
+.content{
+  margin-bottom: 10%;
+}
 .mainCol1 {
   flex: 50%;
   display: flex;
@@ -68,6 +70,7 @@ button,
   /* background-color: #1b4958; */
   background-color: #141516;
 }
+
 
 select {
   width: 150px;
@@ -116,6 +119,18 @@ select {
   cursor: pointer;
   font-size: medium;
 }
+
+#btn_cont {
+  background-color: #4caf50;
+  width: 100%;
+  color: black;
+  padding: 15px;
+  border: none;
+  cursor: pointer;
+  font-size: medium;
+}
+
+
 
 /* change color to white */
 ::-webkit-calendar-picker-indicator {

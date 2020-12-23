@@ -93,19 +93,25 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
         <?php echo $outHTML_Img; ?>
       </center>
     </div>
+    <div class="ZoneBtn">
+      <!-- drop box Zones -->
+      <select name="zoneId" class="slectZone" onchange="showTimeSlot(this.value)">
+        <option value="">Select a Zone:</option>
+        <?php echo $zoneSlectorHTML; ?>
+      </select>
+    </div>
     <div class="info">
       <center>
         <input type="hidden" name="fairId" value="<?php echo $fairId; ?>">
         Title
         <input type="text" placeholder="Name" value="<?php echo $title; ?>" disabled>
-        start_date
+        Start Date
         <input type="text" placeholder="Email" value="<?php echo $start_date; ?>" disabled>
-        end_date
+        End Date
         <input type="text" placeholder="Type" value="<?php echo $end_date; ?>" disabled>
-        opening_hour <input type="text" placeholder="Telephone" value="<?php echo $opening_hour; ?>" disabled>
-        closing_hour
-        <input type="text" placeholder="Username" value="<?php echo $closing_hour; ?>" disabled>
-        location
+        Opening Hour <input type="text" placeholder="Telephone" value="<?php echo $opening_hour; ?>" disabled>
+        Closing Hour <input type="text" placeholder="Username" value="<?php echo $closing_hour; ?>" disabled>
+        Location
         <input type="text" placeholder="Username" value="<?php echo $location; ?>" disabled>
         Description
         <div class="desc">
@@ -114,13 +120,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
         </div>
       </center>
     </div>
-    <div class="ZoneBtn">
-      <!-- drop box Zones -->
-      <select name="zoneId" onchange="showTimeSlot(this.value)">
-        <option value="">Select a Zone:</option>
-        <?php echo $zoneSlectorHTML; ?>
-      </select>
-    </div>
+
   </div>
 
 </body>

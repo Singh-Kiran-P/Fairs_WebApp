@@ -1,4 +1,4 @@
-function validateForm() {
+function validateFormSlots() {
   var openingSlot = document.getElementsByName("openingSlot")[0].value;
   var closingSlot = document.getElementsByName("closingSlot")[0].value;
 
@@ -8,7 +8,7 @@ function validateForm() {
 }
 
 
-function checkTime(t1, t2, out) {
+function checkTimeSlots(t1, t2, out) {
 
   /*  */
   if (t2 <= t1) {

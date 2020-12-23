@@ -7,6 +7,18 @@ class Reservation
   public function checkSpot($zoneId, $reservationDate, $reservationTimeSlot, $reservationPeople)
   {
 
+    $errorMsg = '';
+    if ($reservationDate == "")
+      $errorMsg .= "Reservation date cannot be empty<br>";
+    if ($reservationTimeSlot == "")
+      $errorMsg .= "Reservation Time Slot can not be empty<br>";
+    if ($reservationPeople == "")
+      $errorMsg .= "Reservation for people can not be empty<br>";
+    if ($reservationPeople > 8)
+      $errorMsg .= "Max reservation is 8 people<br>";
+
+    if ($errorMsg != "")
+      return $errorMsg;
     //connect to database
     $conn = Database::connect();
 
@@ -38,7 +50,7 @@ class Reservation
     }
   }
 
-  public function updateZoneslot($zoneSlot_id,$reservationPeople, $add = false)
+  public function updateZoneslot($zoneSlot_id, $reservationPeople, $add = false)
   {
 
     //connect to database

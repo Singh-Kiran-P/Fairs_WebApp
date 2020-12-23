@@ -6,6 +6,7 @@ $errorMsg = "";
 $tileFair = "";
 $enabled = "";
 $disabled = "disabled";
+$outHTML_SAVE = "";
 if (isset($_GET['fairId']) && isset($_GET['title'])) {
   $_SESSION['fairId'] = $_GET['fairId'];
   $tileFair = $_GET['title'];
@@ -38,18 +39,17 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       $i = Upload::uploadFiles($files, $zoneId, "zone", "img");
       $v = Upload::uploadFiles($video, $zoneId, "zone", "video");
       if (is_numeric($zoneId)) {
-        $_SESSION['zoneId'] =    $zoneId;
-
+        $_SESSION['zoneId'] = $zoneId;
         $fair->updateDbFileCount($zoneId, $i, $v, "zones");
         $errorMsg .= 'Zone is added successfully';
         $enabled = "disabled";
-        //reset form
-        $title = "";
-        $open_spots = "";
+        // //reset form
+        // $title = "";
+        // $open_spots = "";
 
-        $desc = "";
-        $location = "";
-        $attractions = "";
+        // $desc = "";
+        // $location = "";
+        // $attractions = "";
       } else {
         $errorMsg .= $zoneId;
       }
@@ -59,14 +59,27 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         $errorMsg .= '<br><br>Images error :' . $errorMsgUploadImg['msg'];
 
       if ($errorMsgUploadVideo['msg'] != '')
-        $errorMsg .= '<br><br>Video error : ' . $errorMsgUploadVideo['msg'];
+        $errorMsg .= '<br><br>Video error :' . $errorMsgUploadVideo['msg'];
     }
   }
+
   if (isset($_POST['submit_slot'])) {
+    $zoneId =  $_SESSION['zoneId'];
     $openingSlot = $_POST['openingSlot'];
     $closingSlot = $_POST['closingSlot'];
 
-    $Msg = $fair->checkingZoneSlot($_SESSION['zoneId'], $openingSlot, $closingSlot);
+    $fair = new Fair();
+    $zoneData = $fair->getZone($zoneId);
+    $title = $zoneData['title'];
+    $open_spots = $zoneData['open_spots'];
+
+    $desc = $zoneData['description'];
+    $location = $zoneData['location'];
+    $attractions = $zoneData['attractions'];
+
+
+
+    $Msg = $fair->checkingZoneSlot($zoneId, $openingSlot, $closingSlot);
     if ($Msg == '') {
       $fairModel = $fair->getFairModel($_SESSION['fairId']);
 
@@ -74,8 +87,12 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       foreach ($zones as $z) {
         $Msg = $fair->addZoneSlot($z['zone_id'], $openingSlot, $closingSlot, $z['freeSlots'], $fairModel->getVar());
       }
-    }
-    header("Location: addZoneSlot.php?zoneId=" .  $_GET['zoneId'] . "&free_slots=" . $_GET['open_spots']);
+    } else
+      $errorMsg .= '<br>' . $Msg;
+    $enabled = "disabled";
+
+    // header("Location: addZoneSlot.php?zoneId=" .  $_GET['zoneId'] . "&free_slots=" . $_GET['open_spots']);
+    $outHTML_SAVE = '<div id="btn"><a  id="btn" href="listOfFair.php">All Fairs</a></div>';
   }
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
@@ -103,16 +120,18 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   </header>
 
   <!-- The flexible grid (content) -->
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="content" id="form" onsubmit="return <?php if ($enabled == '') echo 'validateFormZone()'; else echo 'validateFormSlots()'?>" enctype='multipart/form-data'>
 
     <div class="mainCol1 g">
       <center>
 
-        <h1 class="topTitle">Add Zone <?php echo $tileFair;  ?></h1>
+        <h1 class="topTitle"><?php if ($enabled != "") echo "Add Slot To " . $title;
+                              else echo 'Add Zone ' .  $tileFair; ?></h1>
 
         <input type="text" name="title" placeholder="Title" value="<?php if (isset($title)) echo $title; ?>" required <?php echo $enabled; ?>>
 
         <textarea type="" name="desc" placeholder="Give a short discription about this fair" form="form" required <?php echo $enabled; ?>><?php if (isset($desc)) echo $desc; ?></textarea>
+
         <textarea type="" name="attractions" placeholder="Give the attaction on this Zone like ->  attraction1,attraction2 " form="form" required <?php echo $enabled; ?>><?php if (isset($attractions)) echo $attractions; ?></textarea>
 
         <div>
@@ -133,27 +152,32 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
         <input type="file" name="video[]" class="inputfile" value="" multiple <?php echo $enabled; ?>>
 
+        <!--Add Zone -->
+        <?php if ($enabled == "") echo '<button type="submit" name="submit" id="btn">Add Zone</button>'; ?>
 
         <!-- time slots -->
-        <div>
+        <div <?php if ($enabled == "") echo "class='hidden'"; ?>>
           Time slots:
+
           <div class="sidebyside">
-            <input type="text" name="openingSlot" placeholder="Opening Slot" onfocus="(this.type='time')" onblur="(this.type='text')" <?php echo $disabled; ?>>
-            <input type="text" name="closingSlot" placeholder="Closing Slot" onfocus="(this.type='time')" onblur="(this.type='text')" <?php echo $disabled; ?>>
+            <input type="text" name="openingSlot" placeholder="Opening Slot" onfocus="(this.type='time')" onblur="(this.type='text')">
+            <input type="text" name="closingSlot" placeholder="Closing Slot" onfocus="(this.type='time')" onblur="(this.type='text')">
           </div>
+          <button type="submit" name="submit_slot" id="btn">Add Slot</button>
         </div>
-        <button type="button" name="submit_slot" id="btn">Add Slot</button>
+
+        <?php echo $outHTML_SAVE ?>
 
         <p id="error">
           <?php
-          if (isset($_POST['submit'])) {
+          if ($errorMsg != "") {
             echo $errorMsg;
           }
           ?>
         </p>
 
       </center>
-      <?php if ($enabled == "") echo '<button type="submit" name="submit" id="btn">Add Zone</button>'; ?>
+
 
 
 

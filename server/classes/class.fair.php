@@ -57,6 +57,16 @@ class Fair
    */
   public function checkingAddZone($fairId, $title, $desc, $open_spots, $location, $attractions)
   {
+
+    $errorMsg = '';
+    if ($open_spots == "")
+      $errorMsg .= "Open_sports can not be empty<br>";
+    if ($location == "")
+      $errorMsg .= "Location can not be empty<br>";
+    if ($errorMsg != "")
+      return $errorMsg;
+
+
     //connect to database
     $conn = Database::connect();
 
@@ -67,8 +77,9 @@ class Fair
     if ($query->execute()) {
       if ($query->rowCount() > 0)
         return "You already have a zone with the same title in this fair";
-      else
+      else {
         return "";
+      }
     } else {
       return $query->errorInfo()[2];
     }
@@ -78,10 +89,10 @@ class Fair
   {
     $fairInfo = $this->getFairModel($fair_id);
     $data = $fairInfo->getVar();
-    if ($data['start_date'] < mktime(0, 0, 0))
-      return true;
-    else
+    if (strtotime($data['end_date']) > mktime(0, 0, 0))
       return false;
+    else
+      return true;
   }
 
   /**
@@ -95,6 +106,23 @@ class Fair
    */
   public function checkingZoneSlot($zoneId, $openingSlot, $closingSlot)
   {
+    $errorMsg = '';
+    if ($openingSlot == "")
+      $errorMsg .= "Please enter valid opening slot time<br>";
+    if ($closingSlot == "")
+      $errorMsg .= "Please enter valid closing slot time<br>";
+    if ($zoneId == "" || $zoneId == null)
+      $errorMsg .= "Internal Error in CheckingZoneSlot zoneId == NULL<br>";
+
+    /* check if closing hour before opening hour  */
+    if ($openingSlot != "" && $closingSlot != "") {
+      $closing = new DateTime($closingSlot);
+      $opening = new DateTime($openingSlot);
+      if ($closing <= $opening)
+        $errorMsg .= "Clossing time cannot be less then openning time<br>";
+    }
+    if ($errorMsg != "")
+      return $errorMsg;
     //connect to database
     $conn = Database::connect();
 
@@ -106,8 +134,9 @@ class Fair
     if ($query->execute()) {
       if ($query->rowCount() > 0)
         return "You already have a zoneslot with the same start end end time!";
-      else
-        return "";
+      else {
+        return "Zone slot added successfully";
+      }
     } else {
       return $query->errorInfo()[2];
     }

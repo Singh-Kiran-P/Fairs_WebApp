@@ -96,9 +96,9 @@ class SearchFair
     //connect to database
     $conn = Database::connect();
     if ($oldFairs)
-      $query = $conn->prepare("select * from fair where upper(title) LIKE upper(:title) and start_date >= CURRENT_DATE");
+      $query = $conn->prepare("select * from fair where upper(title) LIKE upper(:title) and end_date >= CURRENT_DATE");
     else
-      $query = $conn->prepare("select * from fair where upper(title) LIKE upper(:title) and start_date < CURRENT_DATE");
+      $query = $conn->prepare("select * from fair where upper(title) LIKE upper(:title) and end_date < CURRENT_DATE");
 
     $parm = '%' . $title . '%';
     $query->bindParam(":title", $parm, PDO::PARAM_STR, 255);

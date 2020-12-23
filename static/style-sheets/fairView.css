@@ -1,6 +1,7 @@
 @import "basic.css";
 .content {
   /* background-color: #1b4958; */
+  display: block;
   margin-top: 0;
   width: 80%;
   background-color: #141516;
@@ -17,6 +18,12 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+}
+.ZoneBtn{
+
+  display: inline-block;
+  float: right;
+
 }
 
 input,
@@ -78,7 +85,8 @@ button {
 
 .info {
   flex: 50%;
-  display: flex;
+  margin-top: 30px;
+  display: block;
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: column;

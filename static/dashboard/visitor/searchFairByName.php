@@ -13,7 +13,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     $listOfFairs = $search->searchByName($_GET['title'], true);
 
     if ($listOfFairs != null) {
-      $outputHTML = 'Up coming<tr><th>Fairs</th><th>Date</th</tr>';
+      $outputHTML = 'Up coming / On Going<tr><th>Fairs</th><th>Date</th</tr>';
       foreach ($listOfFairs as $fair) {
         $out = '<tr><td>';
         $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a></td>';

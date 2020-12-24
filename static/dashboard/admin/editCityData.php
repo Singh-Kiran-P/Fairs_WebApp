@@ -25,10 +25,8 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
       $createdOn = $data['created_on'];
       $description = $data['short_description'];
       $telephone = $data['telephone'];
-    }
-    else {
+    } else {
       header('Location: actions.php');
-
     }
   }
   if (isset($_POST['update'])) { // Process update
@@ -48,7 +46,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
       $errorMsg = "Updated successfully";
     }
   }
-  if(isset($_POST['delete'])) {// Process delete
+  if (isset($_POST['delete'])) { // Process delete
     $admin->deleteCity($cityId);
   }
 }
@@ -80,7 +78,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
 
     <div class="mainCol">
       <center>
-        <H2>Edit Data Of City:  <?php if (isset($name)) echo $name; ?></H2>
+        <H2>Edit Data Of City: <?php if (isset($name)) echo $name; ?></H2>
       </center>
       <div class="container">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?cityId=<?php echo $cityId; ?>" method="post">

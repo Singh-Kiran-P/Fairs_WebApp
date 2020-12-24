@@ -17,10 +17,11 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       foreach ($listOfFairs as $fair) {
         $out = '<tr><td>';
         $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a></td>';
-        $out .= '<td><p>' . $fair['start_date'] . ' TO ' . $fair['end_date'] . '</p>';
-        $out .= '</td></tr></table>';
+        $out .= '<td><p>' . $fair['start_date'] . ' TO ' . $fair['end_date'] . '</p></td></tr>';
         $outputHTML .= $out;
       }
+      $outputHTML.= '</table>';
+
     } else {
       $outputHTML = "No record found";
     }

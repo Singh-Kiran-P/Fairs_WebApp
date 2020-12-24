@@ -16,7 +16,7 @@ class Admin
     //connect to database
     $conn = Database::connect();
 
-    $query = $conn->prepare("select * from accounts,city where  city.city_id= :id and accounts.user_id = city.user_id");
+    $query = $conn->prepare("select * from accounts,city where  city.user_id= accounts.user_id and accounts.user_id = :id");
     $query->bindParam(":id", $cityId, PDO::PARAM_STR, 255);
 
     $list = array();
@@ -172,6 +172,8 @@ class Admin
 
     return $list;
   }
+
+
 
   /**
    * Update Fair data TO-DO
@@ -502,5 +504,81 @@ class Admin
       return $query->errorInfo()[2];
 
     return true;
+  }
+
+  /* Admin Main search functions */
+  public static function getAllFairs($title)
+  {
+    //connect to database
+    $conn = Database::connect();
+    $query = $conn->prepare("select * from fair where upper(title) LIKE upper(:title)");
+    $parm = '%' . $title . '%';
+    $query->bindParam(":title", $parm, PDO::PARAM_STR, 255);
+
+
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $fair = array(
+            "fairId" => $row['fair_id'],
+            "title" => $row['title'],
+            "start_date" => $row['start_date'],
+            "end_date" => $row['end_date'],
+          );
+
+          array_push($list, $fair);
+        }
+      }
+    }
+    return $list;
+  }
+  public static function getAllVisitors($name)
+  {
+    //connect to database
+    $conn = Database::connect();
+    $query = $conn->prepare("select * from accounts where upper(name) LIKE upper(:name) and type ='visitor'");
+    $parm = '%' . $name . '%';
+    $query->bindParam(":name", $parm, PDO::PARAM_STR, 255);
+
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $user = array(
+            "user_id" => $row['user_id'],
+            "name" => $row['name'],
+            "username" => $row['username'],
+          );
+
+          array_push($list, $user);
+        }
+      }
+    }
+    return $list;
+  }
+  public static function getAllCity($name)
+  {
+    //connect to database
+    $conn = Database::connect();
+    $query = $conn->prepare("select * from accounts where upper(name) LIKE upper(:name) and type='city'");
+    $parm = '%' . $name . '%';
+    $query->bindParam(":name", $parm, PDO::PARAM_STR, 255);
+
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $user = array(
+            "user_id" => $row['user_id'],
+            "name" => $row['name'],
+            "username" => $row['username'],
+          );
+
+          array_push($list, $user);
+        }
+      }
+    }
+    return $list;
   }
 }

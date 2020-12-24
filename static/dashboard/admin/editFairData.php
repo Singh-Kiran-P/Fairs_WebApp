@@ -45,7 +45,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
 
   if (isset($_POST['delete'])) { // Process delete
     if ($admin->deleteFair($fairId,$data['title']))
-      header('Location: ' . __DIR__ . 'actions.php');
+      header('Location:actions.php');
 
     else
       $errorMsg = "Not Deleted there was an error, pls try again";

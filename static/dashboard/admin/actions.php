@@ -7,8 +7,63 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
 
+$outVisitors = '';
+$outCity = '';
+$outFair = '';
+if (isset($_GET['title']) && isset($_GET['type'])) {
+  $title = $_GET['title'];
+  $type = $_GET['type'];
+  if ($title == "")
+    $title = '%';
 
+  $admin = new Admin();
 
+  if ($type == 'visitor' ||  $type == '') {
+    //make Visitors HTML
+    $allVisitors = $admin->getAllVisitors($title);
+    $outVisitors = '<p>Visitors:</p>';
+    if (count($allVisitors) == 0)
+      $outVisitors .= '<p class="noData">No data found!</p>';
+    else {
+      $outVisitors .= '<ul>';
+      foreach ($allVisitors as $vis)
+        $outVisitors .= '<li><p><a href="editVisitorData.php?visitorId=' . $vis['user_id'] . '">' . $vis['name'] . '</a></p></li>';
+      $outVisitors .= '</ul>';
+    }
+  }
+
+  if ($type == 'city' ||  $type == '') {
+
+    //make City HTML
+    $allCity = $admin->getAllCity($title);
+    $outCity = '<p>City:</p>';
+    if (count($allCity) == 0)
+      $outCity .= '<p class="noData">No data found!</p>';
+    else {
+      $outCity .= '<ul>';
+
+      foreach ($allCity as $vis)
+        $outCity .= '<li><p><a href="editCityData.php?cityId=' . $vis['user_id'] . '">' . $vis['name'] . '</a></p></li>';
+      $outCity .= '</ul>';
+    }
+  }
+
+  if ($type == 'fair' || $type == '') {
+
+    //make Fair HTML
+    $allFairs = $admin->getAllFairs($title);
+    $outFair = 'Fairs:';
+    if (count($allFairs) == 0)
+      $outFair .= '<p class="noData">No data found!</p>';
+    else {
+      $outFair .= '<ul>';
+
+      foreach ($allFairs as $vis)
+        $outFair .= '<li><p><a href="editFairData.php?fairId=' . $vis['fairId'] . '">' . $vis['title'] . '</a></p></li>';
+      $outFair .= '</ul>';
+    }
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -61,23 +116,24 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
 
       <div class="search">
         <center>
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method=" post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
             <div class="searchBox">
-              <input type="text" name="title" placeholder="Search.." value="" required onkeyup="showResult(this.value)" autocomplete="off">
-              <select name="" id="">
-                <option value="">Choose type:</option>
-                <option value="">City</option>
-                <option value="">Visitor</option>
-                <option value="">Fair</option>
+              <input type="text" name="title" max="49" placeholder="Search.." value="" onkeyup="showResult(this.value)" autocomplete="off">
+              <select name="type" id="">
+                <option value="">All</option>
+                <option value="city" <?php if (isset($_POST['type']) && $_POST['type'] == 'city') echo 'selected'; ?>>City</option>
+                <option value="visitor" <?php if (isset($_POST['type']) && $_POST['type'] == 'visitor') echo 'selected'; ?>>Visitor</option>
+                <option value="fair" <?php if (isset($_POST['type']) && $_POST['type'] == 'fair') echo 'selected'; ?>>Fair</option>
               </select>
+              <button type="submit" id="btn">Search</button>
             </div>
-            <div class="autocomplete" style="width:300px;">
-              <div id="myInputautocomplete-list" class="autocomplete-items">
-                <div><strong>R</strong>eunion<input type="hidden" value="Reunion"></div>
-                <div><strong>R</strong>omania<input type="hidden" value="Romania"></div>
-                <div><strong>R</strong>ussia<input type="hidden" value="Russia"></div>
-                <div><strong>R</strong>wanda<input type="hidden" value="Rwanda"></div>
-              </div>
+            <div class="results">
+
+              <?php echo $outVisitors; ?>
+              <?php echo $outCity; ?>
+              <?php echo $outFair; ?>
+
+
             </div>
           </form>
         </center>

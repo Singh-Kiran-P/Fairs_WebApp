@@ -7,7 +7,7 @@ session_start();
 
 
 if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_SESSION['loggedin']) && isset($_SESSION['type'])) {
-  $fairId = $_GET['fair_id'];
+  $fairId = htmlspecialchars($_GET['fair_id']);
   $fairmodel = new Fair();
   $search = new SearchFair();
 
@@ -114,7 +114,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
         Location
         <input type="text" placeholder="Username" value="<?php echo $location; ?>" disabled>
         Description
-        <div class="desc">
+        <div class="desc long">
           <?php echo $outHTML_desc; ?>
           <button id="btn_More">Read more</button>
         </div>

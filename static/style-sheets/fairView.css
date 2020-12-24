@@ -20,6 +20,7 @@
   width: 100%;
   word-wrap: break-word;
 }
+
 .ZoneBtn {
   display: inline-block;
   float: right;
@@ -87,15 +88,6 @@ button {
   flex: 50%;
   margin-top: 30px;
   display: block;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
-  padding-bottom: 20px;
-}
-
-.infoZone {
-  flex: 50%;
-  display: flex;
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: column;

@@ -46,8 +46,8 @@ if (isset($_POST['isset'])) {
         <center>
           <h1>Login</h1>
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <input class="text" type="text" placeholder="Enter email" name="email" required>
-            <input class="text" type="password" placeholder="Enter Password" name="password" required>
+            <input class="text" max="254" type="text" placeholder="Enter email" name="email" required>
+            <input class="text" max="254" type="password" placeholder="Enter Password" name="password" required>
             <input type="checkbox" checked="checked"> Remember me <br>
             <input name="isset" class="hidden">
             <button type="submit" id="btn">Login</button>

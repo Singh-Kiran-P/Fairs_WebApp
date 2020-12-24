@@ -105,7 +105,7 @@ CREATE TABLE zones (
   fair_id INT NOT NULL,
   title VARCHAR (50) NOT NULL,
   description TEXT,
-  location VARCHAR (5000),
+  location VARCHAR (500),
   open_spots INT NOT NULL,
   attractions TEXT,
   totImg INT,

@@ -16,6 +16,8 @@ class Reservation
       $errorMsg .= "Reservation for people can not be empty<br>";
     if ($reservationPeople > 8)
       $errorMsg .= "Max reservation is 8 people<br>";
+      if ($reservationPeople < 1)
+      $errorMsg .= "Min reservation is 1 people<br>";
 
     if ($errorMsg != "")
       return $errorMsg;

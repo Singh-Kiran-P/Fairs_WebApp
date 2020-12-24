@@ -3,44 +3,46 @@
 .reviewbox {
   background-color: black;
   width: 60%;
-  display:flex;
-  flex-direction:wrap;
+  display: flex;
+  flex-direction: wrap;
   flex-direction: column;
   margin-bottom: 50px;
   padding-bottom: 20px;
-
 }
-.name{
-  display:flex;
+.name {
+  display: flex;
   margin-left: 15px;
   flex-direction: row;
 }
 
-.name i{
+.name i {
   font-size: 30px;
 }
 
-.name p{
+.name p {
   margin-top: 10px;
   margin-left: 10px;
 }
 
-.reviewMsg{
+.reviewMsg {
   margin-left: 12%;
   margin-right: 8%;
-  display:flex;
+  display: flex;
   margin-top: 0px;
-  flex-direction:wrap;
-  overflow:auto;
+  flex-direction: wrap;
+  overflow: auto;
   margin-bottom: 10px;
   word-break: break-all;
-
 }
 
 .att ul {
-  list-style: none
+  list-style: none;
 }
 
 .checked {
   color: dodgerblue;
+}
+
+.long {
+  word-wrap: break-word;
 }

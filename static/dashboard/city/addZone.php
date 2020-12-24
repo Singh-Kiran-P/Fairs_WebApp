@@ -130,9 +130,9 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
         <input type="text" name="title" placeholder="Title" value="<?php if (isset($title)) echo $title; ?>" required <?php echo $enabled; ?>>
 
-        <textarea type="" name="desc" placeholder="Give a short discription about this fair" form="form" required <?php echo $enabled; ?>><?php if (isset($desc)) echo $desc; ?></textarea>
+        <textarea type="" name="desc" cols="50" rows="10" placeholder="Give a short discription about this fair" form="form" required <?php echo $enabled; ?>><?php if (isset($desc)) echo $desc; ?></textarea>
 
-        <textarea type="" name="attractions" placeholder="Give the attaction on this Zone like ->  attraction1,attraction2 " form="form" required <?php echo $enabled; ?>><?php if (isset($attractions)) echo $attractions; ?></textarea>
+        <textarea type="" name="attractions" cols="50" rows="10" placeholder="Give the attaction on this Zone like ->  attraction1,attraction2 " form="form" required <?php echo $enabled; ?>><?php if (isset($attractions)) echo $attractions; ?></textarea>
 
         <div>
           <div class="sidebyside">

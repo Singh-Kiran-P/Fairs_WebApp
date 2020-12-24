@@ -202,6 +202,9 @@ img {
   display: none;
 }
 
+.long {
+  word-wrap: break-word;
+}
 
 
 

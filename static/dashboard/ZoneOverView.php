@@ -149,7 +149,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
     </div>
 
     <!-- Zone info -->
-    <div class="infoZone">
+    <div class="info">
 
       <center>
         <?php echo $outHTML_Info ?>

@@ -7,6 +7,9 @@ session_start();
 if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "admin")) {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 } else { //user is an ADMIN
+  $start_date = date("Y-m-d");
+
+
   $errorMsg = "";
   $admin = new Admin();
   $fairId = "";
@@ -27,28 +30,46 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
     } else {
       header('Location: actions.php');
     }
-  }
-  if (isset($_POST['update'])) { // Process update
-    $dataUpdated = [
-      'name' => $_POST['name'],
-      'username' => $data['username'],
-      'email' => $_POST['email']
-    ];
 
-    $res = $admin->updateVisitorData($visitorId, $dataUpdated);
-    if ($res != '') { //error
-      $errorMsg = $res;
-    } else {
-      $errorMsg = "Updated successfully";
+    if (isset($_POST['update'])) { // Process update
+
+      $dataUpdated = [
+        'title' => $_POST['title'],
+        'description' => $_POST['description'],
+        'start_date' => $_POST['start_date'],
+        'end_date' => $_POST['end_date'],
+        'opening_hour' => $_POST['opening_hour'],
+        'closing_hour' => $_POST['closing_hour'],
+        'location' => $_POST['location'],
+      ];
+
+
+
+      $res = $admin->updateFairData($fairId, $dataUpdated);
+      if ($res != '') { //error
+        $errorMsg = $res;
+      } else {
+        //update form fields
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $start_date = $_POST['start_date'];
+        $end_date = $_POST['end_date'];
+        $opening_hour = $_POST['opening_hour'];
+        $closing_hour = $_POST['closing_hour'];
+        $location = $_POST['location'];
+        $errorMsg = "Updated successfully";
+      }
     }
-  }
 
-  if (isset($_POST['delete'])) { // Process delete
-    if ($admin->deleteFair($fairId,$data['title']))
-      header('Location:actions.php');
+    if (isset($_POST['delete'])) { // Process delete
+      if ($admin->deleteFair($fairId, $data['title']))
+        header('Location:actions.php');
 
-    else
-      $errorMsg = "Not Deleted there was an error, pls try again";
+      else
+        $errorMsg = "Not Deleted there was an error, pls try again";
+    }
+  } else {
+    header('Location: actions.php');
   }
 }
 ?>
@@ -107,7 +128,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <div class="hidden start_date_orginal ">
                 <?php if (isset($start_date)) echo $start_date; ?>
               </div>
-              <input type="date" id="start_date" name="start_date" required value="<?php if (isset($start_date)) echo $start_date; ?>">
+              <input type="date" id="start_date" min="<?php if (isset($start_date)) echo $start_date; ?>" name="start_date" required value="<?php if (isset($start_date)) echo $start_date; ?>">
             </div>
           </div>
           <div class="row">

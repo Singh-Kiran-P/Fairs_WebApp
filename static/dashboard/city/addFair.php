@@ -76,9 +76,9 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         <input type="file" name="file[]" class="inputfile" value="<?php if (isset($_POST['file'])) echo $_POST['file']; ?>" multiple>
         <div>
           <div class="sidebyside">
-            <input type="text" name="startDate" placeholder="Start Date" min="<?php echo date('Y-m') . (date('d') + 1) ?>" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['startDate'])) echo $_POST['startDate']; ?>" required>
+            <input type="text" name="startDate" placeholder="Start Date" min="<?php echo date('Y-m') .'-'. (date('d') + 1); ?>" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['startDate'])) echo $_POST['startDate']; ?>" required>
             <input type="text" name="openingHour" placeholder="Opening Hour" onfocus="(this.type='time')" onblur="(this.type='text')" value="<?php if (isset($_POST['openingHour'])) echo $_POST['openingHour']; ?>" required>
-            <input type="text" name="endDate" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['endDate'])) echo $_POST['endDate']; ?>" required>
+            <input type="text" name="endDate" min="<?php echo date('Y-m') .'-'. (date('d') + 1); ?>" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['endDate'])) echo $_POST['endDate']; ?>" required>
             <input type="text" name="closingHour" placeholder="Closing Hour" onfocus="(this.type='time')" onblur="(this.type='text')" value="<?php if (isset($_POST['closingHour'])) echo $_POST['closingHour']; ?>" required>
           </div>
 

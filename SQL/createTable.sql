@@ -202,7 +202,7 @@ DROP TABLE IF EXISTS notifications;
 CREATE TABLE notifications (
   notification_id serial PRIMARY KEY,
   user_id INT NOT NULL,
-  msg INT NOT NULL,
+  msg TEXT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE
 );
 
@@ -243,4 +243,39 @@ CREATE TABLE messaging (
   showed BOOLEAN DEFAULT False,
   FOREIGN KEY (msgFrom) REFERENCES accounts (user_id) ON DELETE CASCADE,
   FOREIGN KEY (msgTo) REFERENCES accounts (user_id) ON DELETE CASCADE
+);
+
+
+
+-- sql code voor zoneslots te update als fair data geupdate wordt
+
+update fair set start_date ='2020-12-27'  where fair_id =55;
+
+-- na dat de fair data geupdate wordt kijken welke reservations hier door niet meer kunnen door gaan
+-- en dan hun en notification sturen
+-- geeft de user_id van de visitor terug
+select r.user_id,f.title as fair_title from reservations r,fair f
+WHERE r.fair_id = f.fair_id and r.zoneslot_id
+IN
+	(select zoneslot_id FROM zoneslots zs
+		WHERE zs.zone_id
+		IN (
+			select zone_id
+			from zones z,fair f
+			where z.fair_id = f.fair_id and
+			not (zs.opening_slot >= f.opening_hour and
+				 zs.closing_slot <= f.closing_hour and
+				 zs.start_date BETWEEN f.start_date and f.end_date
+				)
+			and zs.free_slots != z.open_spots
+			)
+	);
+
+DELETE FROM zoneslots zs
+WHERE zs.zone_id
+IN (
+	select zone_id
+	from zones z,fair f
+	where z.fair_id = f.fair_id and
+	not (zs.opening_slot >= f.opening_hour and zs.closing_slot <= f.closing_hour and zs.start_date BETWEEN f.start_date and f.end_date)
 );

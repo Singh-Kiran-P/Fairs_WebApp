@@ -17,9 +17,9 @@ class Fair
    */
   public function checkingAddFair($cityId, $title, $desc, $startDate, $endDate, $openingHour, $closingHour, $location)
   {
-    if (count($desc) > 499)
+    if (strlen($desc) > 499)
       return "Description size to big!";
-    if (count($title) > 49)
+    if (strlen($title) > 49)
       return "Title size to big!";
 
 
@@ -65,13 +65,13 @@ class Fair
   public function checkingAddZone($fairId, $title, $desc, $open_spots, $location, $attractions)
   {
     $errorMsg = '';
-    if (count($title) > 49)
+    if (strlen($title) > 49)
       return "Title size to big!";
-    if (count($desc) > 499)
+    if (strlen($desc) > 499)
       return "Description size to big!";
-    if (count($location) > 49)
+    if (strlen($location) > 49)
       return "Location to big!";
-    if (count($attractions) > 499)
+    if (strlen($attractions) > 499)
       return "Attraction list to big!";
     if ($open_spots == "")
       $errorMsg .= "Open_sports can not be empty<br>";
@@ -154,7 +154,7 @@ class Fair
       if ($query->rowCount() > 0)
         return "You already have a zoneslot with the same start end end time!";
       else {
-        return "Zone slot added successfully";
+        return "";
       }
     } else {
       return $query->errorInfo()[2];

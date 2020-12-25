@@ -32,6 +32,21 @@ input,
   margin: 2%;
 }
 
+.m-r{
+  margin-right: 2%;
+}
+#alert-area li {
+  margin-top: 10px;
+
+
+  margin-bottom: 5%;
+  margin-right: 2%;
+}
+
+.fl-right {
+  float: right;
+}
+
 .mainCol1 {
   flex: 50%;
   display: flex;

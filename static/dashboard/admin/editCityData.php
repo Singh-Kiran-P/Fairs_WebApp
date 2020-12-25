@@ -47,7 +47,8 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
     }
   }
   if (isset($_POST['delete'])) { // Process delete
-    $admin->deleteCity($cityId);
+    if ($admin->deleteCity($cityId))
+      header('Location: actions.php');
   }
 }
 ?>

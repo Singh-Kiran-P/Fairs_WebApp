@@ -43,7 +43,7 @@ if (isset($_GET['title']) && isset($_GET['type'])) {
       $outCity .= '<ul>';
 
       foreach ($allCity as $vis)
-        $outCity .= '<li><p><a href="editCityData.php?cityId=' . $vis['user_id'] . '">' . $vis['name'] . '</a></p></li>';
+        $outCity .= '<li><p><a href="editCityData.php?cityId=' . $vis['city_id'] . '">' . $vis['name'] . '</a></p></li>';
       $outCity .= '</ul>';
     }
   }

@@ -16,45 +16,49 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
 
   // FairModels
   $fairRow = $fairmodel->getFairModel($fairId);
-  $fairInfo = $fairRow->getVar();
-
-  // process Img
-  $outHTML_Img = "";
   if ($fairRow != null) {
-    for ($i = 0; $i < $imgCount; $i++) {
-      $toSearchFile = $fairId . "_" . $i;
-      $fairImg = Upload::getUploadedFilePath($toSearchFile, "fair_img");
-      $outHTML_Img .= "<img alt='fair image' src='../../server/uploads/fair_img/" . $fairImg . "'></img>";
+    $fairInfo = $fairRow->getVar();
+
+    // process Img
+    $outHTML_Img = "";
+    if ($fairRow != null) {
+      for ($i = 0; $i < $imgCount; $i++) {
+        $toSearchFile = $fairId . "_" . $i;
+        $fairImg = Upload::getUploadedFilePath($toSearchFile, "fair_img");
+        $outHTML_Img .= "<img alt='fair image' src='../../server/uploads/fair_img/" . $fairImg . "'></img>";
+      }
     }
-  }
 
-  //process Info
-  $title = $fairInfo['title'];
-  $desc = $fairInfo['description'];
-  $start_date = $fairInfo['start_date'];
-  $end_date = $fairInfo['end_date'];
-  $opening_hour = $fairInfo['opening_hour'];
-  $closing_hour = $fairInfo['closing_hour'];
-  $location = $fairInfo['location'];
+    //process Info
+    $title = $fairInfo['title'];
+    $desc = $fairInfo['description'];
+    $start_date = $fairInfo['start_date'];
+    $end_date = $fairInfo['end_date'];
+    $opening_hour = $fairInfo['opening_hour'];
+    $closing_hour = $fairInfo['closing_hour'];
+    $location = $fairInfo['location'];
 
-  //set zone Links
-  // Add list of zones
-  $zones = $fairmodel->getFairZones($fairId);
-  $zoneSlectorHTML = "";
-  if ($zones != null && count($zones) > 0) {
-    foreach ($zones as $z) {
-      $zone = '<option value="' . $z["zoneId"] . '">' . $z["title"] . '</option>';
-      $zoneSlectorHTML .= $zone;
+    //set zone Links
+    // Add list of zones
+    $zones = $fairmodel->getFairZones($fairId);
+    $zoneSlectorHTML = "";
+    if ($zones != null && count($zones) > 0) {
+      foreach ($zones as $z) {
+        $zone = '<option value="' . $z["zoneId"] . '">' . $z["title"] . '</option>';
+        $zoneSlectorHTML .= $zone;
+      }
     }
-  }
 
-  //show more information
-  $showDesc = substr($desc, 0, (strlen($desc) - 1) * (1 / 3));
-  $moreDesc = substr($desc, (strlen($desc) - 1) * (1 / 3) + 1, (strlen($desc) - 1));
-  $outHTML_desc = '';
-  //check if desc not null
-  if (strlen($desc) != 0)
-    $outHTML_desc = '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
+    //show more information
+    $showDesc = substr($desc, 0, (strlen($desc) - 1) * (1 / 3));
+    $moreDesc = substr($desc, (strlen($desc) - 1) * (1 / 3) + 1, (strlen($desc) - 1));
+    $outHTML_desc = '';
+    //check if desc not null
+    if (strlen($desc) != 0)
+      $outHTML_desc = '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
+  } else {
+    header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/visitor/searchFairs.php');
+  }
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }

@@ -16,7 +16,7 @@ class Admin
     //connect to database
     $conn = Database::connect();
 
-    $query = $conn->prepare("select * from accounts,city where  city.user_id= accounts.user_id and accounts.user_id = :id");
+    $query = $conn->prepare("select * from accounts,city where  city.user_id= accounts.user_id and city.city_id = :id");
     $query->bindParam(":id", $cityId, PDO::PARAM_STR, 255);
 
     $list = array();
@@ -56,7 +56,7 @@ class Admin
       $conn = Database::connect();
 
       /* Update Accounts table */
-      $query = $conn->prepare("UPDATE accounts SET name=:name,username=:username,email=:email WHERE user_id=:id");
+      $query = $conn->prepare("UPDATE accounts SET name=:name,username=:username,email=:email WHERE user_id=:id and type='city'");
 
       $query->bindParam(":id", $cityId, PDO::PARAM_STR, 255);
       $query->bindParam(":name", $data['name'], PDO::PARAM_STR, 255);
@@ -94,7 +94,7 @@ class Admin
 
     //delete all fair of this city
     foreach ($allFairIds as $item) {
-      $this->deleteFair($item['fairId'], $item['title']);
+      $this->deleteFair($item['fairId'], $item['title'], "");
     }
 
     //delete city
@@ -178,6 +178,7 @@ class Admin
   /**
    * Update Fair data TO-DO
    *  - update all zoneSlotes opening_slot and closing_slot  and star_date
+   *  - check if on updated zoneSlotes if there where reservation and notify them
    *
    * @param [type] $fairId
    * @param [type] $data
@@ -186,27 +187,123 @@ class Admin
   public function updateFairData($fairId, $data)
   {
     $res = $this->_checkFairData($data);
+
     if ($res == '') { //no error in checking
 
       //connect to database
       $conn = Database::connect();
 
       /* Update Accounts table */
-      $query = $conn->prepare("UPDATE accounts SET name=:name,username=:username,email=:email,type=:type WHERE user_id=:id");
+      $query = $conn->prepare("UPDATE fair SET title=:title,description=:description, start_date=:start_date , end_date=:end_date  , opening_hour=:opening_hour , closing_hour=:closing_hour , location=:location WHERE fair_id=:fair_id;");
 
-      $query->bindParam(":id", $fairId, PDO::PARAM_STR, 255);
-      $query->bindParam(":name", $data['name'], PDO::PARAM_STR, 255);
-      $query->bindParam(":username", $data['username'], PDO::PARAM_STR, 255);
-      $query->bindParam(":email", $data['email'], PDO::PARAM_STR, 255);
-      $query->bindParam(":type", $data['type'], PDO::PARAM_STR, 255);
+      $query->bindParam(":fair_id", $fairId, PDO::PARAM_STR, 255);
+      $query->bindParam(":title", $data['title'], PDO::PARAM_STR, 255);
+      $query->bindParam(":description", $data['description'], PDO::PARAM_STR, 255);
+      $query->bindParam(":end_date", $data['end_date'], PDO::PARAM_STR, 255);
+      $query->bindParam(":start_date", $data['start_date'], PDO::PARAM_STR, 255);
+      $query->bindParam(":opening_hour", $data['opening_hour'], PDO::PARAM_STR, 255);
+      $query->bindParam(":closing_hour", $data['closing_hour'], PDO::PARAM_STR, 255);
+      $query->bindParam(":location", $data['location'], PDO::PARAM_STR, 255);
 
       if (!$query->execute())
         return $query->errorInfo()[2];
 
-      return "Updated successfully";
+      // Get visitors there are affected
+      $listOfVisitors = $this->_getAffectedVisitors();
+      $userIds = array();
+
+      foreach ($listOfVisitors as $visitor)
+        array_push($userIds, $visitor['user_id']);
+
+      foreach ($listOfVisitors as $visitor)
+        $this->_notifyVisitors($userIds, "The admin decided to update data of fair: <a href='../fairOverView.php?fair_id=" . $fairId . "'>" . $visitor['fair_title'] . "</a> data. We had to cancel your reservation for this fair.");
+
+      $reservationUsers = $this->_getAllReservationUsers($fairId);
+      // Notify visitors that the data has been updated
+      $this->_notifyVisitors($reservationUsers, "The admin updated data of fair: <a href='../fairOverView.php?fair_id=" . $fairId . "'>" . $data['title'] . "</a>");
+      // Update zoneslots
+      $this->_updateZoneSlotsTable();
+
+      return "";
     } else {
       return $res;
     }
+  }
+
+  /**
+   * Helper function for updating Fair data
+   * Get reservations visitors that are affected by updating fairData
+   *
+   * @return list with user ids
+   */
+  private function _getAffectedVisitors()
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select r.user_id,f.title as fair_title from reservations r,fair f
+    WHERE r.fair_id = f.fair_id and r.zoneslot_id
+    IN
+      (select zoneslot_id FROM zoneslots zs
+        WHERE zs.zone_id
+        IN (
+          select zone_id
+          from zones z,fair f
+          where z.fair_id = f.fair_id and
+          not (zs.opening_slot >= f.opening_hour and
+             zs.closing_slot <= f.closing_hour and
+             zs.start_date BETWEEN f.start_date and f.end_date
+            )
+          and zs.free_slots != z.open_spots
+          )
+      );");
+
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $user = [
+            "user_id" => $row['user_id'],
+            "fair_title" => $row['fair_title']
+          ];
+          array_push($list, $user);
+        }
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return $list;
+  }
+
+  /**
+   * Update ZoneSlot table
+   *  - DELETE all zone slots where start time || end time || start date are
+   *    changed because the fair data got updated
+   *
+   * @return void
+   */
+  private function _updateZoneSlotsTable()
+  {
+
+    //connect to database
+    $conn = Database::connect();
+
+    /* Delete fair */
+    $query = $conn->prepare("DELETE FROM zoneslots zs
+                              WHERE zs.zone_id
+                              IN (
+                                select zone_id
+                                from zones z,fair f
+                                where z.fair_id = f.fair_id and
+                                not (zs.opening_slot >= f.opening_hour and zs.closing_slot <= f.closing_hour and zs.start_date BETWEEN f.start_date and f.end_date)
+    );");
+
+
+    if ($query->execute())
+      return '';
+    else
+      return 'Error while updating zoneslots table';
   }
 
   /**
@@ -235,10 +332,12 @@ class Admin
       return "End date cannot be smaller then start date";
 
     /* check if closing hour before opening hour  */
-    $closing = new DateTime($data['closingHour']);
-    $opening = new DateTime($data['openingHour']);
+    $closing = new DateTime($data['closing_hour']);
+    $opening = new DateTime($data['opening_hour']);
     if ($closing <= $opening)
       return "Clossing time cannot be less then openning time";
+
+    return '';
   }
 
   /**
@@ -267,7 +366,7 @@ class Admin
     if ($query->execute()) {
 
       //Notify visitors
-      $this->_notifyVisitors($reservationUsers, $title);
+      $this->_notifyVisitors($reservationUsers, "The admin decided to delete fair: " . $title . ". We had to cancel all reservations for this fair");
 
       //Delete all img's en video's
       $this->_deleteAllMedia($fairId, "fair_img", $nFairImg);
@@ -322,7 +421,7 @@ class Admin
     if ($query->execute()) {
       if ($query->rowCount() > 0) {
         while ($row = $query->fetch()) {
-          array_push($list, ['user_id' => $row['user_id']]);
+          array_push($list,  $row['user_id']);
         }
       }
     } else {
@@ -361,13 +460,13 @@ class Admin
   }
 
   /**
-   * Helper function for DeleteFair
+   * Helper function for DeleteFair and updateFair
    *
    * @param list $listOfUsers
    * @param text $fairTitle
    * @return void
    */
-  private function _notifyVisitors($listOfUsers, $fairTitle)
+  private function _notifyVisitors($listOfUsers, $msg)
   {
     //connect to database
     $conn = Database::connect();
@@ -375,7 +474,6 @@ class Admin
     foreach ($listOfUsers as $userId) {
       $query = $conn->prepare("INSERT INTO notifications VALUES (DEFAULT,:userId,:msg)");
       $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
-      $msg = "The admin decided to delete " . $fairTitle . ". We had to cancel all reservations for this fair.";
       $query->bindParam(":msg", $msg, PDO::PARAM_STR, 255);
       $query->execute();
     }
@@ -561,7 +659,7 @@ class Admin
   {
     //connect to database
     $conn = Database::connect();
-    $query = $conn->prepare("select * from accounts where upper(name) LIKE upper(:name) and type='city'");
+    $query = $conn->prepare("select * from accounts,city where upper(name) LIKE upper(:name) and type='city' and accounts.user_id = city.user_id ");
     $parm = '%' . $name . '%';
     $query->bindParam(":name", $parm, PDO::PARAM_STR, 255);
 
@@ -570,7 +668,7 @@ class Admin
       if ($query->rowCount() > 0) {
         while ($row = $query->fetch()) {
           $user = array(
-            "user_id" => $row['user_id'],
+            "city_id" => $row['city_id'],
             "name" => $row['name'],
             "username" => $row['username'],
           );

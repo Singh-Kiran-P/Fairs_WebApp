@@ -106,7 +106,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
               </div>
               <div class="l">
                 <H4>
-                  <input type="datetime-local" name="date" class="date_time" id="" min="<?php echo $fairInfo['start_date'] ?>" max="<?php echo $fairInfo['end_date'] ?>" required>
+                  <input type="datetime-local" name="date" class="date_time" id="" min="<?php echo $fairInfo['start_date'] . 'T' . $fairInfo['opening_hour']; ?>" max="<?php echo $fairInfo['end_date'] . 'T' . $fairInfo['closing_hour']; ?>" required>
                 </H4>
               </div>
             </label>

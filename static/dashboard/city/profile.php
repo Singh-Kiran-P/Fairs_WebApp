@@ -1,5 +1,4 @@
 <?php
-require '../../../server/classes/class.city.php';
 require '../../../server/classes/class.accounts.php';
 require '../../../server/classes/class.upload.php';
 

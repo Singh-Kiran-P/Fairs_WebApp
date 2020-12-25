@@ -294,7 +294,7 @@ class SearchFair
       }
     }
 
-    return NULL;
+    return 0;
   }
 
   public function totVideo($id, $table)

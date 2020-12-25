@@ -42,8 +42,11 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       // create notification
       $today_dt = new DateTime(date("Y-m-d"));
       $expire_dt = new DateTime($item['date']);
-      if ($expire_dt < $today_dt)
-        $outHTML_notification .= "If you liked " . $item['fairTitle'] . "'s zone " . $item['zoneTitle'] . ",you write a review by clicking on 👍<br>";
+
+      if ($expire_dt < $today_dt) {
+
+        $outHTML_notification .= "<li>If you liked " . $item['fairTitle'] . "'s zone " . $item['zoneTitle'] . ",you write a review by clicking on 👍</li>";
+      }
 
       $outHTML_reservations .= '  <tr>';
       $outHTML_reservations .= '      <td>' . $item['fairTitle'] . '</td>';
@@ -120,7 +123,12 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   foreach ($msg as $m) {
     $OUTHTML_MSG .= '<div class="msg">';
     $OUTHTML_MSG .= $m['msgCount'] . ' new messages from <a href="message.php?msgTo=' . $m['user_id'] . '&opened=true"><b id="linkinnotification" >' . $m['msgFrom'] . '</b></a>';
-    $OUTHTML_MSG .= '</div>';
+  }
+
+  // Notification if admin updated something
+  $notifications = $account->getNotifications($userId);
+  foreach ($notifications as $notification) {
+    $OUTHTML_MSG .= '<li>' . $notification['msg'] . '<a class="fl-right" href="../../../server/dashboard/visitor/deleteNotification.php?id=' . $notification['notification_id'] . '">X</a> </li>';
   }
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
@@ -192,8 +200,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         Type:
         <input type="text" placeholder="Type" value="<?php echo $type; ?>" disabled>
       </center>
-      Meldingen:
-      <div id="alert-area">
+      <div id="alert-area" <?php if ($OUTHTML_MSG == "") echo "class='hidden'"; ?>>
+        <p>Meldingen: <a class="fl-right m-r" href="../../../server/dashboard/visitor/deleteNotification.php?id=">All X</a></p>
         <?php echo $OUTHTML_MSG; ?>
       </div>
     </div>
@@ -207,7 +215,9 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     <?php
     if ($outHTML_notification != "") {
       echo "<div class='notification'>Notifications:<br>";
+      echo "<ul class='notifications'>";
       echo $outHTML_notification;
+      echo "</ul>";
       echo '</div>';
     }
     echo $outHTML_reservations; ?>

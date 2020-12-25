@@ -275,8 +275,53 @@ class Accounts
     return NULL;
   }
 
+  public function getNotifications($userId)
+  {
+    //connect to database
+    $conn = Database::connect();
 
+    $query = $conn->prepare("select * from notifications where user_id=:id");
+    $query->bindParam(":id", $userId, PDO::PARAM_STR, 255);
 
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+
+          $msg = [
+            'notification_id' => $row['notification_id'],
+            'msg' => $row['msg']
+          ];
+
+          array_push($list, $msg);
+        }
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return $list;
+  }
+  public function deleteNotification($notification_id, $userId, $all)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    try {
+      if ($all) {
+        $query = $conn->prepare("DELETE FROM notifications WHERE  user_id=:userId ");
+        $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
+      } else {
+        $query = $conn->prepare("DELETE FROM notifications WHERE notification_id = :id and  user_id=:userId ");
+        $query->bindParam(":id", $notification_id, PDO::PARAM_STR, 255);
+        $query->bindParam(":userId", $userId, PDO::PARAM_STR, 255);
+      }
+
+      $query->execute();
+    } catch (\Throwable $th) {
+      //throw $th;
+    }
+  }
 
   /* ___________________________ GETTER / SETTERS_________________________________ */
 

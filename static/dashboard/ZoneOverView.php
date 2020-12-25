@@ -7,91 +7,97 @@ include_once '../../server/classes/class.model.fair.php';
 
 session_start();
 if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_SESSION['loggedin']) && isset($_SESSION['type'])) {
-  if (isset($_GET['zoneId'])) {
+  if (isset($_GET['zoneId']) && isset($_GET['fairId'])) {
     $zoneId = $_GET['zoneId'];
     $fair = new Fair();
+    $fairData = $fair->getFairModel($_GET['fairId']);
+
     $zone = $fair->getZone($zoneId);
+    if ($zone != null && $fairData != null) {
 
-    // process Img
-    $outHTML_Img = "";
-    if ($zone != null) {
-      for ($i = 0; $i < $zone['totimg']; $i++) {
-        $toSearchFile = $zoneId . "_" . $i;
-        $zoneImg = Upload::getUploadedFilePath($toSearchFile, "zone_img");
-        $outHTML_Img .= "<img alt='Zone images' src='../../server/uploads/zone_img/" . $zoneImg . "'></img>";
+      // process Img
+      $outHTML_Img = "";
+      if ($zone != null) {
+        for ($i = 0; $i < $zone['totimg']; $i++) {
+          $toSearchFile = $zoneId . "_" . $i;
+          $zoneImg = Upload::getUploadedFilePath($toSearchFile, "zone_img");
+          $outHTML_Img .= "<img alt='Zone images' src='../../server/uploads/zone_img/" . $zoneImg . "'></img>";
+        }
       }
-    }
 
-    // process video
-    $outHTML_Video = "";
-    if ($zone['totvideo'] > 0) {
+      // process video
+      $outHTML_Video = "";
+      if ($zone['totvideo'] > 0) {
 
-      for ($i = 0; $i < $zone['totvideo']; $i++) {
-        $outHTML_Video .= '<div class="video">';
-        $outHTML_Video .= '<video width="320" height="240" controls>';
-        $toSearchFile = $zoneId . "_" . $i;
-        $video = Upload::getUploadedFilePath($toSearchFile, "zone_video");
-        $ext = explode(".", $video);
-        if (count($ext) == 2)
-          $outHTML_Video .= "<source  src='../../server/uploads/zone_video/" . $video . "' type='video/" . $ext[1] . "'>";
-        $outHTML_Video .= '</video></div>';
+        for ($i = 0; $i < $zone['totvideo']; $i++) {
+          $outHTML_Video .= '<div class="video">';
+          $outHTML_Video .= '<video width="320" height="240" controls>';
+          $toSearchFile = $zoneId . "_" . $i;
+          $video = Upload::getUploadedFilePath($toSearchFile, "zone_video");
+          $ext = explode(".", $video);
+          if (count($ext) == 2)
+            $outHTML_Video .= "<source  src='../../server/uploads/zone_video/" . $video . "' type='video/" . $ext[1] . "'>";
+          $outHTML_Video .= '</video></div>';
+        }
       }
-    }
-    if ($zone['totvideo'] == 0)
-      $outHTML_Video = '';
+      if ($zone['totvideo'] == 0)
+        $outHTML_Video = '';
 
-    //process info
-    $outHTML_Info = '';
-    $outHTML_Info .=   'Title';
-    $outHTML_Info .=   '<input type="text" placeholder="Name" value="' . $zone['title'] . '" disabled>';
-    $outHTML_Info .=   'Location';
-    $outHTML_Info .=   ' <input type="text" placeholder="Username" value="' . $zone['location'] . '" disabled>';
-    $outHTML_Info .=   ' <input type="hidden" placeholder="Username" value="' . $zone['zoneId'] . '" name="zoneId" >';
+      //process info
+      $outHTML_Info = '';
+      $outHTML_Info .=   'Title';
+      $outHTML_Info .=   '<input type="text" placeholder="Name" value="' . $zone['title'] . '" disabled>';
+      $outHTML_Info .=   'Location';
+      $outHTML_Info .=   ' <input type="text" placeholder="Username" value="' . $zone['location'] . '" disabled>';
+      $outHTML_Info .=   ' <input type="hidden" placeholder="Username" value="' . $zone['zoneId'] . '" name="zoneId" >';
 
-    // procces attractions
-    $outHTML_Attraction = 'Attractions:';
-    $attractions = explode(",", $zone['attractions']);
-    $outHTML_Attraction .= '<center><div class="att"><ul>';
-    foreach ($attractions as $att) {
-      $outHTML_Attraction .= '<li>📷 ' . $att . '</li>';
-    }
-    $outHTML_Attraction .= '</ul></div></center>';
-
-
-
-    $outHTML_Info .= $outHTML_Attraction;
-    $outHTML_Info .= 'Description';
-
-
-    //show more information
-    $desc =  $zone['description'];
-    $showDesc = substr($desc, 0, (strlen($desc) - 1) * (1 / 3));
-    $moreDesc = substr($desc, (strlen($desc) - 1) * (1 / 3) + 1, (strlen($desc) - 1));
-    $outHTML_desc = '';
-    //check if desc not null
-    if (strlen($desc) != 0)
-      $outHTML_desc .= '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
-
-    // Add list of dates
-    $dateSlectorHTML = "";
-    $dates = $fair->getZonesDate($zoneId);
-
-    if (count($dates) > 0) {
-      foreach ($dates as $d) {
-        $date = '<option value="' . $d . '">' . $d . '</option>';
-        $dateSlectorHTML .= $date;
+      // procces attractions
+      $outHTML_Attraction = 'Attractions:';
+      $attractions = explode(",", $zone['attractions']);
+      $outHTML_Attraction .= '<center><div class="att"><ul>';
+      foreach ($attractions as $att) {
+        $outHTML_Attraction .= '<li>📷 ' . $att . '</li>';
       }
+      $outHTML_Attraction .= '</ul></div></center>';
+
+
+
+      $outHTML_Info .= $outHTML_Attraction;
+      $outHTML_Info .= 'Description';
+
+
+      //show more information
+      $desc =  $zone['description'];
+      $showDesc = substr($desc, 0, (strlen($desc) - 1) * (1 / 3));
+      $moreDesc = substr($desc, (strlen($desc) - 1) * (1 / 3) + 1, (strlen($desc) - 1));
+      $outHTML_desc = '';
+      //check if desc not null
+      if (strlen($desc) != 0)
+        $outHTML_desc .= '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
+
+      // Add list of dates
+      $dateSlectorHTML = "";
+      $dates = $fair->getZonesDate($zoneId);
+
+      if (count($dates) > 0) {
+        foreach ($dates as $d) {
+          $date = '<option value="' . $d . '">' . $d . '</option>';
+          $dateSlectorHTML .= $date;
+        }
+      }
+
+      $zoneInfoTableHeading =
+        "<tr><th>Date</th><th>Start time</th><th>End time</th><th>Open</th></tr>";
+      $zoneInfoTableHeading .= $fair->showZoneTimeSlots($zoneId);
+
+
+      //build reviews
+      $review = new Review();
+      $reviewInfo = $review->getReviewInfo($zoneId);
+      $outReview = $review->buildReviewHTML($reviewInfo);
+    } else {
+      header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/visitor/searchFairs.php');
     }
-
-    $zoneInfoTableHeading =
-      "<tr><th>Date</th><th>Start time</th><th>End time</th><th>Open</th></tr>";
-    $zoneInfoTableHeading .= $fair->showZoneTimeSlots($zoneId);
-
-
-    //build reviews
-    $review = new Review();
-    $reviewInfo = $review->getReviewInfo($zoneId);
-    $outReview = $review->buildReviewHTML($reviewInfo);
   }
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');

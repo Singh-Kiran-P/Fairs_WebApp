@@ -62,8 +62,6 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
 }
-
-
 ?>
 
 <!DOCTYPE html>

@@ -146,6 +146,35 @@ class Accounts
     //connect to database
     $conn = Database::connect();
 
+    //check input
+    if (strlen($email) > 49)
+      return ['msg' => "Email length to  big!", 'val' => false];
+    if ($email == "")
+      return ['msg' => "Email cannot be empty!", 'val' => false];
+
+
+    if (strlen($name) > 49)
+      return ['msg' => "Name length to  big!", 'val' => false];
+    if ($name == "")
+      return ['msg' => "Name cannot be empty!", 'val' => false];
+
+
+    if (strlen($password) > 49)
+      return ['msg' => "Password length to  big!", 'val' => false];
+    if ($password == "")
+      return ['msg' => "Password cannot be empty!", 'val' => false];
+
+
+    if (strlen($username) > 49)
+      return ['msg' => "Username length to  big!", 'val' => false];
+    if ($email == "")
+      return ['msg' => "Username cannot be empty!", 'val' => false];
+
+
+    if ($type == "" || ($type != "city" && $type != " visitor"))
+      return ['msg' => "Invaild type", 'val' => false];
+
+
     // Validating EMail and username
     if ($this->checkIfEmail($email))
       return ['msg' => "Email already taken!", 'val' => false];
@@ -184,6 +213,15 @@ class Accounts
    */
   public function completeRegisteration($telephone, $desc)
   {
+
+    //check input
+    if (strlen($telephone) > 49)
+      return "Telephone number length to  big!";
+
+    if ($telephone == "")
+      return "Telephone number cannot be empty!";
+
+
     //connect to database
     $conn = Database::connect();
 

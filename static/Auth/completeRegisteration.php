@@ -35,6 +35,9 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
     if ($res == "true") {
       header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
     }
+    else{
+      $errorMsg = $res;
+    }
   }
 }
 ?>

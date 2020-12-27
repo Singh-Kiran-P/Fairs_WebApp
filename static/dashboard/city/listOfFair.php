@@ -6,33 +6,37 @@ session_start();
 
 if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "city") {
 
-    $cityId = $_SESSION['cityId'];
-    $fair = new Fair();
+  $cityId = $_SESSION['cityId'];
+  $fair = new Fair();
 
-    // $listOfFairs is a array of FairModels
-    $listOfFairs = $fair->getListOfFairs($cityId);
+  // $listOfFairs is a array of FairModels
+  $listOfFairs = $fair->getListOfFairs($cityId);
 
-    $html_List_of_Faris = "";
+  $html_List_of_Faris = "";
+  if ($listOfFairs != null) {
     foreach ($listOfFairs as $fairRow) {
       $s = $fairRow->getVar();
 
       $html_List_of_Faris .= '
-    <a href="../fairOverView.php?fair_id=' . $fairRow->getVar()['fair_id'] . '&fair_Title=' . $fairRow->getVar()['title'] . '" class="card">
-    <center class="title"> <label for="Title">' . $fairRow->getVar()['title'] . '</label></center>
-    <center class="title"> <label for="Location">' . $fairRow->getVar()['location'] . '</label></center>
-    <div class="time">
-      <div class="card_left">
-        <label for="Start-Date">' . $fairRow->getVar()['start_date'] . '</label>
-      </div>
-      <div class="card_right">
-        <label for="End-Date">' . $fairRow->getVar()['end_date'] . '</label>
-      </div>
-    </div>
-  </a>';
+        <a href="../fairOverView.php?fair_id=' . $fairRow->getVar()['fair_id'] . '&fair_Title=' . $fairRow->getVar()['title'] . '" class="card">
+        <center class="title"> <label for="Title">' . $fairRow->getVar()['title'] . '</label></center>
+        <center class="title"> <label for="Location">' . $fairRow->getVar()['location'] . '</label></center>
+        <div class="time">
+          <div class="card_left">
+            <label for="Start-Date">' . $fairRow->getVar()['start_date'] . '</label>
+          </div>
+          <div class="card_right">
+            <label for="End-Date">' . $fairRow->getVar()['end_date'] . '</label>
+          </div>
+        </div>
+      </a>';
     }
   } else {
-    header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
+    $html_List_of_Faris .= '<H4>No fairs found! Head over to Add Fair to add your own first fair!</h4>';
   }
+} else {
+  header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
+}
 
 
 ?>

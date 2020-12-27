@@ -42,7 +42,10 @@ class Upload
   {
     $msg = '';
     // Count total files
-    $countfiles = count($files['name']);
+    if ($single)
+      $countfiles = 1;
+    else
+      $countfiles = count($files['name']);
 
     $count = 0;
     // Looping all files
@@ -53,10 +56,12 @@ class Upload
         $imageFileType = strtolower(pathinfo($files["name"], PATHINFO_EXTENSION));
         $filename = $files["name"];
         $tempName = $files["tmp_name"];
+        $size = $files["size"];
       } else {
         $imageFileType = strtolower(pathinfo($files["name"][$i], PATHINFO_EXTENSION));
         $filename = $files["name"][$i];
         $tempName = $files["tmp_name"][$i];
+        $size = $files["size"][$i];
       }
 
       if ($imageFileType == '')
@@ -71,7 +76,7 @@ class Upload
 
 
       // Check file size
-      if ($files["size"][$i] > 2000000) {
+      if ($size > 2000000) {
         $msg .= "Sorry, file [" . $filename . "] is too large.";
         $uploadOk = 0;
       }

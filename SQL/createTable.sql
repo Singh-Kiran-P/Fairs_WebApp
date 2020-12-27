@@ -54,7 +54,7 @@ CREATE TABLE city (
   city_id serial PRIMARY KEY,
   user_id INT NOT NULL,
   telephone VARCHAR (50) UNIQUE,
-  short_description VARCHAR (1000),
+  short_description TEXT,
   FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE
 );
 
@@ -74,7 +74,7 @@ CREATE TABLE fair (
   fair_id serial PRIMARY KEY,
   city_id INT NOT NULL,
   title VARCHAR (50) NOT NULL,
-  description VARCHAR (500),
+  description TEXT,
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
   opening_hour TIME NOT NULL,
@@ -190,7 +190,7 @@ CREATE TABLE reservations (
   nOfPeople INT NOT NULL,
   going boolean NOT NULL DEFAULT 'f',
   review_rating INT,
-  review_description VARCHAR (500),
+  review_description TEXT,
   FOREIGN KEY (fair_id) REFERENCES fair (fair_id) ON DELETE CASCADE,
   FOREIGN KEY (zoneslot_id) REFERENCES zoneslots (zoneslot_id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE
@@ -254,28 +254,31 @@ update fair set start_date ='2020-12-27'  where fair_id =55;
 -- na dat de fair data geupdate wordt kijken welke reservations hier door niet meer kunnen door gaan
 -- en dan hun en notification sturen
 -- geeft de user_id van de visitor terug
-select r.user_id,f.title as fair_title from reservations r,fair f
-WHERE r.fair_id = f.fair_id and r.zoneslot_id
-IN
-	(select zoneslot_id FROM zoneslots zs
-		WHERE zs.zone_id
-		IN (
-			select zone_id
-			from zones z,fair f
-			where z.fair_id = f.fair_id and
-			not (zs.opening_slot >= f.opening_hour and
-				 zs.closing_slot <= f.closing_hour and
-				 zs.start_date BETWEEN f.start_date and f.end_date
-				)
-			and zs.free_slots != z.open_spots
-			)
-	);
+-- select r.user_id,f.title as fair_title from reservations r,fair f
+-- WHERE r.fair_id = f.fair_id and r.zoneslot_id
+-- IN
+-- 	(select zoneslot_id FROM zoneslots zs
+-- 		WHERE zs.zone_id
+-- 		IN (
+-- 			select zone_id
+-- 			from zones z,fair f
+-- 			where z.fair_id = f.fair_id and
+-- 			not (zs.opening_slot >= f.opening_hour and
+-- 				 zs.closing_slot <= f.closing_hour and
+-- 				 zs.start_date BETWEEN f.start_date and f.end_date
+-- 				)
+-- 			and zs.free_slots != z.open_spots
+-- 			)
+-- 	);
 
-DELETE FROM zoneslots zs
-WHERE zs.zone_id
-IN (
-	select zone_id
-	from zones z,fair f
-	where z.fair_id = f.fair_id and
-	not (zs.opening_slot >= f.opening_hour and zs.closing_slot <= f.closing_hour and zs.start_date BETWEEN f.start_date and f.end_date)
-);
+-- DELETE FROM zoneslots zs
+-- WHERE zs.zone_id
+-- IN (
+-- 	select zone_id
+-- 	from zones z,fair f
+-- 	where z.fair_id = f.fair_id and
+-- 	not (zs.opening_slot >= f.opening_hour and zs.closing_slot <= f.closing_hour and zs.start_date BETWEEN f.start_date and f.end_date)
+-- );
+
+-- admin user
+-- update accounts set type='admin' where user_id = 1

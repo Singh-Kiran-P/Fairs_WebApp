@@ -67,7 +67,7 @@ if (isset($_GET['title']) && isset($_GET['type'])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <title>Profile</title>

@@ -43,7 +43,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <title>Complete Registeration</title>

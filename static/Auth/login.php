@@ -7,18 +7,19 @@ if (isset($_POST['isset'])) {
   $email = $_POST['email'];
 
   $user = new Accounts();
-  $redirectTo = $user->login($email, $password);
+  $obj = $user->login($email, $password);
 
   $out = "";
-  if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)
-    header('Location: ' . $redirectTo);
-  else // no redirect -> user does not exites
-    $out = "User does not exites!!";
+  if (!$obj['vaild'])
+    $out .= $obj['msg'];
+  else {
+    header('Location: ' . $obj['redirectTo']);
+  }
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <title>Login</title>
@@ -45,10 +46,13 @@ if (isset($_POST['isset'])) {
       <div id="form">
         <center>
           <h1>Login</h1>
+          <label class="hidden" for="email">Enter your email address Or Username:</label>
+          <label class="hidden" for="password">Enter your password:</label>
+          <label class="hidden" for="rememberMe">Remember you?:</label>
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <input class="text" max="254" type="text" placeholder="Enter email" name="email" required>
-            <input class="text" max="254" type="password" placeholder="Enter Password" name="password" required>
-            <input type="checkbox" checked="checked"> Remember me <br>
+            <input class="text" max="254" type="text" placeholder="Enter email or Username" name="email" id="email" required>
+            <input class="text" max="254" type="password" placeholder="Enter Password" name="password" id="password" required>
+            <input type="checkbox" name="" checked="checked" id="rememberMe"> Remember me <br>
             <input name="isset" class="hidden">
             <button type="submit" id="btn">Login</button>
             Forgot <a href="#"> password? </a>

@@ -51,7 +51,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
 
 <!-- https://www.w3schools.com/css/tryit.asp?filename=trycss_form_responsive -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <title>Profile</title>

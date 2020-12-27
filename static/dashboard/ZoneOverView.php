@@ -21,7 +21,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
         for ($i = 0; $i < $zone['totimg']; $i++) {
           $toSearchFile = $zoneId . "_" . $i;
           $zoneImg = Upload::getUploadedFilePath($toSearchFile, "zone_img");
-          $outHTML_Img .= "<img alt='Zone images' src='../../server/uploads/zone_img/" . $zoneImg . "'></img>";
+          $outHTML_Img .= "<img alt='Zone_images' src='../../server/uploads/zone_img/" . $zoneImg . "'></img>";
         }
       }
 

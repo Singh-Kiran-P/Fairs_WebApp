@@ -25,7 +25,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
       for ($i = 0; $i < $imgCount; $i++) {
         $toSearchFile = $fairId . "_" . $i;
         $fairImg = Upload::getUploadedFilePath($toSearchFile, "fair_img");
-        $outHTML_Img .= "<img alt='fair image' src='../../server/uploads/fair_img/" . $fairImg . "'></img>";
+        $outHTML_Img .= "<img alt='fair_images' src='../../server/uploads/fair_img/" . $fairImg . "'></img>";
       }
     }
 

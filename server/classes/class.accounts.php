@@ -78,6 +78,22 @@ class Accounts
    */
   public function login($email_username, $password)
   {
+    if (strlen($email_username) > 49)
+      return  ["msg" => "Email/Username length to big! Max size 50", "vaild" => false];
+
+    if ($email_username == "")
+      return  ["msg" => "Email/Username cannot be empty!", "vaild" => false];
+
+
+    if (strlen($password) > 49)
+      return  ["msg" => "Password length to big! Max size 50", "vaild" => false];
+
+    if ($password == "")
+      return  ["msg" => "Password cannot be empty!", "vaild" => false];
+
+
+
+
     //connect to database
     $conn = Database::connect();
 
@@ -94,12 +110,12 @@ class Accounts
         if (password_verify($password, $row['password'])) {
           /* Call the login helper */
           $redirectTo = $this->_login($row);
-          return $redirectTo;
-        } else {
-          return "";
+          return ["redirectTo" => $redirectTo, "vaild" => true];
         }
       }
     }
+
+    return  ["msg" => "Incorrect username or password!", "vaild" => false];
   }
 
   /**

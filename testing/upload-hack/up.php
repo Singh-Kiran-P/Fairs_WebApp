@@ -25,7 +25,7 @@
       }
    }
 ?>
-<html>
+<html lang="en">
    <body>
 
       <form action = "" method = "POST" enctype = "multipart/form-data">

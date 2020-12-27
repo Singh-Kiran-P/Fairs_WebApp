@@ -9,7 +9,7 @@
     else
       echo '<a href="/~kiransingh/project/static/index.php">';
     ?>
-    <img src="/~kiransingh/project/static/img/UHasselt-liggend.jpg" width="200px" alt="">
+    <img src="/~kiransingh/project/static/img/UHasselt-liggend.jpg" width="200px" alt="logo">
     </a>
   </div>
 

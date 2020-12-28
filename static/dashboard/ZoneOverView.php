@@ -8,7 +8,7 @@ include_once '../../server/classes/class.model.fair.php';
 session_start();
 if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_SESSION['loggedin']) && isset($_SESSION['type'])) {
   if (isset($_GET['zoneId']) && isset($_GET['fairId'])) {
-    $zoneId = $_GET['zoneId'];
+    $zoneId = _e($_GET['zoneId']);
     $fair = new Fair();
     $fairData = $fair->getFairModel($_GET['fairId']);
 
@@ -46,17 +46,17 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
       //process info
       $outHTML_Info = '';
       $outHTML_Info .=   'Title';
-      $outHTML_Info .=   '<input type="text" placeholder="Name" value="' . $zone['title'] . '" disabled>';
+      $outHTML_Info .=   '<input type="text" placeholder="Name" value="' . _e($zone['title']) . '" disabled>';
       $outHTML_Info .=   'Location';
-      $outHTML_Info .=   ' <input type="text" placeholder="Username" value="' . $zone['location'] . '" disabled>';
-      $outHTML_Info .=   ' <input type="hidden" placeholder="Username" value="' . $zone['zoneId'] . '" name="zoneId" >';
+      $outHTML_Info .=   ' <input type="text" placeholder="Username" value="' . _e($zone['location']) . '" disabled>';
+      $outHTML_Info .=   ' <input type="hidden" placeholder="Username" value="' . _e($zone['zoneId']) . '" name="zoneId" >';
 
       // procces attractions
       $outHTML_Attraction = 'Attractions:';
-      $attractions = explode(",", $zone['attractions']);
+      $attractions = explode(",", _e($zone['attractions']));
       $outHTML_Attraction .= '<center><div class="att"><ul>';
       foreach ($attractions as $att) {
-        $outHTML_Attraction .= '<li>📷 ' . $att . '</li>';
+        $outHTML_Attraction .= '<li>📷 ' . _e($att) . '</li>';
       }
       $outHTML_Attraction .= '</ul></div></center>';
 
@@ -67,13 +67,13 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
 
 
       //show more information
-      $desc =  $zone['description'];
+      $desc =  _e($zone['description']);
       $showDesc = substr($desc, 0, (strlen($desc) - 1) * (1 / 3));
       $moreDesc = substr($desc, (strlen($desc) - 1) * (1 / 3) + 1, (strlen($desc) - 1));
       $outHTML_desc = '';
       //check if desc not null
       if (strlen($desc) != 0)
-        $outHTML_desc .= '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
+        $outHTML_desc .= '<p id="short_desc">' . _e($showDesc) . '<span id="dots">...</span><span id="more">' . _e($moreDesc) . '</span></p>';
 
       // Add list of dates
       $dateSlectorHTML = "";
@@ -81,7 +81,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
 
       if (count($dates) > 0) {
         foreach ($dates as $d) {
-          $date = '<option value="' . $d . '">' . $d . '</option>';
+          $date = '<option value="' . _e($d) . '">' . _e($d) . '</option>';
           $dateSlectorHTML .= $date;
         }
       }
@@ -137,8 +137,8 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
   <?php if ($_SESSION['type'] == 'visitor') {
     if (!$fair->outdatedFair($_GET['fairId'])) {
       $outHTML = '<form action="visitor/reservation.php" method="post" class="content">';
-      $outHTML .= '<input type="hidden" name="zoneId" value="' . $_GET['zoneId'] . '">';
-      $outHTML .= '<input type="hidden" name="fairId" value="' . $_GET['fairId'] . '">';
+      $outHTML .= '<input type="hidden" name="zoneId" value="' . _e($_GET['zoneId']) . '">';
+      $outHTML .= '<input type="hidden" name="fairId" value="' . _e($_GET['fairId']) . '">';
       $outHTML .= '<button type="submit">Book Tickets</button>';
       $outHTML .= '</form>';
       echo $outHTML;

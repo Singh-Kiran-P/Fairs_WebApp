@@ -1,6 +1,8 @@
 <?php
 include_once "class.database.php";
 include_once "class.upload.php";
+include_once __DIR__ . "/../preventions/func.xss.php";
+
 
 /* Admin class holds the Admin fuction and methodes*/
 class Admin

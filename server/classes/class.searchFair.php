@@ -5,6 +5,8 @@ https://www.intelliwolf.com/find-nearest-location-from-array-of-coordinates-php/
 */
 
 include_once "class.database.php";
+include_once __DIR__ . "/../preventions/func.xss.php";
+
 
 class SearchFair
 {

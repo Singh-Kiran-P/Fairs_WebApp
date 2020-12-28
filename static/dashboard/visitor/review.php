@@ -47,13 +47,13 @@ if (isset($_POST['review']) && isset($_POST['rating'])) {
   <div class=content>
     <div class="review">
       <center>
-        <h2> Review for zone: <?php if (isset($info)) echo $info['zoneTitle'] ?></h2>
+        <h2> Review for zone: <?php if (isset($info)) echo _e($info['zoneTitle']); ?></h2>
       </center>
       <div class="info">
         Info:
         <ul>
-          <li>Fair Title:&nbsp <?php if (isset($info)) echo $info['fairTitle'] ?></li>
-          <li>Zone Title:&nbsp <?php if (isset($info)) echo $info['zoneTitle'] ?></li>
+          <li>Fair Title:&nbsp <?php if (isset($info)) echo _e($info['fairTitle']); ?></li>
+          <li>Zone Title:&nbsp <?php if (isset($info)) echo _e($info['zoneTitle']); ?></li>
         </ul>
 
         Write your review:
@@ -68,7 +68,7 @@ if (isset($_POST['review']) && isset($_POST['rating'])) {
         <!-- Error msg -->
         <?php
         if ($msg != "") {
-          echo $msg;
+          echo _e($msg);
         }
         ?>
       </div>

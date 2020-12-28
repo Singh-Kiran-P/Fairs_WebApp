@@ -23,7 +23,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   $outHTML_desc = '';
   //check if desc not null
   if (strlen($desc) != 0)
-    $outHTML_desc = '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
+    $outHTML_desc = '<p id="short_desc">' . _e($showDesc) . '<span id="dots">...</span><span id="more">' . _e($moreDesc) . '</span></p>';
 
 
   $telephone = $account->getTelephone();

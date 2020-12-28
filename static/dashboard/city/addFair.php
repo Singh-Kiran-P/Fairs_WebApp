@@ -68,27 +68,27 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
         <h1 class="topTitle">Add Fair</h1>
 
-        <input type="text" name="title" placeholder="Title" value="<?php if (isset($_POST['title'])) echo $_POST['title']; ?>" required>
+        <input type="text" name="title" placeholder="Title" value="<?php if (isset($_POST['title'])) echo _e($_POST['title']); ?>" required>
 
-        <textarea type="" name="desc" placeholder="Give a short discription about this fair" form="form" required><?php if (isset($_POST['desc'])) echo $_POST['desc']; ?></textarea>
+        <textarea type="" name="desc" placeholder="Give a short discription about this fair" form="form" required><?php if (isset($_POST['desc'])) echo _e($_POST['desc']); ?></textarea>
 
         <h5> (only JPG, JPEG, PNG & GIF files are allowed Max 5mb )</h5>
-        <input type="file" name="file[]" class="inputfile" value="<?php if (isset($_POST['file'])) echo $_POST['file']; ?>" multiple>
+        <input type="file" name="file[]" class="inputfile" value="<?php if (isset($_POST['file'])) echo _e($_POST['file']); ?>" multiple>
         <div>
           <div class="sidebyside">
-            <input type="text" name="startDate" placeholder="Start Date" min="<?php echo date('Y-m') .'-'. (date('d') + 1); ?>" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['startDate'])) echo $_POST['startDate']; ?>" required>
-            <input type="text" name="openingHour" placeholder="Opening Hour" onfocus="(this.type='time')" onblur="(this.type='text')" value="<?php if (isset($_POST['openingHour'])) echo $_POST['openingHour']; ?>" required>
-            <input type="text" name="endDate" min="<?php echo date('Y-m') .'-'. (date('d') + 1); ?>" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['endDate'])) echo $_POST['endDate']; ?>" required>
-            <input type="text" name="closingHour" placeholder="Closing Hour" onfocus="(this.type='time')" onblur="(this.type='text')" value="<?php if (isset($_POST['closingHour'])) echo $_POST['closingHour']; ?>" required>
+            <input type="text" name="startDate" placeholder="Start Date" min="<?php echo date('Y-m') . '-' . (date('d') + 1); ?>" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['startDate'])) echo _e($_POST['startDate']); ?>" required>
+            <input type="text" name="openingHour" placeholder="Opening Hour" onfocus="(this.type='time')" onblur="(this.type='text')" value="<?php if (isset($_POST['openingHour'])) echo _e($_POST['openingHour']); ?>" required>
+            <input type="text" name="endDate" min="<?php echo date('Y-m') . '-' . (date('d') + 1); ?>" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['endDate'])) echo _e($_POST['endDate']); ?>" required>
+            <input type="text" name="closingHour" placeholder="Closing Hour" onfocus="(this.type='time')" onblur="(this.type='text')" value="<?php if (isset($_POST['closingHour'])) echo _e($_POST['closingHour']); ?>" required>
           </div>
 
         </div>
-        <input type="text" name="location" placeholder="Location" value="<?php if (isset($_POST['location'])) echo $_POST['location']; ?>" required>
+        <input type="text" name="location" placeholder="Location" value="<?php if (isset($_POST['location'])) echo _e($_POST['location']); ?>" required>
 
         <p id="error">
           <?php
           if (isset($_POST['submit'])) {
-            echo $errorMsg;
+            echo _e($errorMsg);
           }
           ?>
         </p>

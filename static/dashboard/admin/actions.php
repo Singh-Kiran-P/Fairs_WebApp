@@ -27,7 +27,7 @@ if (isset($_GET['title']) && isset($_GET['type'])) {
     else {
       $outVisitors .= '<ul>';
       foreach ($allVisitors as $vis)
-        $outVisitors .= '<li><p><a href="editVisitorData.php?visitorId=' . $vis['user_id'] . '">' . $vis['name'] . '</a></p></li>';
+        $outVisitors .= '<li><p><a href="editVisitorData.php?visitorId=' . _e($vis['user_id']) . '">' . _e($vis['name']) . '</a></p></li>';
       $outVisitors .= '</ul>';
     }
   }
@@ -43,7 +43,7 @@ if (isset($_GET['title']) && isset($_GET['type'])) {
       $outCity .= '<ul>';
 
       foreach ($allCity as $vis)
-        $outCity .= '<li><p><a href="editCityData.php?cityId=' . $vis['city_id'] . '">' . $vis['name'] . '</a></p></li>';
+        $outCity .= '<li><p><a href="editCityData.php?cityId=' . _e($vis['city_id']) . '">' . _e($vis['name']) . '</a></p></li>';
       $outCity .= '</ul>';
     }
   }
@@ -59,7 +59,7 @@ if (isset($_GET['title']) && isset($_GET['type'])) {
       $outFair .= '<ul>';
 
       foreach ($allFairs as $vis)
-        $outFair .= '<li><p><a href="editFairData.php?fairId=' . $vis['fairId'] . '">' . $vis['title'] . '</a></p></li>';
+        $outFair .= '<li><p><a href="editFairData.php?fairId=' . _e($vis['fairId']) . '">' . _e($vis['title']) . '</a></p></li>';
       $outFair .= '</ul>';
     }
   }

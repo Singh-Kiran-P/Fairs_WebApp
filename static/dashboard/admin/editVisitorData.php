@@ -75,16 +75,16 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
 
     <div class="mainCol">
       <center>
-        <H2>Edit Data Of Visitor: <?php if (isset($name)) echo $name; ?></H2>
+        <H2>Edit Data Of Visitor: <?php if (isset($name)) echo _e($name); ?></H2>
       </center>
       <div class="container">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?visitorId=<?php echo $visitorId; ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?visitorId=<?php echo _e($visitorId); ?>" method="post">
           <div class="row">
             <div class="col-25">
               <label for="Name">Name</label>
             </div>
             <div class="col-75">
-              <input type="text" id="name" name="name" required value="<?php if (isset($name)) echo $name; ?>">
+              <input type="text" id="name" name="name" required value="<?php if (isset($name)) echo _e($name); ?>">
             </div>
           </div>
           <div class="row">
@@ -92,7 +92,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="Username">Username</label>
             </div>
             <div class="col-75">
-              <input type="text" id="username" name="username" disabled required value="<?php if (isset($username)) echo $username; ?>">
+              <input type="text" id="username" name="username" disabled required value="<?php if (isset($username)) echo _e($username); ?>">
             </div>
           </div>
           <div class="row">
@@ -100,7 +100,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="Email">Email</label>
             </div>
             <div class="col-75">
-              <input type="email" id="email" name="email" required value="<?php if (isset($email)) echo $email; ?>">
+              <input type="email" id="email" name="email" required value="<?php if (isset($email)) echo _e($email); ?>">
             </div>
           </div>
           <div class="row">
@@ -118,7 +118,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="createdOn">Created On</label>
             </div>
             <div class="col-75">
-              <input type="text" id="createdOn" name="createdOn" disabled required value="<?php if (isset($createdOn)) echo $createdOn; ?>">
+              <input type="text" id="createdOn" name="createdOn" disabled required value="<?php if (isset($createdOn)) echo _e($createdOn); ?>">
             </div>
           </div>
 
@@ -129,7 +129,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
         </form>
         <p id="error">
           <?php
-          echo $errorMsg;
+          echo _e($errorMsg);
           ?>
         </p>
       </div>

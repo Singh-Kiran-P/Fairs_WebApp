@@ -44,7 +44,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
     $zoneSlectorHTML = "";
     if ($zones != null && count($zones) > 0) {
       foreach ($zones as $z) {
-        $zone = '<option value="' . $z["zoneId"] . '">' . $z["title"] . '</option>';
+        $zone = '<option value="' . _e($z["zoneId"]) . '">' . _e($z["title"]) . '</option>';
         $zoneSlectorHTML .= $zone;
       }
     }
@@ -55,7 +55,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
     $outHTML_desc = '';
     //check if desc not null
     if (strlen($desc) != 0)
-      $outHTML_desc = '<p id="short_desc">' . $showDesc . '<span id="dots">...</span><span id="more">' . $moreDesc . '</span></p>';
+      $outHTML_desc = '<p id="short_desc">' . _e($showDesc) . '<span id="dots">...</span><span id="more">' . _e($moreDesc) . '</span></p>';
   } else {
     header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/visitor/searchFairs.php');
   }

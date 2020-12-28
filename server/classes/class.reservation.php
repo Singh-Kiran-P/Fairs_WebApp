@@ -1,6 +1,8 @@
 <?php
 include_once "class.database.php";
 include_once "class.fair.php";
+include_once __DIR__ . "/../preventions/func.xss.php";
+
 
 class Reservation
 {

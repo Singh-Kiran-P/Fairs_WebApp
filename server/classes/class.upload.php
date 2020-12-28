@@ -1,4 +1,5 @@
 <?php
+include_once __DIR__ . "/../preventions/func.xss.php";
 
 class Upload
 {

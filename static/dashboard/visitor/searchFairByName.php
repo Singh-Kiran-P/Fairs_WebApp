@@ -16,8 +16,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       $outputHTML = 'Up coming / On Going<tr><th>Fairs</th><th>Date</th</tr>';
       foreach ($listOfFairs as $fair) {
         $out = '<tr><td>';
-        $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a></td>';
-        $out .= '<td><p>' . $fair['start_date'] . ' TO ' . $fair['end_date'] . '</p></td></tr>';
+        $out .= '<a href="../fairOverView.php?fair_id=' . _e($fair['fairId']) . '">' . _e($fair['title']) . '</a></td>';
+        $out .= '<td><p>' . _e($fair['start_date']) . ' TO ' . _e($fair['end_date']) . '</p></td></tr>';
         $outputHTML .= $out;
       }
       $outputHTML.= '</table>';
@@ -32,8 +32,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       $outputHTML .= '<table>Old Fairs<tr><th>Fairs</th><th>Date</th</tr>';
       foreach ($listOfFairs as $fair) {
         $out = '<tr><td>';
-        $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a></td>';
-        $out .= '<td><p>' . $fair['start_date'] . ' TO ' . $fair['end_date'] . '</p>';
+        $out .= '<a href="../fairOverView.php?fair_id=' . _e($fair['fairId']) . '">' . _e($fair['title']) . '</a></td>';
+        $out .= '<td><p>' . _e($fair['start_date']) . ' TO ' . _e($fair['end_date']) . '</p>';
         $out .= '</td></tr>';
         $outputHTML .= $out;
       }

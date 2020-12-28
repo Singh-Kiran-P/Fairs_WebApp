@@ -20,7 +20,7 @@ if (count($listOfVisitors) > 0) {
 
   foreach ($listOfVisitors as $visitor) {
     if ($visitor['userId'] != $msgFrom)
-      $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . $visitor['userId'] . '">' . $visitor['name'] . '</a>';
+      $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . _e($visitor['userId']) . '">' . _e($visitor['name']) . '</a>';
   }
 }
 
@@ -41,10 +41,10 @@ if ((isset($_GET['msgTo']) && $_GET['msgTo'] != "")) {
     foreach ($listOfVisitors as $visitor) {
       if ($visitor['userId'] != $msgFrom) {
         if ($visitor['userId'] == $msgTo) {
-          $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . $visitor['userId'] . '" class="active">' . $visitor['name'] . '</a>';
+          $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . _e($visitor['userId']) . '" class="active">' . _e($visitor['name']) . '</a>';
           $HTMLcurrentUser =  $visitor['name'];
         } else
-          $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . $visitor['userId'] . '">' . $visitor['name'] . '</a>';
+          $outHTML_otherVisitors .= '<a href="message.php?msgTo=' . _e($visitor['userId']) . '">' . _e($visitor['name']) . '</a>';
       }
     }
   }

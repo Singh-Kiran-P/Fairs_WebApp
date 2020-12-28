@@ -1,6 +1,8 @@
 <?php
 
 include_once "class.database.php";
+include_once __DIR__ . "/../preventions/func.xss.php";
+
 
 /* Accounts class holds the users identity and fuction/methode that are related to users*/
 class Review
@@ -62,9 +64,9 @@ class Review
       $outHTML .= '<div class="reviewbox">';
       $outHTML .= '<div class="name">';
       $outHTML .= '<i class="fa fa-user fa-7x"></i>';
-      $outHTML .= '<p>' . $name . ':</p>';
+      $outHTML .= '<p>' . _e($name) . ':</p>';
       $outHTML .= '</div>';
-      $outHTML .= '<div class="reviewMsg">' . $reviewMsg . '</div>';
+      $outHTML .= '<div class="reviewMsg">' . _e($reviewMsg) . '</div>';
       $outHTML .= '<div class="rating">';
 
       $i = 0;

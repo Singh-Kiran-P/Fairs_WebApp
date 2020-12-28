@@ -3,10 +3,16 @@ include_once '../../../server/classes/class.fair.php';
 include_once '../../../server/classes/class.model.fair.php';
 session_start();
 
+if (isset($_SESSION['fairId']))
+  unset($_SESSION['fairId']);
+
+if (isset($_SESSION['zoneId']))
+  unset($_SESSION['zoneId']);
 
 if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "city") {
 
   $cityId = $_SESSION['cityId'];
+
   $fair = new Fair();
 
   // $listOfFairs is a array of FairModels
@@ -18,15 +24,15 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       $s = $fairRow->getVar();
 
       $html_List_of_Faris .= '
-        <a href="../fairOverView.php?fair_id=' . $fairRow->getVar()['fair_id'] . '&fair_Title=' . $fairRow->getVar()['title'] . '" class="card">
-        <center class="title"> <label for="Title">' . $fairRow->getVar()['title'] . '</label></center>
-        <center class="title"> <label for="Location">' . $fairRow->getVar()['location'] . '</label></center>
+        <a href="../fairOverView.php?fair_id=' . _e($fairRow->getVar()['fair_id']) . '&fair_Title=' . _e($fairRow->getVar()['title']) . '" class="card">
+        <center class="title"> <label for="Title">' . _e($fairRow->getVar()['title']) . '</label></center>
+        <center class="title"> <label for="Location">' . _e($fairRow->getVar()['location']) . '</label></center>
         <div class="time">
           <div class="card_left">
-            <label for="Start-Date">' . $fairRow->getVar()['start_date'] . '</label>
+            <label for="Start-Date">' . _e($fairRow->getVar()['start_date']) . '</label>
           </div>
           <div class="card_right">
-            <label for="End-Date">' . $fairRow->getVar()['end_date'] . '</label>
+            <label for="End-Date">' . _e($fairRow->getVar()['end_date']) . '</label>
           </div>
         </div>
       </a>';

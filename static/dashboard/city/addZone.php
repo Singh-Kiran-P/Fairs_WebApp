@@ -9,11 +9,14 @@ $disabled = "disabled";
 $outHTML_SAVE = "";
 if (isset($_GET['fairId']) && isset($_GET['title'])) {
   $_SESSION['fairId'] = $_GET['fairId'];
-  $tileFair = $_GET['title'];
 }
 
 if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "city") {
-
+  $fair = new Fair();
+  $fairData = $fair->getFairModel($_SESSION['fairId'])->getVar();
+  $tileFair = $fairData['title'];
+  $opening = $fairData['opening_hour'];
+  $closing = $fairData['closing_hour'];
   if (isset($_POST['submit'])) {
 
     $fairId = $_SESSION['fairId'];
@@ -29,7 +32,6 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     $video = $_FILES['video'];
 
 
-    $fair = new Fair();
     $errorMsgZone = $fair->checkingAddZone($fairId, $title, $desc, $open_spots, $location, $attractions);
     $errorMsgUploadImg = Upload::checkFilesImg($files, false);
     $errorMsgUploadVideo = Upload::checkFilesVideo($video);
@@ -43,13 +45,6 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         $fair->updateDbFileCount($zoneId, $i, $v, "zones");
         $errorMsg .= 'Zone is added successfully';
         $enabled = "disabled";
-        // //reset form
-        // $title = "";
-        // $open_spots = "";
-
-        // $desc = "";
-        // $location = "";
-        // $attractions = "";
       } else {
         $errorMsg .= $zoneId;
       }
@@ -87,12 +82,15 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       foreach ($zones as $z) {
         $Msg = $fair->addZoneSlot($z['zone_id'], $openingSlot, $closingSlot, $z['freeSlots'], $fairModel->getVar());
       }
+      $errorMsg .= '<br>' . "Zone Slot added successfully.";
+      $outHTML_SAVE = '<div id="btn"><a  id="btn" href="listOfFair.php">All Fairs</a></div>';
     } else
       $errorMsg .= '<br>' . $Msg;
+
     $enabled = "disabled";
 
     // header("Location: addZoneSlot.php?zoneId=" .  $_GET['zoneId'] . "&free_slots=" . $_GET['open_spots']);
-    $outHTML_SAVE = '<div id="btn"><a  id="btn" href="listOfFair.php">All Fairs</a></div>';
+
   }
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
@@ -120,7 +118,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   </header>
 
   <!-- The flexible grid (content) -->
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="content" id="form" onsubmit="return <?php if ($enabled == '') echo 'validateFormZone()'; else echo 'validateFormSlots()'?>" enctype='multipart/form-data'>
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="content" id="form" onsubmit="return <?php if ($enabled == '') echo 'validateFormZone()';
+                                                                                                                                else echo 'validateFormSlots()' ?>" enctype='multipart/form-data'>
 
     <div class="mainCol1 g">
       <center>
@@ -157,11 +156,10 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
         <!-- time slots -->
         <div <?php if ($enabled == "") echo "class='hidden'"; ?>>
-          Time slots:
-
+          <p>Time slots: <?php echo " between " . _e($opening) . " - " . _e($closing) ?></p>
           <div class="sidebyside">
-            <input type="text" name="openingSlot" placeholder="Opening Slot" onfocus="(this.type='time')" onblur="(this.type='text')">
-            <input type="text" name="closingSlot" placeholder="Closing Slot" onfocus="(this.type='time')" onblur="(this.type='text')">
+            <input type="text" name="openingSlot" placeholder="Opening Slot" value="<?php if (isset($openingSlot)) echo $openingSlot; ?>" onfocus="(this.type='time')" onblur="(this.type='text')">
+            <input type="text" name="closingSlot" placeholder="Closing Slot" value="<?php if (isset($closingSlot)) echo $closingSlot; ?>" onfocus="(this.type='time')" onblur="(this.type='text')">
           </div>
           <button type="submit" name="submit_slot" id="btn">Add Slot</button>
         </div>

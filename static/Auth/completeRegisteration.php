@@ -5,8 +5,8 @@ include '../../server/classes/class.accounts.php';
 include '../../server/classes/class.upload.php';
 include '../../server/config/config.php';
 if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
-  $telephone = $_POST['telephone'];
-  $desc = $_POST['desc'];
+  $telephone = htmlspecialchars($_POST['telephone']);
+  $desc = htmlspecialchars($_POST['desc']);
   $fileToUpload = $_FILES['fileToUpload'];
 
   $userId = $_SESSION['userId'];
@@ -20,7 +20,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
   $_SESSION["fileToUpload"] = $fileToUpload;
 
   //TO-DO BUG
-  $errorMsg = Upload::checkFilesImg($fileToUpload,true);
+  $errorMsg = Upload::checkFilesImg($fileToUpload, true);
   if ($errorMsg['msg'] != '') //error while checking
     $res =  $errorMsg['msg'];
   else {
@@ -34,8 +34,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
 
     if ($res == "true") {
       header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
-    }
-    else{
+    } else {
       $errorMsg = $res;
     }
   }
@@ -80,7 +79,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
           <p id="error">
             <?php
             if (isset($_POST['isset']))
-              echo $res;
+              echo _e($res);
             ?>
           </p>
         </center>

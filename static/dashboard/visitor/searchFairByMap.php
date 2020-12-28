@@ -22,13 +22,13 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       if ($listOfFairs != null) {
         foreach ($listOfFairs as $fair) {
           $out = '<tr><td>';
-          $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
+          $out .= '<a href="../fairOverView.php?fair_id=' . _e($fair['fairId']) . '">' . _e($fair['title']) . '</a>';
           $out .= '</td>';
           $out .= '<td>';
-          $out .=  $fair['location'];
+          $out .=  _e($fair['location']);
           $out .= '</td>';
           $out .= '<td>';
-          $out .=  $fair['distance_txt'];
+          $out .=  _e($fair['distance_txt']);
           $out .= '</td></tr>';
           $outputHTML .= $out;
         }
@@ -107,7 +107,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         <p id="error">
           <?php
 
-          if (isset($errorMsg)) echo $errorMsg;
+          if (isset($errorMsg)) echo _e($errorMsg);
 
           ?>
         </p>

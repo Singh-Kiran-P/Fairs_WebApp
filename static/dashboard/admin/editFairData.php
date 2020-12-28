@@ -100,16 +100,16 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
 
     <div class="mainCol">
       <center>
-        <H2>Edit Data Of Fair: <?php if (isset($title)) echo $title; ?></H2>
+        <H2>Edit Data Of Fair: <?php if (isset($title)) echo _e($title); ?></H2>
       </center>
       <div class="container">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?fairId=<?php echo $fairId; ?>" method="post" onsubmit="return validateForm()">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?fairId=<?php echo _e($fairId); ?>" method="post" onsubmit="return validateForm()">
           <div class="row">
             <div class="col-25">
               <label for="title">Title</label>
             </div>
             <div class="col-75">
-              <input type="text" id="title" name="title" required value="<?php if (isset($title)) echo $title; ?>">
+              <input type="text" id="title" name="title" required value="<?php if (isset($title)) echo _e($title); ?>">
             </div>
           </div>
           <div class="row">
@@ -117,7 +117,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="location">Location</label>
             </div>
             <div class="col-75">
-              <input type="text" id="location" name="location" required value="<?php if (isset($location)) echo $location; ?>">
+              <input type="text" id="location" name="location" required value="<?php if (isset($location)) echo _e($location); ?>">
             </div>
           </div>
           <div class="row">
@@ -126,9 +126,9 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
             </div>
             <div class="col-75">
               <div class="hidden start_date_orginal ">
-                <?php if (isset($start_date)) echo $start_date; ?>
+                <?php if (isset($start_date)) echo _e($start_date); ?>
               </div>
-              <input type="date" id="start_date" min="<?php if (isset($start_date)) echo $start_date; ?>" name="start_date" required value="<?php if (isset($start_date)) echo $start_date; ?>">
+              <input type="date" id="start_date" min="<?php if (isset($start_date)) echo _e($start_date); ?>" name="start_date" required value="<?php if (isset($start_date)) echo _e($start_date); ?>">
             </div>
           </div>
           <div class="row">
@@ -137,9 +137,9 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
             </div>
             <div class="col-75">
               <div class="hidden end_date_orginal ">
-                <?php if (isset($end_date)) echo $end_date; ?>
+                <?php if (isset($end_date)) echo _e($end_date); ?>
               </div>
-              <input type="date" id="end_date" name="end_date" required value="<?php if (isset($end_date)) echo $end_date; ?>">
+              <input type="date" id="end_date" name="end_date" required value="<?php if (isset($end_date)) echo _e($end_date); ?>">
             </div>
           </div>
           <div class="row">
@@ -147,7 +147,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="opening_hour">Opening Hour</label>
             </div>
             <div class="col-75">
-              <input type="time" id="opening_hour" name="opening_hour" required value="<?php if (isset($opening_hour)) echo $opening_hour; ?>">
+              <input type="time" id="opening_hour" name="opening_hour" required value="<?php if (isset($opening_hour)) echo _e($opening_hour); ?>">
             </div>
           </div>
           <div class="row">
@@ -155,7 +155,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="closing_hour">Closing Hour</label>
             </div>
             <div class="col-75">
-              <input type="time" id="closing_hour" name="closing_hour" required value="<?php if (isset($closing_hour)) echo $closing_hour; ?>">
+              <input type="time" id="closing_hour" name="closing_hour" required value="<?php if (isset($closing_hour)) echo _e($closing_hour); ?>">
             </div>
           </div>
           <div class="row">
@@ -163,7 +163,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
               <label for="description">Description</label>
             </div>
             <div class="col-75">
-              <textarea id="description" required name="description"><?php if (isset($description)) echo $description; ?></textarea>
+              <textarea id="description" required name="description"><?php if (isset($description)) echo _e($description); ?></textarea>
             </div>
           </div>
 
@@ -174,7 +174,7 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
         </form>
         <p id="error">
           <?php
-          echo $errorMsg;
+          echo _e($errorMsg);
           ?>
         </p>
       </div>

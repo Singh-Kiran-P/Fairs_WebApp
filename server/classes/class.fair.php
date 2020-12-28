@@ -2,6 +2,9 @@
 include_once "class.database.php";
 include_once 'class.model.fair.php';
 
+include_once __DIR__ . "/../preventions/func.xss.php";
+
+
 
 /* City class holds the City identity and fuction/methode that are related to users*/
 class Fair
@@ -21,6 +24,17 @@ class Fair
     //   return "Description size to big!";
     if (strlen($title) > 49)
       return "Title size to big!";
+
+
+    $begin = new DateTime($openingHour);
+    $end = new DateTime($closingHour);
+    $time2 = $end->format('H:i:s');
+    $time1 = $begin->format('H:i:s');
+
+    //check if the fair is open for at least 45min
+    if (((strtotime($time2) - strtotime($time1)) / 60) < 45) {
+      return  "Time slot must be bigger or equal to 45min ";
+    }
 
 
 
@@ -126,6 +140,25 @@ class Fair
   public function checkingZoneSlot($zoneId, $openingSlot, $closingSlot)
   {
     $errorMsg = '';
+    $fairData = $this->_giveFairOpeningEnClosingTime($zoneId);
+
+
+    $begin = new DateTime($openingSlot);
+    $end = new DateTime($closingSlot);
+    $time2 = $end->format('H:i:s');
+    $time1 = $begin->format('H:i:s');
+
+    //check if the timeslot is a slot of atleast 45min
+    if (((strtotime($time2) - strtotime($time1)) / 60) < 45) {
+      $errorMsg .= "Time slot must be bigger or equal to 45min <br>";
+    }
+
+    if ($openingSlot < $fairData['opening'])
+      $errorMsg .= "Opening hour must be greater than " . _e($fairData['opening']) . "<br>";
+
+    if ($closingSlot > $fairData['closing'])
+      $errorMsg .= "Closing hour must be less than " . _e($fairData['closing']) . "<br>";
+
     if ($openingSlot == "")
       $errorMsg .= "Please enter valid opening slot time<br>";
     if ($closingSlot == "")
@@ -160,6 +193,28 @@ class Fair
     } else {
       return $query->errorInfo()[2];
     }
+  }
+  private function _giveFairOpeningEnClosingTime($zoneId)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from fair,zones where zones.fair_id=fair.fair_id and zones.zone_id = :id");
+    $query->bindParam(":id", $zoneId, PDO::PARAM_STR, 255);
+
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        $row = $query->fetch();
+
+        $opening = $row['opening_hour'];
+        $closing = $row['closing_hour'];
+        return ["opening" => $opening, "closing" => $closing];
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return NULL;
   }
 
   private function _checkIfNotDupplicate($cityId, $title, $startDate, $location)

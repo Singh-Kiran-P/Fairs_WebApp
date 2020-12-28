@@ -1,5 +1,6 @@
 <?php
 include_once "class.database.php";
+include_once __DIR__ . "/../preventions/func.xss.php";
 
 
 
@@ -152,7 +153,7 @@ class Messaging
         $currentUserMsgBubble .= '<div class="inlineContainer own">';
         $currentUserMsgBubble .= '<img class="inlineIcon" src="https://www.pinclipart.com/picdir/middle/205-2059398_blinkk-en-mac-app-store-ninja-icon-transparent.png">';
         $currentUserMsgBubble .= '<div class="ownBubble own">';
-        $currentUserMsgBubble .=  $item['message'];
+        $currentUserMsgBubble .=  _e($item['message']);
         $currentUserMsgBubble .= '</div>';
         $currentUserMsgBubble .= '</div><span class="own">' . $item['send_datetime'] . '</span>';
         $currentUserMsgBubble .= '</div>';
@@ -163,7 +164,7 @@ class Messaging
         $otherUserMsgBubble .= '<div class="inlineContainer">';
         $otherUserMsgBubble .= '<img class="inlineIcon" src="https://www.pinclipart.com/picdir/middle/205-2059398_blinkk-en-mac-app-store-ninja-icon-transparent.png">';
         $otherUserMsgBubble .= '<div class="otherBubble other">';
-        $otherUserMsgBubble .= $item['message'];
+        $otherUserMsgBubble .= _e($item['message']);
         $otherUserMsgBubble .= '</div>';
         $otherUserMsgBubble .= '</div><span class="other">' . $item['send_datetime'] . '</span>';
         $otherUserMsgBubble .= '</div>';

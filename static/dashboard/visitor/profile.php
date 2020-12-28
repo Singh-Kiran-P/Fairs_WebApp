@@ -45,25 +45,25 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
       if ($expire_dt < $today_dt) {
 
-        $outHTML_notification .= "<li>If you liked " . $item['fairTitle'] . "'s zone " . $item['zoneTitle'] . ",you write a review by clicking on 👍</li>";
+        $outHTML_notification .= "<li>If you liked " . _e($item['fairTitle']) . "'s zone " . _e($item['zoneTitle']) . ",you write a review by clicking on 👍</li>";
       }
 
       $outHTML_reservations .= '  <tr>';
-      $outHTML_reservations .= '      <td>' . $item['fairTitle'] . '</td>';
-      $outHTML_reservations .= '      <td>' . $item['zoneTitle'] . '</td>';
-      $outHTML_reservations .= '      <td>' . $item['nOfPeople'] . '</td>';
-      $outHTML_reservations .= '      <td>On ' . $item['date'] . ' from ' . $item['opening_slot'] . ' To ' . $item['closing_slot'] . '</td>';
+      $outHTML_reservations .= '      <td>' . _e($item['fairTitle']) . '</td>';
+      $outHTML_reservations .= '      <td>' . _e($item['zoneTitle']) . '</td>';
+      $outHTML_reservations .= '      <td>' . _e($item['nOfPeople']) . '</td>';
+      $outHTML_reservations .= '      <td>On ' . _e($item['date']) . ' from ' . _e($item['opening_slot']) . ' To ' . _e($item['closing_slot']) . '</td>';
       $outHTML_reservations .= '      <td class="actions">';
       $outHTML_reservations .= '        <!-- Go to fair info -->';
-      $outHTML_reservations .= '        <a class="reservation_btn" href="../fairOverView.php?fair_id=' . $item['fair_id'] . '">';
+      $outHTML_reservations .= '        <a class="reservation_btn" href="../fairOverView.php?fair_id=' . _e($item['fair_id']) . '">';
       $outHTML_reservations .= '          <span> <i class="fa fa-fighter-jet "></i></span>';
       $outHTML_reservations .= '        </a>';
       $outHTML_reservations .= '        <!-- Go to review page -->';
-      $outHTML_reservations .= '        <a class="reservation_btn" href="review.php?reservationId=' . $item['reservation_id'] . '">';
+      $outHTML_reservations .= '        <a class="reservation_btn" href="review.php?reservationId=' . _e($item['reservation_id']) . '">';
       $outHTML_reservations .= '          <span> <i class="fa fa-thumbs-up"></i></span>';
       $outHTML_reservations .= '        </a>';
       $outHTML_reservations .= '        <!-- Cancel reservation -->';
-      $outHTML_reservations .= '        <a class="reservation_btn" href="../../../server/dashboard/visitor/cancelReservation.php?reservationId=' . $item['reservation_id'] . '&zoneslot_id=' . $item['zoneslot_id'] . '&people=' . $item['nOfPeople'] . '">';
+      $outHTML_reservations .= '        <a class="reservation_btn" href="../../../server/dashboard/visitor/cancelReservation.php?reservationId=' . $item['reservation_id'] . '&zoneslot_id=' . _e($item['zoneslot_id']) . '&people=' . _e($item['nOfPeople']) . '">';
       $outHTML_reservations .= '          <span> <i class="fa fa-close"></i></span>';
       $outHTML_reservations .= '        </a>';
       $outHTML_reservations .= '      </td>';
@@ -92,21 +92,21 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       $outHTML_waitingList .= '  <tr>';
 
       if ($item['free_slots'] > 0) {
-        $outHTML_waitingList .= '      <td class="open_spot">' . $item['fairTitle'] . '</td>';
-        $outHTML_waitingList .= '      <td class="open_spot">' . $item['zoneTitle'] . '</td>';
-        $outHTML_waitingList .= '      <td class="open_spot">' . $item['free_slots'] . '</td>';
+        $outHTML_waitingList .= '      <td class="open_spot">' . _e($item['fairTitle']) . '</td>';
+        $outHTML_waitingList .= '      <td class="open_spot">' . _e($item['zoneTitle']) . '</td>';
+        $outHTML_waitingList .= '      <td class="open_spot">' . _e($item['free_slots']) . '</td>';
       } else {
-        $outHTML_waitingList .= '      <td >' . $item['fairTitle'] . '</td>';
-        $outHTML_waitingList .= '      <td>' . $item['zoneTitle'] . '</td>';
-        $outHTML_waitingList .= '      <td>' . $item['free_slots'] . '</td>';
+        $outHTML_waitingList .= '      <td >' . _e($item['fairTitle']) . '</td>';
+        $outHTML_waitingList .= '      <td>' . _e($item['zoneTitle']) . '</td>';
+        $outHTML_waitingList .= '      <td>' . _e($item['free_slots']) . '</td>';
       }
-      $outHTML_waitingList .= '      <td>On ' . $item['date'] . ' from ' . $item['opening_slot'] . ' To ' . $item['closing_slot'] . '</td>';
+      $outHTML_waitingList .= '      <td>On ' . _e($item['date']) . ' from ' . _e($item['opening_slot']) . ' To ' . _e($item['closing_slot']) . '</td>';
       $outHTML_waitingList .= '      <td class="actions">';
       $outHTML_waitingList .= '        <!-- Go to fair info -->';
-      $outHTML_waitingList .= '        <a class="reservation_btn" href="../ZoneOverView.php?zoneId=' . $item['zone_id'] . '&fairId=' . $item['fair_id'] . '">';
+      $outHTML_waitingList .= '        <a class="reservation_btn" href="../ZoneOverView.php?zoneId=' . _e($item['zone_id']) . '&fairId=' . _e($item['fair_id']) . '">';
       $outHTML_waitingList .= '          <span> <i class="fa fa-fighter-jet "></i></span>';
       $outHTML_waitingList .= '        </a>';
-      $outHTML_waitingList .= '        <a class="reservation_btn" href="../../../server/dashboard/visitor/removeFromWaitingList.php?userId=' . $_SESSION['userId'] . '&zoneslot_id=' . $item['zoneslot_id'] . '">';
+      $outHTML_waitingList .= '        <a class="reservation_btn" href="../../../server/dashboard/visitor/removeFromWaitingList.php?userId=' . $_SESSION['userId'] . '&zoneslot_id=' . _e($item['zoneslot_id']) . '">';
       $outHTML_waitingList .= '          <span> <i class="fa fa-close "></i></span>';
       $outHTML_waitingList .= '        </a>';
       $outHTML_waitingList .= '      </td>';
@@ -122,13 +122,13 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   $OUTHTML_MSG = "";
   foreach ($msg as $m) {
     $OUTHTML_MSG .= '<div class="msg">';
-    $OUTHTML_MSG .= $m['msgCount'] . ' new messages from <a href="message.php?msgTo=' . $m['user_id'] . '&opened=true"><b id="linkinnotification" >' . $m['msgFrom'] . '</b></a>';
+    $OUTHTML_MSG .= $m['msgCount'] . ' new messages from <a href="message.php?msgTo=' . _e($m['user_id']) . '&opened=true"><b id="linkinnotification" >' . _e($m['msgFrom']) . '</b></a>';
   }
 
   // Notification if admin updated something
   $notifications = $account->getNotifications($userId);
   foreach ($notifications as $notification) {
-    $OUTHTML_MSG .= '<li>' . $notification['msg'] . '<a class="fl-right" href="../../../server/dashboard/visitor/deleteNotification.php?id=' . $notification['notification_id'] . '">X</a> </li>';
+    $OUTHTML_MSG .= '<li>' . _e($notification['msg']) . '<a class="fl-right" href="../../../server/dashboard/visitor/deleteNotification.php?id=' . _e($notification['notification_id']) . '">X</a> </li>';
   }
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
@@ -200,8 +200,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         Type:
         <input type="text" placeholder="Type" value="<?php echo $type; ?>" disabled>
       </center>
-      <div id="alert-area" <?php if ($OUTHTML_MSG == "") echo "class='hidden'"; ?>>
-        <p>Meldingen: <a class="fl-right m-r" href="../../../server/dashboard/visitor/deleteNotification.php?id=">All X</a></p>
+      <div id="alert-area">
+        <p <?php if ($OUTHTML_MSG == "") echo "class='hidden'"; ?>>Meldingen: <a class="fl-right m-r" href="../../../server/dashboard/visitor/deleteNotification.php?id=">All X</a></p>
         <?php echo $OUTHTML_MSG; ?>
       </div>
     </div>

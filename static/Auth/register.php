@@ -60,9 +60,9 @@ if (isset($_POST['isset'])) {
         <center>
           <h1> Kermis Register Form </h1>
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" onsubmit="return validateForm()">
-            <input  class="text" max="49" type="text" placeholder="Enter your name" name="name" value="<?php if (isset($_POST['name'])) echo $_POST['name']; ?>" required>
-            <input class="text" max="49" type="text" placeholder="Enter Username" name="username" value="<?php if (isset($_POST['username'])) echo $_POST['username']; ?>" required>
-            <input class="text" max="254" type="email" placeholder="Enter Email" name="email" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" required>
+            <input  class="text" max="49" type="text" placeholder="Enter your name" name="name" value="<?php if (isset($_POST['name'])) echo _e($_POST['name']); ?>" required>
+            <input class="text" max="49" type="text" placeholder="Enter Username" name="username" value="<?php if (isset($_POST['username'])) echo _e($_POST['username']); ?>" required>
+            <input class="text" max="254" type="email" placeholder="Enter Email" name="email" value="<?php if (isset($_POST['email'])) echo _e($_POST['email']); ?>" required>
             <input class="text" max="254" type="password" placeholder="Enter Password" name="password" required>
             <input class="text" max="254" type="password" placeholder="ReEnter Password" name="password2" required>
             Soort gebruiker: <select name="type" name="type" class="form-control" required>
@@ -75,7 +75,7 @@ if (isset($_POST['isset'])) {
           <p id="error">
             <?php
             if (isset($_POST['isset']))
-              echo $out;
+              echo _e($out);
             ?>
           </p>
         </center>

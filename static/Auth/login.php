@@ -60,7 +60,7 @@ if (isset($_POST['isset'])) {
           <p id="error">
             <?php
             if (isset($_POST['isset']))
-              echo $out;
+              echo _e($out);
             ?>
           </p>
         </center>

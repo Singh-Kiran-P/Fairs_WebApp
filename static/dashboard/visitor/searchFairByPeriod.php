@@ -18,10 +18,10 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     if ($listOfFairs != null) {
       foreach ($listOfFairs as $fair) {
         $out = '<tr><td>';
-        $out .= '<a href="../fairOverView.php?fair_id=' . $fair['fairId'] . '">' . $fair['title'] . '</a>';
+        $out .= '<a href="../fairOverView.php?fair_id=' . _e($fair['fairId']) . '">' . _e($fair['title']) . '</a>';
         $out .= '</td>';
         $out .= '<td>';
-        $out .= '<p>'. $fair['start_date'] .' TO ' . $fair['end_date'] . '</p>';
+        $out .= '<p>'. _e($fair['start_date']) .' TO ' . _e($fair['end_date']) . '</p>';
         $out .= '</td></tr>';
         $outputHTML .= $out;
       }

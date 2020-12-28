@@ -8,6 +8,7 @@
  */
 
 include_once "class.database.php";
+include_once __DIR__ . "/../preventions/func.xss.php";
 
 /* Accounts class holds the users identity and fuction/methode that are related to users*/
 class Accounts
@@ -187,7 +188,7 @@ class Accounts
       return ['msg' => "Username cannot be empty!", 'val' => false];
 
 
-    if ($type == "" || ($type != "city" && $type != " visitor"))
+    if ($type == "" && $type != "city" && $type != " visitor")
       return ['msg' => "Invaild type", 'val' => false];
 
 

@@ -1,4 +1,5 @@
 @import "city_main.css";
+
 /* profile Img center */
 .profileImg {
   width: 15%;
@@ -27,17 +28,18 @@ input,
 
 #alert-area {
   padding-left: 9%;
+  border: 1px solid #ccc;
+  margin: 7px;
 }
 #alert-area .msg {
   margin: 2%;
 }
 
-.m-r{
+.m-r {
   margin-right: 2%;
 }
 #alert-area li {
   margin-top: 10px;
-
 
   margin-bottom: 5%;
   margin-right: 2%;
@@ -48,11 +50,6 @@ input,
 }
 
 .mainCol1 {
-  flex: 50%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
   /*   background-color: #1b4958; */
   background-color: #141516;
   padding-bottom: 20px;
@@ -70,14 +67,15 @@ input,
 }
 
 .messaging_btn {
-  float: left;
+  float: right;
   padding-right: 20px;
   background-color: DodgerBlue; /* Blue background */
   border: none; /* Remove borders */
   color: white; /* White text */
   padding: 6px 6px; /* Some padding */
-  font-size: 20px; /* Set a font size */
+  font-size: 30px; /* Set a font size */
   cursor: pointer; /* Mouse pointer on hover */
+  position: absolute;
 }
 
 .notification {
@@ -102,16 +100,14 @@ button {
 
 .reservations {
   margin-top: 0;
-  flex: 50%;
-  width: 95%;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
   /*   background-color: #1b4958; */
   background-color: #141516;
   padding-bottom: 20px;
+  min-width: 100px;
+}
+
+.table table {
+  min-width: 100px;
 }
 
 .actions {
@@ -177,6 +173,9 @@ td {
     align-items: center;
     justify-content: center;
   }
+  .messaging_btn {
+    font-size: 25px;
+  }
 
   /* Style buttons */
   .reservation_btn {
@@ -193,5 +192,9 @@ td {
   .reservations {
     width: 100%;
     float: 100%;
+    overflow-x: auto;
+  }
+  .content {
+    width: 100%;
   }
 }

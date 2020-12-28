@@ -28,6 +28,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
   if ($reservationList !== null) {
     $outHTML_reservations .= '<h2 class="title">Reservations</h2>';
+    $outHTML_reservations .= '<div class="table">';
     $outHTML_reservations .= '<table>';
     $outHTML_reservations .= '  <tr>';
     $outHTML_reservations .= '    <th>Fair Title</th>';
@@ -70,6 +71,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       $outHTML_reservations .= '   </tr>';
     }
     $outHTML_reservations .= '   </table>';
+    $outHTML_reservations .= '   </div>';
   }
 
   /* Make the waitingList table */
@@ -79,6 +81,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
   if ($waitingList != null) {
     $outHTML_waitingList .= '<h2 class="title">Waiting List</h2>';
+    $outHTML_waitingList .= '<div class="table">';
+
     $outHTML_waitingList .= '<table>';
     $outHTML_waitingList .= '  <tr>';
     $outHTML_waitingList .= '    <th>Fair Title</th>';
@@ -113,6 +117,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       $outHTML_waitingList .= '   </tr>';
     }
     $outHTML_waitingList .= '   </table>';
+    $outHTML_waitingList .= '   </div>';
   }
 
   // get Message List
@@ -227,7 +232,6 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <center class="reservations">
     <?php echo $outHTML_waitingList; ?>
   </center>
-  </div>
 
 
 </body>

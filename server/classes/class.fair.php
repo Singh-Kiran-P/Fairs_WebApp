@@ -88,9 +88,9 @@ class Fair
     if (strlen($attractions) > 499)
       return "Attraction list to big!";
     if ($open_spots == "")
-      $errorMsg .= "Open_sports can not be empty<br>";
+      $errorMsg .= "Open_sports cannot be empty<br>";
     if ($location == "")
-      $errorMsg .= "Location can not be empty<br>";
+      $errorMsg .= "Location cannot be empty<br>";
     if ($open_spots >= 9999999)
       $errorMsg .= "Error in open slots<br>";
     if ($open_spots <= 1)

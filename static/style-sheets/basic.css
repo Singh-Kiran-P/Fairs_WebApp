@@ -8,10 +8,41 @@ nav menu from
   https://webdesign.tutsplus.com/tutorials/how-to-build-a-responsive-navigation-bar-with-flexbox--cms-33535
 
 */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  line-height: 1.9;
+  font-weight: 300;
+}
 
 * {
   box-sizing: border-box;
   color: white;
+  word-wrap: break-word;
+}
+
+.footer_ {
+  width: 100%;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: dodgerblue;
+}
+
+.footer_ p {
+  flex: 1;
+  text-align: center;
+  justify-content: center;
+}
+
+.footer_ a {
+  margin-right: 2%;
+  margin-left: 2%;
 }
 
 /* a {
@@ -57,7 +88,6 @@ body {
   /* position: relative; */
   min-width: 400px;
 
-
   /* background: rgb(119, 83, 235);
   background: radial-gradient(
     circle,
@@ -65,7 +95,6 @@ body {
     rgba(66, 100, 251, 1) 100%
   ); */
   background-color: #282b2c;
-
 
   /* background-image: url("../img/bgImg.jpg"); */
   background-size: 100%;
@@ -96,6 +125,10 @@ header {
   /*   background-color: #141516;*/
 }
 
+.topNavbar a {
+  font-weight: bold;
+}
+
 /* Column container */
 .content {
   display: flex;
@@ -113,10 +146,12 @@ img {
 .logo {
   margin-right: auto;
   text-align: center;
+  border-right: 2px solid white;
 }
 
 .logo img {
-  width: 200px;
+  width: 60px;
+  margin: 0;
 }
 
 .l3 {
@@ -162,7 +197,6 @@ img {
 
 /* Footer */
 .footer {
-  padding: 20px;
   position: absolute;
   text-align: center;
   bottom: 0;
@@ -200,16 +234,13 @@ img {
   );
 }
 
-.hidden{
+.hidden {
   display: none;
 }
 
 .long {
   word-wrap: break-word;
 }
-
-
-
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 700px) {
@@ -231,6 +262,6 @@ img {
 
   /* Column container */
   .content {
-    width: 80%;
+    width: 100% !important;
   }
 }

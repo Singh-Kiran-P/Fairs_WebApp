@@ -79,10 +79,12 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
 <html lang="en">
 
 <head>
-  <title>Profile</title>
+  <title>Edit Fair Data</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/admin_forms.css">
+  <!-- favicon -->
+  <?php include "../../favicon/favicon.php"; ?>
 </head>
 
 <body>

@@ -116,6 +116,8 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
   <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>ZoneOverView</title>
+  <!-- favicon -->
+  <?php include "../favicon/favicon.php"; ?>
 </head>
 
 <body>

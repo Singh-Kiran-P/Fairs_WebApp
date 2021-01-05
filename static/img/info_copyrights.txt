@@ -6,3 +6,6 @@ banner_van_hasselt.png
 
 uhasselt.jpp
   -> Uhasselt.be
+
+fair.png
+  -> https://pixabay.com/nl/vectors/carnaval-cartoon-vectoren-eerlijke-2024563/

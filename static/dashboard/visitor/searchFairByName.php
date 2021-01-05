@@ -20,8 +20,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         $out .= '<td><p>' . _e($fair['start_date']) . ' TO ' . _e($fair['end_date']) . '</p></td></tr>';
         $outputHTML .= $out;
       }
-      $outputHTML.= '</table>';
-
+      $outputHTML .= '</table>';
     } else {
       $outputHTML = "No record found";
     }
@@ -55,6 +54,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Seach By Name</title>
+  <!-- favicon -->
+  <?php include "../../favicon/favicon.php"; ?>
 </head>
 
 <body>

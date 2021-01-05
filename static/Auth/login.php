@@ -52,7 +52,6 @@ if (isset($_POST['isset'])) {
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <input class="text" max="254" type="text" placeholder="Enter email or Username" name="email" id="email" required>
             <input class="text" max="254" type="password" placeholder="Enter Password" name="password" id="password" required>
-            <input type="checkbox" name="" checked="checked" id="rememberMe"> Remember me <br>
             <input name="isset" class="hidden">
             <button type="submit" id="btn">Login</button>
             Forgot <a href="#"> password? </a>

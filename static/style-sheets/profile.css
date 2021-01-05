@@ -30,6 +30,7 @@ input,
   padding-left: 9%;
   border: 1px solid #ccc;
   margin: 7px;
+  margin-top: 30px;
 }
 #alert-area .msg {
   margin: 2%;
@@ -78,7 +79,8 @@ input,
   position: absolute;
 }
 
-.notification {
+.notification_inside {
+  margin: 7px;
   margin-top: 20px;
   border: 1px solid white;
   padding: 10px;
@@ -98,11 +100,11 @@ button {
   color: dodgerBlue !important;
 }
 
-.reservations {
+.notifications {
   margin-top: 0;
   /*   background-color: #1b4958; */
   background-color: #141516;
-  padding-bottom: 20px;
+  margin-bottom: 20px;
   min-width: 100px;
 }
 

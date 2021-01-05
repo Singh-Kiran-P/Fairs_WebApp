@@ -42,6 +42,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/profile.css">
+  <!-- favicon -->
+  <?php include "../../favicon/favicon.php"; ?>
 </head>
 
 <body>

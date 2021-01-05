@@ -9,7 +9,7 @@
     else
       echo '<a href="/~kiransingh/project/static/index.php">';
     ?>
-    <img src="/~kiransingh/project/static/img/UHasselt-liggend.jpg" width="200px" alt="logo">
+    <img src="/~kiransingh/project/static/img/fair.png"  alt="logo">
     </a>
   </div>
 
@@ -32,7 +32,7 @@
 
   /* Login navTop */
   if ($typeNav == "login" || $typeNav == "index") {
-    echo '<a href="/~kiransingh/project/static/Auth/register.php">register</a>';
+    echo '<a href="/~kiransingh/project/static/Auth/register.php">Register</a>';
   }
 
   /* City main navTop Links right */

@@ -6,6 +6,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/index.css">
+  <!-- favicon -->
+  <?php include "./favicon/favicon.php"; ?>
 </head>
 
 <body>
@@ -35,18 +37,21 @@
           ullamco.
         </p>
       </div>
-
-      <h2>PROJECT FUTEURS</h2>
-      <div class="fakeimg">Image</div>
-      <p>Some text..</p>
-      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-      </p>
+      <div class="info striped-border">
+        <h2>PROJECT INFO</h2>
+        <div class="fakeimg">Image</div>
+        <p>Some text..</p>
+        <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco.
+        </p>
+      </div>
     </div>
-
   </div>
 
 </body>
 
+<!-- Footer -->
+<?php include './componets/footer.php'; ?>
 
 </html>

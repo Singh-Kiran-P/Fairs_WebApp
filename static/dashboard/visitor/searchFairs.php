@@ -15,6 +15,8 @@ if (!isset($_SESSION['loggedin'])) {
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/searchFair.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search the perfect fair</title>
+  <!-- favicon -->
+  <?php include "../../favicon/favicon.php"; ?>
 </head>
 
 <body>

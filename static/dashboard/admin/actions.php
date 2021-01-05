@@ -70,10 +70,12 @@ if (isset($_GET['title']) && isset($_GET['type'])) {
 <html lang="en">
 
 <head>
-  <title>Profile</title>
+  <title>Actions</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/actions.css">
+    <!-- favicon -->
+    <?php include "../../favicon/favicon.php"; ?>
 </head>
 
 <body>

@@ -10,19 +10,22 @@ class Reservation
   {
 
     $errorMsg = '';
+    /* check if startdate before current date  */
+    if (strtotime($reservationDate) < mktime(0, 0, 0))
+      $errorMsg .= "Reservation date cannot less then current date<br>";
     if ($reservationDate == "")
       $errorMsg .= "Reservation date cannot be empty<br>";
     if ($reservationTimeSlot == "")
-      $errorMsg .= "Reservation Time Slot can not be empty<br>";
+      $errorMsg .= "Reservation Time Slot cannot be empty<br>";
     if ($reservationPeople == "")
-      $errorMsg .= "Reservation for people can not be empty<br>";
+      $errorMsg .= "Reservation for people cannot be empty<br>";
     if ($reservationPeople > 8)
       $errorMsg .= "Max reservation is 8 people<br>";
     if ($reservationPeople < 1)
       $errorMsg .= "Min reservation is 1 people<br>";
 
     if ($errorMsg != "")
-      return $errorMsg;
+      return ['msg' => $errorMsg];
     //connect to database
     $conn = Database::connect();
 
@@ -44,10 +47,10 @@ class Reservation
         if ($row['free_slots'] - $reservationPeople >= 0) {
           return ['zoneslot_id' => $row['zoneslot_id'], 'free' => $row['free_slots'], 'msg' => ''];
         } else {
-          return ['zoneslot_id' => $row['zoneslot_id'], 'msg' => "Can not book on " . $reservationDate . " booking is not available. "];
+          return ['zoneslot_id' => $row['zoneslot_id'], 'msg' => "Cannot book on " . $reservationDate . " booking is not available. "];
         }
       } else {
-        return ['msg' => "You can not book on this date and timeslot"];
+        return ['msg' => "You cannot book on this date and timeslot"];
       }
     } else {
       return $query->errorInfo()[2];

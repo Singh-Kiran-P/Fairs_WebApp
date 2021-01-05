@@ -21,7 +21,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         $out .= '<a href="../fairOverView.php?fair_id=' . _e($fair['fairId']) . '">' . _e($fair['title']) . '</a>';
         $out .= '</td>';
         $out .= '<td>';
-        $out .= '<p>'. _e($fair['start_date']) .' TO ' . _e($fair['end_date']) . '</p>';
+        $out .= '<p>' . _e($fair['start_date']) . ' TO ' . _e($fair['end_date']) . '</p>';
         $out .= '</td></tr>';
         $outputHTML .= $out;
       }
@@ -46,6 +46,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Seach By Period</title>
+  <!-- favicon -->
+  <?php include "../../favicon/favicon.php"; ?>
 </head>
 
 <body>

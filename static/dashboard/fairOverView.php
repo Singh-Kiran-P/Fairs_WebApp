@@ -71,7 +71,9 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/fairView.css">
-  <title>FairOverView</title>
+  <title>Fair Overview</title>
+  <!-- favicon -->
+  <?php include "../favicon/favicon.php"; ?>
 </head>
 
 <body>

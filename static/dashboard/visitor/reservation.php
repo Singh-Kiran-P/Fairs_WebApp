@@ -25,19 +25,20 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       $reservationPeople = $_POST['nOfPeople'];
 
       $msg = $reservation->checkSpot($_SESSION['zoneId'], $reservationDate, $reservationTimeSlot, $reservationPeople);
-
-      if ($msg['msg'] == "" && isset($_POST['submit'])) { // enough place
-        $out = $reservation->updateZoneslot($msg['zoneslot_id'], $reservationPeople, false);
-        if ($out['msg'] == "") {
-          //booking
-          $out = $reservation->book($_SESSION['userId'], $_SESSION['fairId'], $msg['zoneslot_id'], $reservationPeople);
-          if ($out['msg'] == "")
-            header('Location: ' . "profile.php");
-        }
-      } else { // not enough place, add user to a waiting list
-        if (isset($msg['zoneslot_id'])) {
-          $zoneslot_id = $msg['zoneslot_id'];
-          $msg['msg'] .= $reservation->addToWaitingList($zoneslot_id, $_SESSION['userId'])['msg'];
+      if ($msg['msg'] == "") {
+        if (isset($_POST['submit'])) { // enough place
+          $out = $reservation->updateZoneslot($msg['zoneslot_id'], $reservationPeople, false);
+          if ($out['msg'] == "") {
+            //booking
+            $out = $reservation->book($_SESSION['userId'], $_SESSION['fairId'], $msg['zoneslot_id'], $reservationPeople);
+            if ($out['msg'] == "")
+              header('Location: ' . "profile.php");
+          }
+        } else { // not enough place, add user to a waiting list
+          if (isset($msg['zoneslot_id'])) {
+            $zoneslot_id = $msg['zoneslot_id'];
+            $msg['msg'] .= $reservation->addToWaitingList($zoneslot_id, $_SESSION['userId'])['msg'];
+          }
         }
       }
     }
@@ -57,6 +58,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/~kiransingh/project/static/style-sheets/form.css">
+  <!-- favicon -->
+  <?php include "../../favicon/favicon.php"; ?>
 </head>
 
 <body>

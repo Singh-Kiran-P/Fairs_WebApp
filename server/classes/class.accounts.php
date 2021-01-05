@@ -187,8 +187,11 @@ class Accounts
     if ($email == "")
       return ['msg' => "Username cannot be empty!", 'val' => false];
 
+    if ($type == "")
+      return ['msg' => "Type cannot be empty!", 'val' => false];
 
-    if ($type == "" && $type != "city" && $type != " visitor")
+
+    if (!($type == "city" || $type == "visitor"))
       return ['msg' => "Invaild type", 'val' => false];
 
 

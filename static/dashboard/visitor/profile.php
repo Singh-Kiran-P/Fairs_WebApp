@@ -46,7 +46,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
       if ($expire_dt < $today_dt) {
 
-        $outHTML_notification .= "<li>If you liked " . _e($item['fairTitle']) . "'s zone " . _e($item['zoneTitle']) . ",you write a review by clicking on 👍</li>";
+        $outHTML_notification .= "<li>If you liked " . _e($item['fairTitle']) . "'s zone " . _e($item['zoneTitle']) . ",you can write a review by clicking on 👍</li>";
       }
 
       $outHTML_reservations .= '  <tr>';
@@ -153,16 +153,9 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <link rel="stylesheet" type="text/css" href="/~kiransingh/project/static/style-sheets/alert.css">
   <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-  <!-- Alertify JS -->
-  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-  <!-- CSS -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
-  <!-- Semantic UI theme -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
-
-
   <script src="profile.js"></script>
+  <!-- favicon -->
+  <?php include "../../favicon/favicon.php"; ?>
 
 </head>
 
@@ -182,57 +175,56 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     //echo "<img class='topImg' src='/~kiransingh/project/server/uploads/profile_img/$userId.jpg' alt='Profile Img'>"
     ?>
   </div>
+  <div class="content">
+    <!-- The flexible grid (content) -->
+    <form action="" method="post" id="form">
+      <!-- Messaging link -->
+      <a class="messaging_btn" href="message.php"><span> <i class="fa fa-comments" aria-hidden="true"></i></span></a>
 
-  <!-- The flexible grid (content) -->
-  <form action="" method="post" class="content" id="form">
-    <!-- Messaging link -->
-    <a class="messaging_btn" href="message.php"><span> <i class="fa fa-comments" aria-hidden="true"></i></span></a>
-
-    <div class="mainCol1 g">
-      <center>
-        Name:
-        <input type="text" placeholder="Name" value="<?php echo $name; ?>" disabled>
-        Email:
-        <input type="text" placeholder="Email" value="<?php echo $email; ?>">
+      <div class="mainCol1 g">
+        <center>
+          Name:
+          <input type="text" placeholder="Name" value="<?php echo $name; ?>" disabled>
+          Email:
+          <input type="text" placeholder="Email" value="<?php echo $email; ?>">
 
 
-      </center>
-    </div>
-    <div class="mainCol2 b">
-      <center>
-        Username:
-        <input type="text" placeholder="Username" value="<?php echo $username; ?>">
-        Type:
-        <input type="text" placeholder="Type" value="<?php echo $type; ?>" disabled>
-      </center>
-      <div id="alert-area">
-        <p <?php if ($OUTHTML_MSG == "") echo "class='hidden'"; ?>>Meldingen: <a class="fl-right m-r" href="../../../server/dashboard/visitor/deleteNotification.php?id=">All X</a></p>
-        <?php echo $OUTHTML_MSG; ?>
+        </center>
       </div>
-    </div>
+      <div class="mainCol2 b">
+        <center>
+          Username:
+          <input type="text" placeholder="Username" value="<?php echo $username; ?>">
+          Type:
+          <input type="text" placeholder="Type" value="<?php echo $type; ?>" disabled>
+        </center>
+        <div id="alert-area">
+          <p <?php if ($OUTHTML_MSG == "") echo "class='hidden'"; ?>>Meldingen: <a class="fl-right m-r" href="../../../server/dashboard/visitor/deleteNotification.php?id=">All X</a></p>
+          <?php echo $OUTHTML_MSG; ?>
+        </div>
+      </div>
 
 
-  </form>
+    </form>
 
+    <!-- Reservations -->
+    <center class="notifications">
+      <?php
+      if ($outHTML_notification != "") {
+        echo "<div class='notification_inside'>Notifications:<br>";
+        echo "<ul>";
+        echo $outHTML_notification;
+        echo '</ul>';
+        echo "</div>";
+      }
+      echo $outHTML_reservations; ?>
+    </center>
 
-  <!-- Reservations -->
-  <center class="reservations">
-    <?php
-    if ($outHTML_notification != "") {
-      echo "<div class='notification'>Notifications:<br>";
-      echo "<ul class='notifications'>";
-      echo $outHTML_notification;
-      echo "</ul>";
-      echo '</div>';
-    }
-    echo $outHTML_reservations; ?>
-  </center>
-
-  <!-- Waiting List -->
-  <center class="reservations">
-    <?php echo $outHTML_waitingList; ?>
-  </center>
-
+    <!-- Waiting List -->
+    <center class="notifications">
+      <?php echo $outHTML_waitingList; ?>
+    </center>
+  </div>
 
 </body>
 

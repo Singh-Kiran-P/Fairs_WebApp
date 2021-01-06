@@ -3,7 +3,7 @@
 require '../../../server/classes/class.fair.php';
 session_start();
 
-if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'] == "city") {
+if (isset($_SESSION['loggedin']) && isset($_SESSION['type'])) {
   $fair = new Fair();
 
   if (isset($_GET['zoneId']) && isset($_GET['date'])) {

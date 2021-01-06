@@ -15,6 +15,17 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
     $reservation = new Reservation();
     $fair = new Fair();
 
+    // Add list of dates
+    $dateSlectorHTML = "";
+    $dates = $fair->getZonesDate($_SESSION['zoneId']);
+
+    if (count($dates) > 0) {
+      foreach ($dates as $d) {
+        $date = '<option value="' . _e($d) . '">' . _e($d) . '</option>';
+        $dateSlectorHTML .= $date;
+      }
+    }
+
     $fairInfo = $fair->getFairModel($_SESSION['fairId'])->getVar();
     $zoneInfo = $fair->getZone($_SESSION['zoneId']);
 
@@ -139,7 +150,17 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
             ?>
           </p>
         </center>
-        <table style="width:100%">
+        <!-- Zone Time slots info -->
+        <p class="hidden" id="zoneId"><?php if (isset($_SESSION['zoneId'])) echo $_SESSION['zoneId']; ?></p>
+        <?php if ($dateSlectorHTML != "") {
+          //drop box Dates
+          echo '<select name="date" class="dropBox_Dates" onchange="showTimeSlotByDate(this.value)">';
+          echo '<option value="">Select a Date:</option>';
+          echo $dateSlectorHTML;
+          echo '</select>';
+        }
+        ?>
+        <table style="width:100%" class="zoneTimeslotstable">
           <tr>
             <th>Date</th>
             <th>Opening Slot</th>
@@ -155,7 +176,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   </div>
 </body>
 
+
 <!-- Script -->
-<script src="login.js"></script>
+<script src="reservation.js"></script>
 
 </html>

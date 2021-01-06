@@ -8,6 +8,7 @@
  */
 
 include_once "class.database.php";
+include_once 'class.mail.php';
 include_once __DIR__ . "/../preventions/func.xss.php";
 
 /* Accounts class holds the users identity and fuction/methode that are related to users*/
@@ -150,6 +151,99 @@ class Accounts
   }
 
   /**
+   * Send mail to reset password
+   *
+   * @param [type] $email
+   * @return void
+   */
+  public function sendResetPasswordMail($email)
+  {
+    include_once __DIR__ . '/../config/config.php';
+    include_once __DIR__ . '/../config/config.php';
+    $mail = new Mail();
+
+    $token = md5(uniqid($email, true));
+    if ($this->_addResetPasswordTokenToDatabase($token, $email)) {
+
+      $link = $rootURL . "/~kiransingh/project/server/dashboard/auth/activate.php?token=" . $token . "&email" . $email;
+      $body =
+        "
+      Hi,
+      Someone (hopefully you!) requested a password reset for your account. Click the link below to choose a new password.
+         " .
+        $link
+        . "
+
+      If you did not request a password reset, you can simply ignore this message.
+      Regards,
+      Singh Kiran
+
+    ";
+      $mail->sendEmail($email, "Request for password recovery", $body);
+      return true;
+    } else
+      return false;
+  }
+
+  private function _addResetPasswordTokenToDatabase($token, $email)
+  {
+
+    //connect to database
+    $conn = Database::connect();
+    $query = $conn->prepare("INSERT INTO password_reset VALUES (DEFAULT, :email,:token)");
+
+    // Bind params
+    $query->bindParam(":token", $token, PDO::PARAM_STR, 255);
+    $query->bindParam(":email", $email, PDO::PARAM_STR, 255);
+
+    if ($query->execute())
+      return true;
+    else
+      return false;
+  }
+
+  /**
+   * Reset password
+   *
+   * @param [type] $email
+   * @param [type] $token
+   * @return void
+   */
+  public function resetPassword($email, $token, $password)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    // check if there is account only using email
+    $queryUser = $conn->prepare("select * from password_reset where token=:token and email=:email");
+    $queryUser->bindParam(":token", $token, PDO::PARAM_STR, 255);
+    $queryUser->bindParam(":email", $email, PDO::PARAM_STR, 255);
+
+    if ($queryUser->execute()) {
+      if ($queryUser->rowCount() > 0) { //token is valid with this $email
+        return $this->_changePassword($password, $email);
+      }
+    }
+  }
+
+  private function _changePassword($password, $email)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    // check if there is account only using email
+    $queryUser = $conn->prepare("update accounts set password=:pass where email=:email");
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $queryUser->bindParam(":password", $hashedPassword, PDO::PARAM_STR, 255);
+    $queryUser->bindParam(":email", $email, PDO::PARAM_STR, 255);
+
+    if ($queryUser->execute())
+      return true;
+    else
+      return false;
+  }
+
+  /**
    * Register new users
    *
    * @param [string] $email
@@ -201,7 +295,7 @@ class Accounts
     else if ($this->checkIfUsername($username))
       return ['msg' => "Username already taken!", 'val' => false];
     else {
-      $query = $conn->prepare("INSERT INTO accounts VALUES (DEFAULT, :name,:username,:password,:email,:type,NOW(),NULL)");
+      $query = $conn->prepare("INSERT INTO accounts VALUES (DEFAULT, :name,:username,:password,:email,:type,NOW(),DEFAULT,:activationHash)");
 
       // Bind params
       $query->bindParam(":username", $username, PDO::PARAM_STR, 255);
@@ -209,19 +303,25 @@ class Accounts
       $query->bindParam(":type", $type, PDO::PARAM_STR, 50);
       $query->bindParam(":name", $name, PDO::PARAM_STR, 50);
 
+      $activationHash = password_hash($email, PASSWORD_DEFAULT);
+      $query->bindParam(":activationHash", $activationHash, PDO::PARAM_STR, 255);
+
       /* Secure password hash. */
       $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
       $query->bindParam(":password", $hashedPassword, PDO::PARAM_STR, 255);
 
       if ($query->execute()) {
+        //send verification
+        $this->sendConfirmationMail($email, $activationHash);
         // Login the registered user, to get the identity and making session variables
         $this->login($email, $password);
-        return ['msg' => "Username already taken!", 'val' => true];
+        return ['msg' => "We have send a verification email, please check your email.", 'val' => false];
       } else {
-        return ($conn->errorInfo());
+        return ['msg' => $conn->errorInfo()[2], 'val' => false];
       }
-      echo "<script>console.log('Debug Objects: " . "Error in Accounts->register" . "' );</script>";
     }
+
+    return  ['msg' => "Failed to register, please try again later.", 'val' => false];
   }
 
   /**
@@ -254,6 +354,79 @@ class Accounts
       return "true";
     } else {
       return $query->errorInfo()[2];
+    }
+  }
+
+  /**
+   * Send confimation email with activationHash to user email address
+   *
+   * @param [type] $email
+   * @param [type] $userId
+   * @return void
+   */
+  private function sendConfirmationMail($email, $activationHash)
+  {
+    require __DIR__ . '/../config/config.php';
+    $mail = new Mail();
+
+    $link = $rootURL . "/~kiransingh/project/server/dashboard/auth/activate.php?activationHash=" . $activationHash;
+    $body =
+      "
+    Hello,
+
+    Thank you for registering.
+
+    Please click on the link below to activate your account.
+    " .
+      $link
+      . "
+
+    Best regards,
+    Singh Kiran
+
+    ";
+    $mail->sendEmail($email, "Activate account Fairs_Of_Belgium", $body);
+  }
+  /**
+   * Checks if activation hash is valid
+   *
+   * @param string $activationHash
+   * @return int user_id
+   */
+  public function _checkIfActivationHashIsValid($activationHash)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    // check if there is account only using email
+    $queryUser = $conn->prepare("select * from accounts where activation_hash=:activationHash");
+    $queryUser->bindParam(":activationHash", $activationHash, PDO::PARAM_STR, 255);
+
+    if ($queryUser->execute()) {
+
+      if ($queryUser->rowCount() > 0) {
+        $row = $queryUser->fetch(PDO::FETCH_ASSOC);
+        if (password_verify($activationHash, $row['email'])) {
+          return $row['user_id'];
+        } else
+          return null;
+      }
+    }
+  }
+
+  public function activateAccount($user_id)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    // check if there is account only using email
+    $queryUser = $conn->prepare("Update accounts set active=true where user_id=:id");
+    $queryUser->bindParam(":id", $user_id, PDO::PARAM_STR, 255);
+
+    if ($queryUser->execute()) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -360,6 +533,7 @@ class Accounts
 
     return $list;
   }
+
   public function deleteNotification($notification_id, $userId, $all)
   {
     //connect to database

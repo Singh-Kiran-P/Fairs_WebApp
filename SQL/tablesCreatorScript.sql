@@ -1,5 +1,4 @@
--- https://www.postgresqltutorial.com/postgresql-create-table/
--- accounts---------------------------------------------------
+-- Accounts---------------------------------------------------
 DROP TABLE IF EXISTS accounts;
 
 CREATE TABLE accounts (
@@ -10,44 +9,21 @@ CREATE TABLE accounts (
   email VARCHAR (255) UNIQUE NOT NULL,
   type VARCHAR (30) NOT NULL,
   created_on TIMESTAMP NOT NULL,
-  last_login TIMESTAMP
+  active boolean DEFAULT 'f',
+  activation_hash VARCHAR (255) UNIQUE,
 );
 
-/* INSERT INTO
- "accounts"
- VALUES
- (
- DEFAULT,
- 'kiran',
- 'kiranhass',
- 'hello',
- 'singh@sigh.com',
- 'gemeente',
- CURRENT_TIMESTAMP,
- CURRENT_TIMESTAMP
- ),
- (
- DEFAULT,
- 'kiran',
- 'singh',
- 'singh',
- 'singh@sigh.singh',
- 'bezoeker',
- CURRENT_TIMESTAMP,
- CURRENT_TIMESTAMP
- ),
- (
- DEFAULT,
- 'admin',
- 'admin',
- 'admin',
- 'admin@admin.com',
- 'admin',
- CURRENT_TIMESTAMP,
- CURRENT_TIMESTAMP
- );
- */
--- gemeente-----------------------------------------------------
+-- Reset Password------------------------------------------------
+DROP TABLE IF EXISTS password_reset;
+
+Create table password_reset(
+  id serial PRIMARY KEY,
+  email VARCHAR (50) NOT NULL,
+  token VARCHAR (50) UNIQUE NOT NULL,
+  FOREIGN KEY (email) REFERENCES accounts (email) ON DELETE CASCADE
+);
+
+-- City-----------------------------------------------------
 DROP TABLE IF EXISTS city;
 
 CREATE TABLE city (
@@ -58,16 +34,7 @@ CREATE TABLE city (
   FOREIGN KEY (user_id) REFERENCES accounts (user_id) ON DELETE CASCADE
 );
 
-/* INSERT INTO
- "gemeente"
- VALUES
- (
- DEFAULT,
- 1,
- '048704756',
- 'hasselt is goed'
- ); */
--- fair-------------------------------------------------------
+-- Fair table-----------------------------------------------------
 DROP TABLE IF EXISTS fair;
 
 CREATE TABLE fair (
@@ -84,19 +51,6 @@ CREATE TABLE fair (
   FOREIGN KEY (city_id) REFERENCES city (city_id) ON DELETE CASCADE
 );
 
-/* INSERT INTO
- "kermis"
- VALUES
- (
- DEFAULT,
- 1,
- 'hasselt 2020',
- 'hasselt kermis 2020',
- '2008-11-11',
- '2008-11-20',
- '13:30',
- '18:30'
- ); */
 -- zones-------------------------------------------------------
 DROP TABLE IF EXISTS zones;
 
@@ -113,18 +67,6 @@ CREATE TABLE zones (
   FOREIGN KEY (fair_id) REFERENCES fair (fair_id) ON DELETE CASCADE
 );
 
-/* INSERT INTO
- "zones"
- VALUES
- (
- DEFAULT,
- 1,
- 'Zone 1',
- 'hasselt kermis 2020 zone1 DEsc',
- 'hasselt',
- 30
- );
- */
 -- zoneSlots ------------------------------------------------
 CREATE TABLE zoneslots (
   zoneslot_id serial PRIMARY KEY,
@@ -135,49 +77,6 @@ CREATE TABLE zoneslots (
   start_date DATE NOT NULL,
   FOREIGN KEY (zone_id) REFERENCES zones (zone_id) ON DELETE CASCADE
 );
-
-/* -- zoneSlots Trigger ------------------------------------------------
-
- CREATE
- OR REPLACE FUNCTION addZoneFreeSlots() RETURNS TRIGGER AS $example_table$ BEGIN
- update
- zoneSlots
- SET
- free_slots =(
- select
- open_spots
- from
- zones
- where
- zone_id = NEW.zone_id
- )
- where
- zoneslot_id = NEW.zoneslot_id;
-
- RETURN NEW;
-
- END;
-
- $example_table$ LANGUAGE plpgsql;
-
- Create trigger insert_free_slots_zone
- AFTER
- INSERT
- ON zoneSlots FOR EACH ROW EXECUTE PROCEDURE addZoneFreeSlots();
-
- --  */
---attractions------------------------------------------------
--- DROP TABLE IF EXISTS attractions;
-
--- CREATE TABLE attractions (
---   attraction_id serial PRIMARY KEY,
---   zone_id INT NOT NULL,
---   fair_id INT NOT NULL,
---   title VARCHAR (50) NOT NULL,
---   description VARCHAR (50),
---   FOREIGN KEY (fair_id) REFERENCES fair (fair_id) ON DELETE CASCADE,
---   FOREIGN KEY (zone_id) REFERENCES zones (zone_id) ON DELETE CASCADE
--- );
 
 -- reservations----------------------------------------------
 DROP TABLE IF EXISTS reservations;
@@ -244,41 +143,3 @@ CREATE TABLE messaging (
   FOREIGN KEY (msgFrom) REFERENCES accounts (user_id) ON DELETE CASCADE,
   FOREIGN KEY (msgTo) REFERENCES accounts (user_id) ON DELETE CASCADE
 );
-
-
-
--- sql code voor zoneslots te update als fair data geupdate wordt
-
-update fair set start_date ='2020-12-27'  where fair_id =55;
-
--- na dat de fair data geupdate wordt kijken welke reservations hier door niet meer kunnen door gaan
--- en dan hun en notification sturen
--- geeft de user_id van de visitor terug
--- select r.user_id,f.title as fair_title from reservations r,fair f
--- WHERE r.fair_id = f.fair_id and r.zoneslot_id
--- IN
--- 	(select zoneslot_id FROM zoneslots zs
--- 		WHERE zs.zone_id
--- 		IN (
--- 			select zone_id
--- 			from zones z,fair f
--- 			where z.fair_id = f.fair_id and
--- 			not (zs.opening_slot >= f.opening_hour and
--- 				 zs.closing_slot <= f.closing_hour and
--- 				 zs.start_date BETWEEN f.start_date and f.end_date
--- 				)
--- 			and zs.free_slots != z.open_spots
--- 			)
--- 	);
-
--- DELETE FROM zoneslots zs
--- WHERE zs.zone_id
--- IN (
--- 	select zone_id
--- 	from zones z,fair f
--- 	where z.fair_id = f.fair_id and
--- 	not (zs.opening_slot >= f.opening_hour and zs.closing_slot <= f.closing_hour and zs.start_date BETWEEN f.start_date and f.end_date)
--- );
-
--- admin user
--- update accounts set type='admin' where user_id = 1

@@ -63,13 +63,13 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <div class=content>
     <div class="mainCol1 g">
       <center>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
           <h1 class="topTitle">Search By Period <?php if (isset($_GET['fairId'])) echo "to " . $_GET['fairId']  ?></h1>
 
           <div class="side">
             <input type="text" name="startDate" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['startDate'])) echo $_POST['startDate']; ?>" required>
             <input type="text" name="endDate" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['endDate'])) echo $_POST['endDate']; ?>" required>
-            <button type="submit" name="submit" class="btnShow">Show</button>
+            <button type="submit" name="submit" class="btn">Show</button>
 
           </div>
           <div>

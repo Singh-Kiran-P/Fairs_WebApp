@@ -71,7 +71,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   <div class=content>
     <div class="mainCol1 g">
       <center>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method=" post" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method=" post"  id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
           <h1 class="topTitle">Search By Name <?php if (isset($_GET['fairId'])) echo "to " . $_GET['fairId']  ?></h1>
 
           <div class="side">

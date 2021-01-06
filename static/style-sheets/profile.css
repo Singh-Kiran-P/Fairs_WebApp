@@ -2,7 +2,7 @@
 
 /* profile Img center */
 .profileImg {
-  width: 15%;
+  /* width: 15%; */
   margin: auto;
 }
 .topImg {
@@ -10,10 +10,8 @@
   margin-bottom: 20px;
 }
 
-input,
 .desc {
   margin: 8px 0;
-  width: 70%;
   padding: 12px 20px;
   display: block;
   box-sizing: border-box;
@@ -24,16 +22,21 @@ input,
 }
 #short_desc {
   word-wrap: break-word;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #alert-area {
   padding-left: 9%;
   border: 1px solid #ccc;
   margin: 7px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
   margin-top: 30px;
 }
 #alert-area .msg {
   margin: 2%;
+  color: orangered;
+  font-weight: bold;
 }
 
 .m-r {
@@ -51,8 +54,6 @@ input,
 }
 
 .mainCol1 {
-  flex: 90%;
-  display: flex;
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: column;
@@ -87,8 +88,12 @@ input,
   font-size: 30px; /* Set a font size */
   cursor: pointer; /* Mouse pointer on hover */
   position: absolute;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
+.info {
+  border: none;
+  text-align: center;
+}
 .notification_inside {
   margin: 7px;
   margin-top: 20px;
@@ -124,6 +129,10 @@ input,
   color: black;
 }
 
+#btn_More {
+  width: 20%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 /* Style buttons */
 .reservation_btn {
   background-color: DodgerBlue; /* Blue background */
@@ -149,6 +158,11 @@ td {
 
 #more {
   display: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+img {
+  border: 2px solid black;
 }
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
@@ -158,14 +172,7 @@ td {
     flex: 100%;
   }
   /* profile Img center */
-  .profileImg {
-    width: 30%;
-    border-radius: 50%;
-    margin: auto;
-  }
-  .desc {
-    max-width: 200px;
-  }
+
   .actions {
     margin: auto !important;
     width: 10px;
@@ -178,7 +185,9 @@ td {
   .messaging_btn {
     font-size: 25px;
   }
-
+  #btn_More {
+    width: 30%;
+  }
   /* Style buttons */
   .reservation_btn {
     background-color: DodgerBlue; /* Blue background */

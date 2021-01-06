@@ -40,7 +40,7 @@
 }
 
 textarea {
-  height: 20%;
+  height: 200px;
 }
 
 .mainCol1 input,
@@ -52,8 +52,12 @@ button,
   padding: 12px 20px;
   display: block;
   box-sizing: border-box;
+
 }
 
+input,textarea{
+  border: 2px solid black;
+}
 .sidebyside input {
   display: inline;
   margin: 8px 0;
@@ -74,6 +78,7 @@ button,
   display: block;
   overflow: auto;
 }
+
 .mainCol1 {
   flex: 90%;
   display: flex;
@@ -135,9 +140,9 @@ select {
   flex: none;
 }
 #btn {
-  background-color: #4caf50;
+  background-color: dodgerBlue;
   width: 100%;
-  color: black;
+  color: white;
   padding: 15px;
   margin: 10px 0px;
   border: none;
@@ -146,9 +151,9 @@ select {
 }
 
 #btn_cont {
-  background-color: #4caf50;
+  background-color: dodgerBlue;
   width: 100%;
-  color: black;
+  color: white;
   padding: 15px;
   border: none;
   cursor: pointer;
@@ -156,8 +161,3 @@ select {
 }
 
 
-
-/* change color to white */
-::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-}

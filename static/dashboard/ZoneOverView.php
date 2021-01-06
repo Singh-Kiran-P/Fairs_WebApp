@@ -45,10 +45,8 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
 
       //process info
       $outHTML_Info = '';
-      $outHTML_Info .=   'Title';
-      $outHTML_Info .=   '<input type="text" placeholder="Name" value="' . _e($zone['title']) . '" disabled>';
-      $outHTML_Info .=   'Location';
-      $outHTML_Info .=   ' <input type="text" placeholder="Username" value="' . _e($zone['location']) . '" disabled>';
+      $outHTML_Info .=   '<p class="input_line">Title: ' . _e($zone['title']) . '</p>';
+      $outHTML_Info .=   '<p class="input_line">Location: ' . _e($zone['location']) . '</p>';
       $outHTML_Info .=   ' <input type="hidden" placeholder="Username" value="' . _e($zone['zoneId']) . '" name="zoneId" >';
 
       // procces attractions
@@ -63,7 +61,7 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
 
 
       $outHTML_Info .= $outHTML_Attraction;
-      $outHTML_Info .= 'Description';
+      $outHTML_Info .= 'Description:';
 
 
       //show more information
@@ -174,9 +172,10 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
       <?php echo $outHTML_Video; ?>
 
       <!-- Zone Time slots info -->
-      <H1>Overview time slots</H1>
+      <br>
       <?php if ($_SESSION['type'] == 'city') {
         //drop box Dates
+        echo '      <H2>Overview time slots:</H2>        ';
         echo '<select name="date" class="dropBox_Dates" onchange="showTimeSlotByDate(this.value)">';
         echo '<option value="">Select a Date:</option>';
         echo $dateSlectorHTML;

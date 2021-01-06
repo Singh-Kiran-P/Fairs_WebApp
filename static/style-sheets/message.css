@@ -3,6 +3,7 @@
 
 .content {
   flex-direction: column;
+  overflow: visible;
 }
 /* Contacts -----------------------------------------------------------*/
 .contacts {
@@ -19,6 +20,8 @@
   border: none;
   cursor: pointer;
   width: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
 
 .dropbtn:hover,
@@ -61,7 +64,6 @@
 .messageBox {
   flex: 70%;
   width: 100%;
-  background-color: black;
 }
 
 .messages {
@@ -76,7 +78,6 @@
 
 .sendMessage {
   padding: 7px 9px;
-  background-color: #181a1b;
 }
 
 .sendMessage input {
@@ -107,6 +108,10 @@
 }
 .buttons button {
   padding-right: 20px;
+  height: unset !important;
+  padding: 0 !important;
+  width: unset !important;
+  margin: 0 !important;
 }
 
 button {
@@ -131,6 +136,11 @@ button:active {
 
 button:focus {
   outline: 0;
+}
+#alert-area{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 10px;
+
 }
 
 .bubbleWrapper {
@@ -182,9 +192,6 @@ span.other {
 }
 
 
-#alert-area {
-  background-color: black;
-}
 
 #alert-area .msg {
   margin: 2%;

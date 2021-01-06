@@ -33,10 +33,9 @@
 input,
 .desc {
   margin: 8px 0;
-  width: 70%;
+  width: 100%;
   padding: 12px 20px;
   display: block;
-  box-sizing: border-box;
   word-wrap: break-word;
 }
 
@@ -66,10 +65,12 @@ input,
   padding-left: 15px;
   color: black;
 }
-
+img {
+  border: 2px solid black;
+}
 .Img img {
   margin: 5px;
-  width: 20%;
+  width: 40%;
 }
 
 @media screen and (max-width: 700px) {

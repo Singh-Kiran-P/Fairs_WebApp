@@ -19,7 +19,7 @@ function checkWaitingList() {
         // msg.delay(5).setContent(element['fairTitle'] + ' has ' + element['open'] + ' open spots!');
         var d = document.createElement('div');
         d.className = "msg";
-        d.innerHTML = element['fairTitle'] + ' has ' + element['open'] + ' open spots!';
+        d.innerHTML = '!  Fair: ' + element['fairTitle'] + ' has ' + element['open'] + ' open spots, Book it before its to late  !';
 
         var alert_area = document.getElementById("alert-area");
         alert_area.appendChild(d);

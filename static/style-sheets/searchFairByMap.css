@@ -28,7 +28,7 @@
   padding-top: 30px;
 }
 .search {
-  width: 60%;
+  width: 80%;
   margin: auto;
 }
 .mainCol input,
@@ -51,26 +51,30 @@ a{
 }
 
 #btn {
-  background-color: #4caf50;
+  text-decoration: none;
+  height: 4em;
+  width: 30%;
   display: block;
-  width: 20%;
-  color: black;
-  padding: 15px;
-  margin: 10px 0px;
-  border: none;
+  padding: 2%;
+  margin: 1em auto;
+  background-color: #4784ff;
+  color: white;
   cursor: pointer;
-  font-size: medium;
+  border: none;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
 
 /* ------------------ MapBox -------------------- */
 
-.mapboxgl-popup-content {
-  background-color: #141516 !important;
-}
 .mapboxgl-popup-content a {
   font-weight: bold;
   font-size: 16px;
-  color: #9ba5e8;
+  color: #5a3fc0;
 }
 
 .suggestions {

@@ -14,6 +14,8 @@
   overflow: auto;
 }
 
+
+
 .reviewFrom textarea,
 input {
   border: none;
@@ -27,16 +29,18 @@ input {
 }
 .reviewFrom button {
   float: right;
-  padding-top: 15px;
-  padding-right: 22%;
+  padding-top: 10px;
+  padding-right: 7%;
+  margin: 0 !important;
+  width: 0 !important;
 }
+
+
 .reviewFrom i {
   font-size: 40px;
 }
 
-.info {
-  padding-left: 20%;
-}
+
 .info p {
   padding-left: 3%;
 }
@@ -81,10 +85,11 @@ input,
 textarea,
 .content a {
   margin: 8px 0;
-  width: 80%;
+  width: 100%;
   padding: 12px 20px;
   /*   display: block;*/
   box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .fa {
@@ -99,4 +104,5 @@ textarea,
   .side input {
     width: 80%;
   }
+
 }

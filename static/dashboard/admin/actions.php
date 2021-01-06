@@ -52,7 +52,7 @@ if (isset($_GET['title']) && isset($_GET['type'])) {
 
     //make Fair HTML
     $allFairs = $admin->getAllFairs($title);
-    $outFair = 'Fairs:';
+    $outFair = '<p>Fairs:</p>';
     if (count($allFairs) == 0)
       $outFair .= '<p class="noData">No data found!</p>';
     else {
@@ -118,7 +118,7 @@ if (isset($_GET['title']) && isset($_GET['type'])) {
 
       <div class="search">
         <center>
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET" class="content" id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET"  id="form" onsubmit="return validateForm()" enctype='multipart/form-data'>
             <div class="searchBox">
               <input type="text" name="title" max="49" placeholder="Search.." value="" onkeyup="showResult(this.value)" autocomplete="off">
               <select name="type" id="">

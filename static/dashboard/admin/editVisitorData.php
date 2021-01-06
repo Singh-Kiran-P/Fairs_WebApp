@@ -35,6 +35,10 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
     if ($res != '') { //error
       $errorMsg = $res;
     } else {
+      $name = $_POST['name'];
+      $username = $data['username'];
+      $email = $_POST['email'];
+      $createdOn = $data['created_on'];
       $errorMsg = "Updated successfully";
     }
   }
@@ -125,8 +129,8 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
           </div>
 
           <div class="row sendBtn">
-            <input class="btn_delete" type="submit" name="update" value="Update">
-            <input class="btn_submit" type="submit" name="delete" value="Delete">
+            <button class="btn_delete" type="submit" name="update" value="Update">Update</button>
+            <button class="btn_submit" type="submit" name="delete" value="Delete">Delete</button>
           </div>
         </form>
         <p id="error">

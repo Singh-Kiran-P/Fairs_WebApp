@@ -105,23 +105,18 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
       </select>
     </div>
     <div class="info">
-      <center>
-        <input type="hidden" name="fairId" value="<?php echo $fairId; ?>">
-        Title
-        <input type="text" placeholder="Name" value="<?php echo $title; ?>" disabled>
-        Start Date
-        <input type="text" placeholder="Email" value="<?php echo $start_date; ?>" disabled>
-        End Date
-        <input type="text" placeholder="Type" value="<?php echo $end_date; ?>" disabled>
-        Opening Hour <input type="text" placeholder="Telephone" value="<?php echo $opening_hour; ?>" disabled>
-        Closing Hour <input type="text" placeholder="Username" value="<?php echo $closing_hour; ?>" disabled>
-        Location
-        <input type="text" placeholder="Username" value="<?php echo $location; ?>" disabled>
-        Description
-        <div class="desc long">
-          <?php echo $outHTML_desc; ?>
-          <button id="btn_More">Read more</button>
-        </div>
+      <input type="hidden" name="fairId" value="<?php echo $fairId; ?>">
+      <p>Title: <?php echo $title; ?></p>
+      <p> Start Date: <?php echo $start_date; ?></p>
+      <p> End Date: <?php echo $end_date; ?></p>
+      <p> Opening Hour: <?php echo $opening_hour; ?></p>
+      <p>Closing Hour: <?php echo $closing_hour; ?></p>
+      <p> Location: <?php echo $location; ?></p>
+      Description:
+      <div class="desc long">
+        <?php echo $outHTML_desc; ?>
+        <button id="btn_More">Read more</button>
+      </div>
       </center>
     </div>
 

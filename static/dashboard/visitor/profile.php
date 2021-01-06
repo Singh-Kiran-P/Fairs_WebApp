@@ -182,22 +182,14 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       <a class="messaging_btn" href="message.php"><span> <i class="fa fa-comments" aria-hidden="true"></i></span></a>
 
       <div class="mainCol1 g">
-        <center>
-          Name:
-          <input type="text" placeholder="Name" value="<?php echo $name; ?>" disabled>
-          Email:
-          <input type="text" placeholder="Email" value="<?php echo $email; ?>">
+        <div class="info">
+        <p>Name: <?php echo $name; ?> </p>
+        <p>Email: <?php echo $email; ?> </p>
 
 
-        </center>
-      </div>
-      <div class="mainCol2 b">
-        <center>
-          Username:
-          <input type="text" placeholder="Username" value="<?php echo $username; ?>">
-          Type:
-          <input type="text" placeholder="Type" value="<?php echo $type; ?>" disabled>
-        </center>
+        <p>Username: <?php echo $username; ?> </p>
+        <p>Type: <?php echo $type; ?> </p>
+        </div>
         <div id="alert-area">
           <p <?php if ($OUTHTML_MSG == "") echo "class='hidden'"; ?>>Meldingen: <a class="fl-right m-r" href="../../../server/dashboard/visitor/deleteNotification.php?id=">All X</a></p>
           <?php echo $OUTHTML_MSG; ?>

@@ -93,6 +93,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         <!-- search location filter -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get">
           <input type="text" name="location" id="" placeholder="Location ez. 'Hasselt' or 3500" value="" />
+          <br>
           <select name="filter" id="">
             <option value="closest">Filter On:</option>
             <option value="closest">closest</option>

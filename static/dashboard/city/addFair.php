@@ -75,6 +75,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         <textarea type="" name="desc" placeholder="Give a short discription about this fair" form="form" required><?php if (isset($_POST['desc'])) echo _e($_POST['desc']); ?></textarea>
 
         <h5> (only JPG, JPEG, PNG & GIF files are allowed Max 5mb )</h5>
+        <label for="files">Images:</label>
         <input type="file" name="file[]" class="inputfile" value="<?php if (isset($_POST['file'])) echo _e($_POST['file']); ?>" multiple>
         <div>
           <div class="sidebyside">

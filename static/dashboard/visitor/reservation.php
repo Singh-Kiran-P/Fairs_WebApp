@@ -36,8 +36,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       $reservationPeople = $_POST['nOfPeople'];
 
       $msg = $reservation->checkSpot($_SESSION['zoneId'], $reservationDate, $reservationTimeSlot, $reservationPeople);
-      if ($msg['msg'] == "") {
-        if (isset($_POST['submit'])) { // enough place
+      if ($msg['msg'] == "") { // enough place
+        if (isset($_POST['submit'])) {
           $out = $reservation->updateZoneslot($msg['zoneslot_id'], $reservationPeople, false);
           if ($out['msg'] == "") {
             //booking
@@ -45,11 +45,11 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
             if ($out['msg'] == "")
               header('Location: ' . "profile.php");
           }
-        } else { // not enough place, add user to a waiting list
-          if (isset($msg['zoneslot_id'])) {
-            $zoneslot_id = $msg['zoneslot_id'];
-            $msg['msg'] .= $reservation->addToWaitingList($zoneslot_id, $_SESSION['userId'])['msg'];
-          }
+        }
+      } else { // not enough place, add user to a waiting list
+        if (isset($msg['zoneslot_id'])) {
+          $zoneslot_id = $msg['zoneslot_id'];
+          $msg['msg'] .= $reservation->addToWaitingList($zoneslot_id, $_SESSION['userId'])['msg'];
         }
       }
     }

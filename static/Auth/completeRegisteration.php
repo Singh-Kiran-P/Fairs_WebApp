@@ -74,7 +74,7 @@ if (isset($_POST['submit']) && isset($_GET['userId'])) {
 
 
             <input name="isset" value="set" class="hidden">
-            <input type="submit" value="Confirm" name="submit">
+            <button type="submit"  name="submit">Confirm</button>
           </form>
           <p id="error">
             <?php

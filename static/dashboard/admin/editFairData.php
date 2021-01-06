@@ -170,8 +170,8 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
           </div>
 
           <div class="row sendBtn">
-            <input class="btn_delete" type="submit" name="update" value="Update">
-            <input class="btn_submit" type="submit" name="delete" value="Delete">
+          <button class="btn_delete" type="submit" name="update" value="Update">Update</button>
+            <button class="btn_submit" type="submit" name="delete" value="Delete">Delete</button>
           </div>
         </form>
         <p id="error">

@@ -9,7 +9,7 @@
   padding-left: 12%;
 }
 
-.searchBox input {
+.searchBox input  {
   height: 40px;
   width: 92%;
   border: 1px solid #34383a;
@@ -19,17 +19,27 @@
   background-color: #34383a;
   color: white;
 }
+a{
+  text-decoration: none;
+  color: Blue;
+  font-weight: bold;
+}
 
+p{
+  font-weight: bold;
+
+}
 .searchBox {
   display: flex;
   flex: 100%;
   flex-direction: row;
+  margin-top: 8%;
 }
 
 .searchBox select {
   display: flex;
   flex-direction: row;
-  color: black;
+  color: white;
   font-size: 14px;
   font-weight: bold;
   background-color: dodgerblue;
@@ -48,4 +58,11 @@
 .results ul,
 .noData {
   margin-left: 10%;
+}
+
+#btn{
+  width: unset !important;
+  height: unset !important;
+  padding: 5px;
+  margin: unset !important;
 }

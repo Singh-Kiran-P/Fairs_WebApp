@@ -6,9 +6,6 @@
   max-width: 100% !important;
 }
 
-.striped-border {
-  border-bottom: 1px dashed #000;
-}
 
 .menu-icon {
   font-size: "100px";
@@ -26,7 +23,7 @@
 }
 
 .striped-border {
-  border-bottom: 1px dashed #000;
+  margin-top: 20px;
 }
 
 /* Content Image for the site */

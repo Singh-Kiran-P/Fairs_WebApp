@@ -68,23 +68,18 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         echo "<img class='topImg' src='/~kiransingh/project/server/uploads/profile_img/$fileName' alt='Profile foto'>"
         ?>
       </div>
-      <center>
-        Name
-        <input type="text" placeholder="Name" value="<?php echo $name; ?>" disabled>
-        Email
-        <input type="text" placeholder="Email" value="<?php echo $email; ?>" disabled>
-        Type
-        <input type="text" placeholder="Type" value="<?php echo $type; ?>" disabled>
-        Telephone Number
-        <input type="text" placeholder="Telephone" value="<?php echo $telephone; ?>" disabled>
-        Username
-        <input type="text" placeholder="Username" value="<?php echo $username; ?>" disabled>
+      <article class="info">
+        <p>Name: <?php echo $name; ?></p>
+        <p><?php echo $email; ?></p>
+        <p>Type: <?php echo $type; ?></p>
+        <p>Telephone Number: <?php echo $telephone; ?></p>
+        <p>Username: <?php echo $username; ?></p>
         Description
         <div class="desc">
           <?php echo $outHTML_desc; ?>
           <button id="btn_More">Read more</button>
         </div>
-      </center>
+      </article>
     </div>
   </div>
 

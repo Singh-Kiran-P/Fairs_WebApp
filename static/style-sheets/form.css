@@ -17,7 +17,6 @@
 /* .flexbox  container */
 .flexbox {
   display: flex;
-  width: 80%;
   margin: auto;
   flex-wrap: wrap;
 }
@@ -49,12 +48,12 @@ textarea {
   padding: 12px 20px;
   display: block;
   box-sizing: border-box;
+  border: 2px solid black;
 }
 
 .date_time {
   margin: 8px 0 !important;
-  width: 70% !important;
-  border: 1px solid white !important;
+  border: 2px solid black !important;
   display: block !important;
 }
 
@@ -71,22 +70,7 @@ button:hover {
   opacity: 0.7;
 }
 
-/* change color to white */
-::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-}
 
-::-webkit-datetime-edit-day-field {
-  color: white;
-}
-
-::-webkit-datetime-edit-year-field {
-  color: white;
-}
-
-::-webkit-datetime-edit-month-field {
-  color: white;
-}
 
 @media screen and (max-width: 700px) {
   .content {

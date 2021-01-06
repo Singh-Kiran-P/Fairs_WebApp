@@ -166,22 +166,23 @@ if (($_SESSION['type'] == "visitor" || $_SESSION['type'] == "city") && isset($_S
           <button id="btn_More">Read more</button>
         </div>
 
-        <!-- Zone Time slots info -->
-        <?php if ($_SESSION['type'] == 'city') {
-          //drop box Dates
-          echo '<select name="date" class="dropBox_Dates" onchange="showTimeSlotByDate(this.value)">';
-          echo '<option value="">Select a Date:</option>';
-          echo $dateSlectorHTML;
-          echo '</select>';
-        }
-        ?>
+
       </center>
 
 
       <!-- show video -->
       <?php echo $outHTML_Video; ?>
 
-
+      <!-- Zone Time slots info -->
+      <H1>Overview time slots</H1>
+      <?php if ($_SESSION['type'] == 'city') {
+        //drop box Dates
+        echo '<select name="date" class="dropBox_Dates" onchange="showTimeSlotByDate(this.value)">';
+        echo '<option value="">Select a Date:</option>';
+        echo $dateSlectorHTML;
+        echo '</select>';
+      }
+      ?>
       <!-- show reviews -->
       <center>
         <?php

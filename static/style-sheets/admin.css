@@ -1,8 +1,6 @@
 @import "basic.css";
 
-* {
-  color: black;
-}
+
 
 .mainCol {
   flex: 90%;

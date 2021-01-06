@@ -1,13 +1,17 @@
 @import "basic.css";
 
 .content {
-  flex: 50%;
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  flex-direction: column;
-  /* background-color: #1b4958; */
-  background-color: #141516;
+  margin: 0 auto;
+  padding: 50px;
+  max-width: 800px;
+  width: calc(100% - 200px);
+  background-color: #fff;
+  color: black;
+  box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: left;
+  display: block;
+  overflow: auto;
 }
 
 .reviewFrom textarea,

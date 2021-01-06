@@ -2,12 +2,8 @@
 
 /* Column container */
 .content {
-  display: flex;
-  width: 80%;
-  margin: auto;
-  flex-wrap: wrap;
-  background-color: #141516;
-
+  width: 60% !important;
+  max-width: 100% !important;
 }
 
 .striped-border {
@@ -22,7 +18,6 @@
 
 /* Main column */
 .main {
-  background-color: #141516;
   padding: 20px;
 }
 

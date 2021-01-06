@@ -51,15 +51,25 @@ input,
 }
 
 .mainCol1 {
+  flex: 90%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
   /*   background-color: #1b4958; */
-  background-color: #141516;
+  background-color: white;
   padding-bottom: 20px;
   padding-top: 30px;
 }
 .mainCol2 {
-  flex: 50%;
-  /* background-color: #1b4958; */
-  background-color: #141516;
+  flex: 90%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  /*   background-color: #1b4958; */
+  background-color: white;
+  padding-bottom: 20px;
   padding-top: 30px;
 }
 
@@ -86,16 +96,6 @@ input,
   padding: 10px;
 }
 
-button {
-  background-color: #4caf50;
-  width: 100%;
-  color: #141516;
-  padding: 15px;
-  margin: 10px 0px;
-  border: none;
-  cursor: pointer;
-}
-
 #linkinnotification {
   color: dodgerBlue !important;
 }
@@ -103,7 +103,7 @@ button {
 .notifications {
   margin-top: 0;
   /*   background-color: #1b4958; */
-  background-color: #141516;
+
   margin-bottom: 20px;
   min-width: 100px;
 }

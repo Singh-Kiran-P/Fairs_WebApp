@@ -63,7 +63,7 @@ if (isset($_POST['isset'])) {
             <input class="text" max="254" type="email" placeholder="Enter Email" name="email" value="<?php if (isset($_POST['email'])) echo _e($_POST['email']); ?>" required>
             <input class="text" max="254" type="password" placeholder="Enter Password" name="password" required>
             <input class="text" max="254" type="password" placeholder="ReEnter Password" name="password2" required>
-            Soort gebruiker: <select name="type" name="type" class="form-control" required>
+            <label for="type">Type: </label> <select name="type" name="type" class="form-control" required>
               <option value="visitor">Visitor</option>
               <option value="city">City</option>
             </select> <br>

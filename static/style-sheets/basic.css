@@ -21,7 +21,7 @@ body {
 
 * {
   box-sizing: border-box;
-  color: white;
+  /* color: white; */
   /* word-wrap: break-word; */
 }
 
@@ -57,21 +57,22 @@ input,
 textarea,
 select,
 .desc {
-  background-color: #181a1b;
   border: 2px solid #4a4a4a;
 }
 
 table,
 th {
   border-collapse: collapse;
-  background-color: #181a1b;
-  border: 2px solid #282b2c;
   padding: 15px;
+}
+
+th {
+  background-color: dodgerblue;
+  color: white;
 }
 
 tr,
 td {
-  background-color: #282b2c;
   padding: 10px;
   text-align: center;
   width: 25%;
@@ -83,10 +84,10 @@ input:disabled {
 
 /* Style the body */
 body {
-  font-family: Arial;
-  margin: 0;
+  /* font-family: Arial; */
+  /* margin: 0; */
   /* position: relative; */
-  min-width: 400px;
+  /* min-width: 400px; */
 
   /* background: rgb(119, 83, 235);
   background: radial-gradient(
@@ -94,10 +95,20 @@ body {
     rgba(119, 83, 235, 1) 35%,
     rgba(66, 100, 251, 1) 100%
   ); */
-  background-color: #282b2c;
+  /* background-color: #282b2c; */
 
   /* background-image: url("../img/bgImg.jpg"); */
-  background-size: 100%;
+  /* background-size: 100%; */
+
+  margin: 0;
+  padding: 0;
+  background-color: #efefef;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  color: #ccc;
+  letter-spacing: 1px;
+  line-height: 1.9;
+  font-weight: 300;
 }
 
 /* Header/logo Title */
@@ -131,12 +142,24 @@ header {
 
 /* Column container */
 .content {
-  display: flex;
+  /* display: flex;
   width: 60%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
+
+  margin: 0 auto;
+  padding: 50px;
+  max-width: 800px;
+  width: calc(100% - 200px);
+  background-color: #fff;
+  color: black;
+  box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: left;
+  display: block;
+  overflow: auto;
 }
 
 img {
@@ -153,7 +176,11 @@ img {
   width: 60px;
   margin: 0;
 }
+label{
+  width: 300px;
+  text-align: left;
 
+}
 .l3 {
   margin-right: 20px;
 }
@@ -202,6 +229,44 @@ img {
   bottom: 0;
   width: 100%;
   background: #ddd;
+}
+
+button {
+  text-decoration: none;
+  height: 4em;
+  width: 100%;
+
+  padding: 2%;
+  margin: 1em auto;
+  background-color: #4784ff;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form {
+  display: block;
+}
+.form input {
+  display: block;
+  height: 2em;
+  width: 100%;
+  margin-bottom: 2%;
+  color: black;
+}
+
+.center {
+  text-align: center;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  font-weight: bold;
 }
 
 /* Custom scroll-bar */

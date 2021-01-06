@@ -46,15 +46,12 @@ if (isset($_POST['isset'])) {
       <div id="form">
         <center>
           <h1>Login</h1>
-          <label class="hidden" for="email">Enter your email address Or Username:</label>
-          <label class="hidden" for="password">Enter your password:</label>
-          <label class="hidden" for="rememberMe">Remember you?:</label>
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <input class="text" max="254" type="text" placeholder="Enter email or Username" name="email" id="email" required>
             <input class="text" max="254" type="password" placeholder="Enter Password" name="password" id="password" required>
             <input name="isset" class="hidden">
             <button type="submit" id="btn">Login</button>
-            Forgot <a href="forgetPassword.php"> password? </a>
+            <a href="forgetPassword.php">Forgot Password? </a>
           </form>
           <p id="error">
             <?php

@@ -1,15 +1,21 @@
 @import "basic.css";
 .content {
   /* background-color: #1b4958; */
+  margin: 0 auto;
+  padding: 50px;
+  max-width: 800px;
+  width: calc(100% - 200px);
+  background-color: #fff;
+  color: black;
+  box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: left;
   display: block;
-  margin-top: 0;
-  width: 80%;
-  background-color: #141516;
+  overflow: auto;
 }
 
 .zoneTimeslotstable {
   width: 100%;
-  background-color: #141516;
   margin-bottom: 200px;
 }
 .desc {
@@ -32,15 +38,6 @@ input,
   display: block;
   box-sizing: border-box;
   word-wrap: break-word;
-}
-button {
-  background-color: #4caf50;
-  width: 100%;
-  color: black;
-  padding: 15px;
-  margin: 10px 0px;
-  border: none;
-  cursor: pointer;
 }
 
 .Img,

@@ -1,8 +1,5 @@
 @import "basic.css";
 
-* {
-  color: white;
-}
 
 /* navbar customs */
 .mostRight {
@@ -24,11 +21,17 @@
 
 /* Column container */
 .content {
-  display: flex;
-  width: 50%;
-  margin: auto;
-  flex-wrap: wrap;
-  background-color: #141516;
+  margin: 0 auto;
+  padding: 50px;
+  max-width: 800px;
+  width: calc(100% - 200px);
+  background-color: #fff;
+  color: black;
+  box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: left;
+  display: block;
+  overflow: auto;
 
 }
 
@@ -59,16 +62,28 @@ button,
   box-sizing: border-box;
 }
 .content{
-  margin-bottom: 10%;
+  margin: 0 auto;
+  padding: 50px;
+  max-width: 800px;
+  width: calc(100% - 200px);
+  background-color: #fff;
+  color: black;
+  box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: left;
+  display: block;
+  overflow: auto;
 }
 .mainCol1 {
-  flex: 50%;
+  flex: 90%;
   display: flex;
   justify-content: center;
-  height: 100%;
+  flex-wrap: wrap;
   flex-direction: column;
-  /* background-color: #1b4958; */
-  background-color: #141516;
+  /*   background-color: #1b4958; */
+  background-color: white;
+  padding-bottom: 20px;
+  padding-top: 30px;
 }
 
 
@@ -97,7 +112,17 @@ select {
 
   /* Column container */
   .content {
-    width: 80%;
+    margin: 0 auto;
+    padding: 50px;
+    max-width: 800px;
+    width: calc(100% - 200px);
+    background-color: #fff;
+    color: black;
+    box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    text-align: left;
+    display: block;
+    overflow: auto;
   }
 
   .sidebyside input,

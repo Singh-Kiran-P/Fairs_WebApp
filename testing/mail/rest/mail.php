@@ -17,7 +17,7 @@ $mail->Host       = "smtp.gmail.com";
 $mail->Username   = "smart.iot.singh@gmail.com";
 $mail->Password   = "FA4UpyL3y9naQwH";
 $mail->IsHTML(true);
-$mail->AddAddress("bram.droogmans@student.uhasselt.be", "recipient-name");
+$mail->AddAddress("kiran.singh@student.uhasselt.be", "recipient-name");
 $mail->SetFrom("from-email@gmail.com", "from-name");
 $mail->AddReplyTo("reply-to-email@domain", "reply-to-name");
 $mail->AddCC("cc-recipient-email@domain", "cc-recipient-name");

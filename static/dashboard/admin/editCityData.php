@@ -35,14 +35,20 @@ if (!(isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['typ
       'username' => $data['username'],
       'email' => $_POST['email'],
       'telephone' => $_POST['telephone'],
-      'createdOn' =>  $data['createdOn'],
+      'createdOn' =>  $data['created_on'],
       'description' => $_POST['description']
     ];
 
-    $res = $admin->updateCityData($cityId, $data);
+    $res = $admin->updateCityData($cityId, $dataUpdated);
     if ($res != '') { //error
       $errorMsg = $res;
     } else {
+      $name = $dataUpdated['name'];
+      $username = $dataUpdated['username'];
+      $email = $dataUpdated['email'];
+      $createdOn = $data['created_on'];
+      $description = $data['short_description'];
+      $telephone = $dataUpdated['telephone'];
       $errorMsg = "Updated successfully";
     }
   }

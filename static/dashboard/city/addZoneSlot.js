@@ -4,7 +4,7 @@ function validateFormSlots() {
 
   var error = document.getElementById("error");
 
-  return checkTime(openingHour, closingHour, error);
+  return checkTime(openingSlot, closingSlot, error);
 }
 
 

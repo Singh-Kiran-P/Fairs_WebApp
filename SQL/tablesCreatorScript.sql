@@ -10,7 +10,7 @@ CREATE TABLE accounts (
   type VARCHAR (30) NOT NULL,
   created_on TIMESTAMP NOT NULL,
   active boolean DEFAULT 'f',
-  activation_hash VARCHAR (255) UNIQUE,
+  activation_hash VARCHAR (255) UNIQUE
 );
 
 -- Reset Password------------------------------------------------

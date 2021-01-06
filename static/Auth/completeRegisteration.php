@@ -1,15 +1,15 @@
 <?php
 session_start();
-
+$res=  '';
 include '../../server/classes/class.accounts.php';
 include '../../server/classes/class.upload.php';
 include '../../server/config/config.php';
-if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
+if (isset($_POST['submit']) && isset($_GET['userId'])) {
   $telephone = htmlspecialchars($_POST['telephone']);
   $desc = htmlspecialchars($_POST['desc']);
   $fileToUpload = $_FILES['fileToUpload'];
 
-  $userId = $_SESSION['userId'];
+  $userId = $_GET['userId'];
 
   //Login as visitor to set the gernal variable
   $user = new Accounts();
@@ -33,7 +33,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
       $res = "upload was unsuccessfull";
 
     if ($res == "true") {
-      header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
+      $res = "We have send a verification email, please check your email.";
     } else {
       $errorMsg = $res;
     }
@@ -66,7 +66,7 @@ if (isset($_POST['submit']) && isset($_SESSION['userId'])) {
       <div id="form" class="completeRegisteration">
         <center>
           <h1> Complete Registeration </h1>
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" id="usrform" onsubmit="return validateForm()">
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?userId=<?php if (isset($_GET['userId'])) echo $_GET["userId"]; ?>" method="post" enctype="multipart/form-data" id="usrform" onsubmit="return validateForm()">
             <input type="text" name="telephone" placeholder="Telephone" required>
             <textarea type="" name="desc" placeholder="Give a short discription of your city" form="usrform" required></textarea>
             Select image to upload: <input type="file" name="fileToUpload" id="fileToUpload" required>

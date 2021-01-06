@@ -37,13 +37,15 @@
 
 .results {
   margin-top: 5%;
+  text-align: left;
+  width: 100%;
 }
 
-.noData{
+.noData {
   width: 100%;
 }
 
 .results ul,
 .noData {
-  margin-left: 65%;
+  margin-left: 10%;
 }

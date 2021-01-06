@@ -21,9 +21,7 @@ if (isset($_POST['isset'])) {
     $out = $res['msg'];
 
     if ($res['val'] == true && $type == "city") {
-      header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/completeRegisteration.php');
-    } else if ($res['val'] == true && $type == "visitor") {
-      header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/login.php');
+      header('Location: ' . $rootURL . '/~kiransingh/project/static/Auth/completeRegisteration.php?userId=' . $res['userId']);
     }
   }
 }

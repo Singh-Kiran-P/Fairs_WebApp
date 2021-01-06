@@ -19,7 +19,6 @@ class Mail
     $this->_mail = new PHPMailer();
     $this->_mail->IsSMTP();
     $this->_mail->Mailer = "smtp";
-    $this->_mail->SMTPDebug  = 1;
     $this->_mail->SMTPAuth   = TRUE;
     $this->_mail->SMTPSecure = "tls";
     $this->_mail->Port       = 587;

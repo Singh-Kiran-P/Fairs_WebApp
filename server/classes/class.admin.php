@@ -58,7 +58,7 @@ class Admin
       $conn = Database::connect();
 
       /* Update Accounts table */
-      $query = $conn->prepare("UPDATE accounts SET name=:name,username=:username,email=:email WHERE user_id=:id and type='city'");
+      $query = $conn->prepare("UPDATE accounts SET name=:name,username=:username,email=:email WHERE user_id=(select user_id from city where city_id=:id) and type='city'");
 
       $query->bindParam(":id", $cityId, PDO::PARAM_STR, 255);
       $query->bindParam(":name", $data['name'], PDO::PARAM_STR, 255);

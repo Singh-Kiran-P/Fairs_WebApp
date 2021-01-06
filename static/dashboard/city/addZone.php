@@ -83,7 +83,8 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         $Msg = $fair->addZoneSlot($z['zone_id'], $openingSlot, $closingSlot, $z['freeSlots'], $fairModel->getVar());
       }
       $errorMsg .= '<br>' . "Zone Slot added successfully.";
-      $outHTML_SAVE = '<div id="btn"><a  id="btn" href="listOfFair.php">All Fairs</a></div>';
+      $outHTML_SAVE .= '<div id="btn"><a  id="btn" href="addZone.php">Add new Zone</a></div>';
+      $outHTML_SAVE .= '<div id="btn"><a  id="btn" href="listOfFair.php">All Fairs</a></div>';
     } else
       $errorMsg .= '<br>' . $Msg;
 

@@ -340,8 +340,8 @@ class Accounts
         //send verification
         $this->sendConfirmationMail($email, $activationHash);
         // Login the registered user, to get the identity and making session variables
-        $this->login($email, $password);
-        return ['msg' => "We have send a verification email, please check your email.", 'val' => false];
+        // $this->login($email, $password);
+        return ['msg' => "We have send a verification email, please check your email.", 'val' => true, 'userId' => $conn->lastInsertId()];
       } else {
         return ['msg' => $conn->errorInfo()[2], 'val' => false];
       }

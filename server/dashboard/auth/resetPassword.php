@@ -27,7 +27,7 @@ if (isset($_GET['token']) && isset($_GET['email'])) {
       $res = $acc->resetPassword($email, $token, $p1);
       if ($res == true) {
         //redirect back to login page
-        header("Location: ../../../static/dashboard/auth/login.php");
+        header("Location: ../../../static/Auth/login.php");
       } else
         $error = "Failed to reset password, try again later!";
     }

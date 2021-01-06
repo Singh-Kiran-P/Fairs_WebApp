@@ -16,30 +16,30 @@ class Mail
     // get the env variables
     require __DIR__ . '/../config/config.php';
 
-    $this->_mail = new PHPMailer(); // create a new object
-    $this->_mail->IsSMTP(); // enable SMTP
-    // $this->_mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
-    $this->_mail->Host = $stmpHost;
-    $this->_mail->Port = 587; // or 587
+    $this->_mail = new PHPMailer();
+    $this->_mail->IsSMTP();
+    $this->_mail->Mailer = "smtp";
+    $this->_mail->SMTPDebug  = 1;
+    $this->_mail->SMTPAuth   = TRUE;
+    $this->_mail->SMTPSecure = "tls";
+    $this->_mail->Port       = 587;
+    $this->_mail->Host       = "smtp.gmail.com";
+    $this->_mail->Username   = "smart.iot.singh@gmail.com";
+    $this->_mail->Password   = "FA4UpyL3y9naQwH";
     $this->_mail->IsHTML(true);
-    $this->_mail->SMTPAuth = true; // Enable SMTP authentication
-    $this->_mail->SMTPAutoTLS = false;
-    $this->_mail->SMTPSecure = false; // Enable TLS encryption, `ssl` also accepted
-    $this->_mail->Username = $username_email;
-    $this->_mail->Password = $password_email;
-    $this->_mail->SetFrom($emailFrom);
   }
 
   public function sendEmail($to, $subject, $body)
   {
-    $this->_mail->Subject = $subject;
-    $this->_mail->Body = $body;
-    $this->_mail->AddAddress($to);
 
+    $this->_mail->AddAddress($to, "");
+    $this->_mail->SetFrom("smart.iot.singh@gmail.com", "Singh Kiran");
+    $this->_mail->Subject = $subject;
+    $this->_mail->MsgHTML($body);
     if (!$this->_mail->Send()) {
-      echo "Mailer Error: " . $this->_mail->ErrorInfo;
+      return "Error sending email";
     } else {
-      echo "Message has been sent";
+      return "Email sent successfully";
     }
   }
 }

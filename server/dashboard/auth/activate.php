@@ -6,7 +6,7 @@ $success = '';
 if (isset($_GET['activationHash'])) {
   $acc = new Accounts();
   $userId = $acc->_checkIfActivationHashIsValid($_GET['activationHash']);
-  if ($res != null) {
+  if ($userId != null) {
     $acc->activateAccount($userId);
     $success = "Account successfully activated!";
     $error = "";
@@ -29,7 +29,7 @@ if (isset($_GET['activationHash'])) {
     <h1>
       <?php echo $error; ?>
     </h1>
-    <a href="">Go to Home page</a>
+    <a href="../../../static/Auth/login.php">Go to Home page</a>
 
   </article>
 

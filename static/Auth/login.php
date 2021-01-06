@@ -54,7 +54,7 @@ if (isset($_POST['isset'])) {
             <input class="text" max="254" type="password" placeholder="Enter Password" name="password" id="password" required>
             <input name="isset" class="hidden">
             <button type="submit" id="btn">Login</button>
-            Forgot <a href="#"> password? </a>
+            Forgot <a href="forgetPassword.php"> password? </a>
           </form>
           <p id="error">
             <?php

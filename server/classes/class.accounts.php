@@ -109,6 +109,9 @@ class Accounts
 
       if ($queryUser->rowCount() > 0) {
         $row = $queryUser->fetch(PDO::FETCH_ASSOC);
+        if ($row['active'] == false)
+          return  ["msg" => "Please check your email for activation!", "vaild" => false];
+
         if (password_verify($password, $row['password'])) {
           /* Call the login helper */
           $redirectTo = $this->_login($row);
@@ -150,6 +153,23 @@ class Accounts
     return $redirectTo;
   }
 
+  public function checkIfEmailInDatabase($email)
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    // check if there is account only using email
+    $queryUser = $conn->prepare("select * from accounts where email=:email");
+    $queryUser->bindParam(":email", $email, PDO::PARAM_STR, 255);
+
+    if ($queryUser->execute()) {
+      if ($queryUser->rowCount() > 0) { //token is valid with this $email
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
    * Send mail to reset password
    *
@@ -158,25 +178,31 @@ class Accounts
    */
   public function sendResetPasswordMail($email)
   {
-    include_once __DIR__ . '/../config/config.php';
-    include_once __DIR__ . '/../config/config.php';
-    $mail = new Mail();
+    require __DIR__ . '/../config/config.php';
 
+    $mail = new Mail();
     $token = md5(uniqid($email, true));
     if ($this->_addResetPasswordTokenToDatabase($token, $email)) {
 
-      $link = $rootURL . "/~kiransingh/project/server/dashboard/auth/activate.php?token=" . $token . "&email" . $email;
+      $link = $rootURL . "/~kiransingh/project/server/dashboard/auth/resetPassword.php?token=" . $token . "&email=" . $email;
       $body =
-        "
+        "<body>
       Hi,
       Someone (hopefully you!) requested a password reset for your account. Click the link below to choose a new password.
-         " .
+      <br>
+      <a href='" .
+        $link
+        . "'>Reset Password</a>
+        <br><br>
+        If the link above not works then copy past this link<br>
+        " .
         $link
         . "
-
+        <br><br>
       If you did not request a password reset, you can simply ignore this message.
       Regards,
       Singh Kiran
+      </body>
 
     ";
       $mail->sendEmail($email, "Request for password recovery", $body);
@@ -234,7 +260,7 @@ class Accounts
     // check if there is account only using email
     $queryUser = $conn->prepare("update accounts set password=:pass where email=:email");
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $queryUser->bindParam(":password", $hashedPassword, PDO::PARAM_STR, 255);
+    $queryUser->bindParam(":pass", $hashedPassword, PDO::PARAM_STR, 255);
     $queryUser->bindParam(":email", $email, PDO::PARAM_STR, 255);
 
     if ($queryUser->execute())
@@ -369,23 +395,29 @@ class Accounts
     require __DIR__ . '/../config/config.php';
     $mail = new Mail();
 
-    $link = $rootURL . "/~kiransingh/project/server/dashboard/auth/activate.php?activationHash=" . $activationHash;
+    $link =   $rootURL . "/~kiransingh/project/server/dashboard/auth/activate.php?activationHash=" . $activationHash;
     $body =
-      "
+      "<body>
     Hello,
 
     Thank you for registering.
 
-    Please click on the link below to activate your account.
+    Please click on the link below to activate your account.<br>
+    <a href='" .
+      $link
+      . "'>Activate account</a>
+      <br><br>
+
+    If the link above not works then copy past this link<br>
     " .
       $link
       . "
-
+      <br><br>
     Best regards,
     Singh Kiran
 
-    ";
-    $mail->sendEmail($email, "Activate account Fairs_Of_Belgium", $body);
+    </body>";
+    $mail->sendEmail($email, "Activate account Fairs Of Belgium", $body);
   }
   /**
    * Checks if activation hash is valid
@@ -406,11 +438,9 @@ class Accounts
 
       if ($queryUser->rowCount() > 0) {
         $row = $queryUser->fetch(PDO::FETCH_ASSOC);
-        if (password_verify($activationHash, $row['email'])) {
-          return $row['user_id'];
-        } else
-          return null;
-      }
+        return $row['user_id'];
+      } else
+        return null;
     }
   }
 

@@ -18,7 +18,7 @@ $mapBoxKey = "pk.eyJ1Ijoia2lyYW5zaW5naCIsImEiOiJja2hhZ2drY2IxZmU4MnBuejQ2ZGVoeGd
 
 
 //email
-$stmpHost = "mail.singh-kiran.educationhost.cloud";
-$username_email = "info@singh-kiran.educationhost.cloud";
-$password_email = "ohh0Choo";
-$emailFrom = "info@singh-kiran.educationhost.cloud";
+$stmpHost = "smtp.gmail.com";
+$username_email = "smart.iot.singh@gmail.com";
+$password_email = "FA4UpyL3y9naQwH";
+$emailFrom = "info@singh.com";

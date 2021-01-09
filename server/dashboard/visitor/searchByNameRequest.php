@@ -17,7 +17,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       $outputHTML .= $out;
     }
   } else {
-    $outputHTML = "No record found";
+    $outputHTML = "No record found<br>";
   }
 
   $listOfFairs = $search->searchByName($title, false);

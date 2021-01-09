@@ -1,3 +1,49 @@
+<?php
+include_once '../server/classes/class.fair.php';
+include_once '../server/classes/class.upload.php';
+$fair = new Fair();
+$outHTML = '';
+// FairModels
+$fairRow = $fair->getAllFairs();
+if ($fairRow != null) {
+  $n = 0;
+  foreach ($fairRow as $f) {
+    if ($n < 2) {
+      $fairInfo = $f->getVar();
+
+      $fairId = $fairInfo['fair_id'];
+      $title = $fairInfo['title'];
+      $desc = $fairInfo['description'];
+      $start_date = $fairInfo['start_date'];
+      $end_date = $fairInfo['end_date'];
+      $opening_hour = $fairInfo['opening_hour'];
+      $closing_hour = $fairInfo['closing_hour'];
+      $location = $fairInfo['location'];
+      $imgCount = $fairInfo['tot_Img'];
+      // process Img
+      $outHTML_Img = "";
+      if ($fairRow != null) {
+        for ($i = 0; $i < $imgCount; $i++) {
+          $toSearchFile = $fairId . "_" . $i;
+          $fairImg = Upload::getUploadedFilePath($toSearchFile, "fair_img");
+          $outHTML_Img .= "<img alt='fair_images' src='../server/uploads/fair_img/" . $fairImg . "'></img>";
+        }
+      }
+
+      $outHTML .= '<div class="info striped-border">';
+      $outHTML .= '<h2>' . $title . '</h2>';
+      $outHTML .= '<div class="img">' . $outHTML_Img . '</div>';
+      $outHTML .= '<p>';
+      $outHTML .= $desc;
+      $outHTML .= '</p>';
+      $outHTML .= '</div>';
+      $n++;
+    }
+  }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,27 +74,9 @@
   <!-- The flexible grid (content) -->
   <div class="content">
     <div class="main">
-      <div class="info striped-border">
-        <h2>PROJECT INFO</h2>
-        <div class="fakeimg">Image</div>
-        <p>Some text..</p>
-        <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco.
-        </p>
-      </div>
-      <div class="info striped-border">
-        <h2>PROJECT INFO</h2>
-        <div class="fakeimg">Image</div>
-        <p>Some text..</p>
-        <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco.
-        </p>
-      </div>
+      <?php echo $outHTML; ?>
     </div>
   </div>
-
 </body>
 
 <!-- Footer -->

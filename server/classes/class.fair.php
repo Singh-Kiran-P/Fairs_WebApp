@@ -342,6 +342,37 @@ class Fair
     return NULL;
   }
 
+  public function getAllFairs()
+  {
+    //connect to database
+    $conn = Database::connect();
+
+    $query = $conn->prepare("select * from fair order by start_date desc");
+    $list = array();
+    if ($query->execute()) {
+      if ($query->rowCount() > 0) {
+        while ($row = $query->fetch()) {
+          $fair_Model = new Fair_Model();
+          $fair_id = $row['fair_id'];
+          $city_id = $row['city_id'];
+          $title = $row['title'];
+          $description = $row['description'];
+          $start_date = $row['start_date'];
+          $end_date = $row['end_date'];
+          $opening_hour = $row['opening_hour'];
+          $closing_hour = $row['closing_hour'];
+          $location = $row['location'];
+          $totImg = $row['totimg'];
+          $fair_Model->setVar($fair_id, $city_id, $title, $description, $start_date, $end_date, $opening_hour, $closing_hour, $location, $totImg);
+          array_push($list, $fair_Model);
+        }
+      }
+    } else {
+      return $query->errorInfo()[2];
+    }
+
+    return $list;
+  }
   /**
    * Get de list of zones
    *

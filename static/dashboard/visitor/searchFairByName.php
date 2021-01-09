@@ -22,7 +22,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       }
       $outputHTML .= '</table>';
     } else {
-      $outputHTML = "No record found";
+      $outputHTML = "No record found<br>";
     }
 
     $listOfFairs = $search->searchByName($_GET['title'], false);

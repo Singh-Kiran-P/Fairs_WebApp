@@ -39,7 +39,7 @@ p{
 .searchBox select {
   display: flex;
   flex-direction: row;
-  color: white;
+  color: black;
   font-size: 14px;
   font-weight: bold;
   background-color: dodgerblue;

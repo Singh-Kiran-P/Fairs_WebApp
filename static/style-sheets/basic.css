@@ -206,7 +206,9 @@ label {
   width: 100%;
   background: #ddd;
 }
-
+.logo img{
+  border: none;
+}
 button {
   text-decoration: none;
   height: 4em;
@@ -215,9 +217,11 @@ button {
   padding: 2%;
   margin: 1em auto;
   background-color: #4784ff;
-  color: white;
+  color: black;
   cursor: pointer;
   border: none;
+  font-weight: bold;
+
   border-radius: 3px;
   text-transform: uppercase;
   letter-spacing: 0.5em;

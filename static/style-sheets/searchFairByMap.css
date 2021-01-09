@@ -45,7 +45,7 @@ td {
   border-bottom: 1px solid white;
 }
 
-a{
+a {
   color: dodgerblue;
   font-weight: bold;
 }
@@ -58,15 +58,18 @@ a{
   padding: 2%;
   margin: 1em auto;
   background-color: #4784ff;
-  color: white;
+  color: black;
+  font-weight: bold;
   cursor: pointer;
   border: none;
   border-radius: 3px;
   text-transform: uppercase;
   letter-spacing: 0.5em;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
+button{
+  box-shadow: none;
 }
 
 /* ------------------ MapBox -------------------- */
@@ -78,16 +81,25 @@ a{
 }
 
 .suggestions {
-  background-color: black !important;
-  color: white !important;
+  background-color: white !important;
+  color: black !important;
 }
 .mapboxgl-ctrl-geocoder .suggestions > .active > a {
   background-color: #5a3fc0 !important;
+  color: white !important;
 }
 .mapboxgl-ctrl-geocoder .suggestions > li > a:hover {
   background-color: #5a3fc0 !important;
+  color: white !important;
 }
-
+.mapboxgl-ctrl-geocoder--button {
+  width: unset !important;
+  height: unset !important;
+  margin: 0 !important;
+}
+.mapboxgl-ctrl-geocoder .suggestions > li > a {
+  background-color: white !important;
+}
 /* Marker */
 .marker {
   background-image: url("../img/mapbox-icon.png");

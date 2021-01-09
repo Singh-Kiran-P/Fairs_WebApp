@@ -6,7 +6,6 @@
   max-width: 100% !important;
 }
 
-
 .menu-icon {
   font-size: "100px";
   font-weight: bold;
@@ -29,4 +28,21 @@
 /* Content Image for the site */
 .contentImg {
   padding: 20px;
+}
+
+
+.img img {
+  width: 30%;
+
+  margin: 10px;
+}
+
+@media screen and (max-width: 700px) {
+  .content {
+    width: 100% !important;
+  }
+
+  .img img {
+    width: 50%;
+  }
 }

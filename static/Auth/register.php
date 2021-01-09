@@ -56,7 +56,7 @@ if (isset($_POST['isset'])) {
       <div id="form" class="register">
 
         <center>
-          <h1> Kermis Register Form </h1>
+          <h1> Register </h1>
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" onsubmit="return validateForm()">
             <input class="text" max="49" type="text" placeholder="Enter your name" name="name" value="<?php if (isset($_POST['name'])) echo _e($_POST['name']); ?>" required>
             <input class="text" max="49" type="text" placeholder="Enter Username" name="username" value="<?php if (isset($_POST['username'])) echo _e($_POST['username']); ?>" required>

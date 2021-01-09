@@ -326,8 +326,8 @@ class Admin
 
 
     /* check if startdate before current date  */
-    if (strtotime($data['start_date']) < mktime(0, 0, 0))
-      return "Start date less then current date";
+    // if (strtotime($data['start_date']) < mktime(0, 0, 0))
+    //   return "Start date less then current date";
 
     /* check if enddate before start date  */
     if (strtotime($data['end_date']) <= strtotime($data['start_date']))

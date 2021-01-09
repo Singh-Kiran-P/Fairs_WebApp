@@ -34,8 +34,9 @@ button {
   padding: 2%;
   margin: 1em auto;
   background-color: #4784ff;
-  color: white;
+  color: black;
   cursor: pointer;
+  font-weight: bold;
   border: none;
   border-radius: 3px;
   text-transform: uppercase;
@@ -52,16 +53,14 @@ button {
   width: 100%;
   margin-bottom: 2%;
   color: black;
-
 }
 
 .center {
   text-align: center;
 }
 
-.error{
+.error {
   color: red;
-  text-align:center;
+  text-align: center;
   font-weight: bold;
-
 }

@@ -23,7 +23,8 @@
   padding: 2%;
   margin: 1em auto;
   background-color: #4784ff;
-  color: white;
+  color: black;
+  font-weight: bold;
   cursor: pointer;
   border: none;
   border-radius: 3px;

@@ -15,7 +15,6 @@ function validateFormSlots() {
 
 function checkTimeSlots(t1, t2, out) {
 
-  /*  */
   if (t1 == "" || t2 == "") {
     out.innerHTML = "Time slots cannot be empty";
     return false;
@@ -25,5 +24,4 @@ function checkTimeSlots(t1, t2, out) {
     return false;
   }
   return true;
-
 }

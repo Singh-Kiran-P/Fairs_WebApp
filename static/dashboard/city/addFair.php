@@ -79,13 +79,22 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         <input type="file" name="file[]" class="inputfile" value="<?php if (isset($_POST['file'])) echo _e($_POST['file']); ?>" multiple>
         <div>
           <div class="sidebyside">
-            <input type="text" name="startDate" placeholder="Start Date" min="<?php echo date('Y-m') . '-' . (date('d') + 1); ?>" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['startDate'])) echo _e($_POST['startDate']); ?>" required>
-            <input type="text" name="openingHour" placeholder="Opening Hour" onfocus="(this.type='time')" onblur="(this.type='text')" value="<?php if (isset($_POST['openingHour'])) echo _e($_POST['openingHour']); ?>" required>
-            <input type="text" name="endDate" min="<?php echo date('Y-m') . '-' . (date('d') + 1); ?>" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')" value="<?php if (isset($_POST['endDate'])) echo _e($_POST['endDate']); ?>" required>
-            <input type="text" name="closingHour" placeholder="Closing Hour" onfocus="(this.type='time')" onblur="(this.type='text')" value="<?php if (isset($_POST['closingHour'])) echo _e($_POST['closingHour']); ?>" required>
+
+            <label for="startDate">Start Date:</label>
+            <input type="date" name="startDate" placeholder="Start Date" min="<?php echo date('Y-m') . '-' . (date('d') + 1); ?>" value="<?php if (isset($_POST['startDate'])) echo _e($_POST['startDate']); ?>" required>
+
+            <label for="endDate">End Date:</label>
+            <input type="date" name="endDate" min="<?php echo date('Y-m') . '-' . (date('d') + 1); ?>" placeholder="End Date" value="<?php if (isset($_POST['endDate'])) echo _e($_POST['endDate']); ?>" required>
+
+            <label for="openingHour">Opening Hour:</label>
+            <input type="time" name="openingHour" placeholder="Opening Hour" value="<?php if (isset($_POST['openingHour'])) echo _e($_POST['openingHour']); ?>" required>
+
+            <label for="closingHour">Closing Hour:</label>
+            <input type="time" name="closingHour" placeholder="Closing Hour" value="<?php if (isset($_POST['closingHour'])) echo _e($_POST['closingHour']); ?>" required>
           </div>
 
         </div>
+        <label for="location">Location:</label>
         <input type="text" name="location" placeholder="Location" value="<?php if (isset($_POST['location'])) echo _e($_POST['location']); ?>" required>
 
         <p id="error">

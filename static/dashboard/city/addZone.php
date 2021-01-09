@@ -89,9 +89,6 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
       $errorMsg .= '<br>' . $Msg;
 
     $enabled = "disabled";
-
-    // header("Location: addZoneSlot.php?zoneId=" .  $_GET['zoneId'] . "&free_slots=" . $_GET['open_spots']);
-
   }
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
@@ -161,8 +158,10 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
         <div <?php if ($enabled == "") echo "class='hidden'"; ?>>
           <p>Time slots: <?php echo " between " . _e($opening) . " - " . _e($closing) ?></p>
           <div class="sidebyside">
-            <input type="text" name="openingSlot" placeholder="Opening Slot" value="<?php if (isset($openingSlot)) echo $openingSlot; ?>" onfocus="(this.type='time')" onblur="(this.type='text')">
-            <input type="text" name="closingSlot" placeholder="Closing Slot" value="<?php if (isset($closingSlot)) echo $closingSlot; ?>" onfocus="(this.type='time')" onblur="(this.type='text')">
+            <label for="openingSlot">Opening Slot:</label>
+            <input type="time" name="openingSlot" placeholder="Opening Slot" value="<?php if (isset($openingSlot)) echo $openingSlot; ?>">
+            <label for="closingSlot">Closing Slot:</label>
+            <input type="time" name="closingSlot" placeholder="Closing Slot" value="<?php if (isset($closingSlot)) echo $closingSlot; ?>">
           </div>
           <button type="submit" name="submit_slot" id="btn">Add Slot</button>
         </div>

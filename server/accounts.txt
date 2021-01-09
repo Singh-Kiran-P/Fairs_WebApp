@@ -1,0 +1,32 @@
+Admin: (done)
+  - Een gemeente profile
+  - Username: hasselt
+  - Admin:    admin@admin.com
+  - Pass:     hasselt
+
+Gemeente1 (city): (done)
+  - Een gemeente profile -> tijdens de demo doen (future kermis maken)
+  - kermis in het verleden in db
+  - Username: hasselt
+  - Email:    singh.kiran2456@gmail.com
+  - Pass:     hasselt
+
+Gemeente2 (city): (done)
+  - Een gemeente profile
+  - kermis die bezig is
+  - Username: tongeren
+  - Email:    tongeren@tongeren.com
+  - Pass:     tongeren
+
+Visitor1:
+  - Een visitor profile
+  - Username: v1
+  - Email:    singh.kiran2456@hotmail.com
+  - Pass:     v1
+
+Visitor2:
+  - Een visitor profile
+  - Username: v2
+  - Email:    kiran.singh@student.uhasselt.be
+  - Pass:     v2
+

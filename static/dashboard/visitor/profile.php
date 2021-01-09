@@ -127,13 +127,13 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
   $OUTHTML_MSG = "";
   foreach ($msg as $m) {
     $OUTHTML_MSG .= '<div class="msg">';
-    $OUTHTML_MSG .= $m['msgCount'] . ' new messages from <a href="message.php?msgTo=' . _e($m['user_id']) . '&opened=true"><b id="linkinnotification" >' . _e($m['msgFrom']) . '</b></a>';
+    $OUTHTML_MSG .= $m['msgCount'] . ' new messages from <a href="message.php?msgTo=' . $m['user_id'] . '&opened=true"><b id="linkinnotification" >' . $m['msgFrom'] . '</b></a>';
   }
 
   // Notification if admin updated something
   $notifications = $account->getNotifications($userId);
   foreach ($notifications as $notification) {
-    $OUTHTML_MSG .= '<li>' . _e($notification['msg']) . '<a class="fl-right" href="../../../server/dashboard/visitor/deleteNotification.php?id=' . _e($notification['notification_id']) . '">X</a> </li>';
+    $OUTHTML_MSG .= '<li>' . $notification['msg'] . '<a class="fl-right" href="../../../server/dashboard/visitor/deleteNotification.php?id=' . $notification['notification_id'] . '">X</a> </li>';
   }
 } else {
   header('Location: ' . $rootURL . '/~kiransingh/project/static/dashboard/unauthorized.php');
@@ -183,12 +183,12 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
       <div class="mainCol1 g">
         <div class="info">
-        <p>Name: <?php echo $name; ?> </p>
-        <p>Email: <?php echo $email; ?> </p>
+          <p>Name: <?php echo $name; ?> </p>
+          <p>Email: <?php echo $email; ?> </p>
 
 
-        <p>Username: <?php echo $username; ?> </p>
-        <p>Type: <?php echo $type; ?> </p>
+          <p>Username: <?php echo $username; ?> </p>
+          <p>Type: <?php echo $type; ?> </p>
         </div>
         <div id="alert-area">
           <p <?php if ($OUTHTML_MSG == "") echo "class='hidden'"; ?>>Meldingen: <a class="fl-right m-r" href="../../../server/dashboard/visitor/deleteNotification.php?id=">All X</a></p>

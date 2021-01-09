@@ -153,7 +153,7 @@ class Fair
       $errorMsg .= "Time slot must be bigger or equal to 45min <br>";
     }
 
-    if ($openingSlot < $fairData['opening'])
+    if ($openingSlot <= $fairData['opening'])
       $errorMsg .= "Opening hour must be greater than " . _e($fairData['opening']) . "<br>";
 
     if ($closingSlot > $fairData['closing'])

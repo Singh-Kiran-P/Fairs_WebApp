@@ -59,7 +59,7 @@ input,textarea{
   border: 2px solid black;
 }
 .sidebyside input {
-  display: inline;
+  display: block;
   margin: 8px 0;
   width: 40%;
   padding: 12px 20px;

@@ -181,9 +181,11 @@ button:focus {
 }
 .own {
   align-self: flex-end;
+  color: white;
 }
 .other {
   align-self: flex-start;
+  color: white;
 }
 span.own,
 span.other {

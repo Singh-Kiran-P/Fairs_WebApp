@@ -200,6 +200,7 @@ class Accounts
         . "
         <br><br>
       If you did not request a password reset, you can simply ignore this message.
+      <br><br><br>
       Regards,
       Singh Kiran
       </body>
@@ -413,6 +414,9 @@ class Accounts
       $link
       . "
       <br><br>
+
+      <br><br><br>
+
     Best regards,
     Singh Kiran
 

@@ -68,10 +68,10 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION['type']) && $_SESSION['type'
 
           <div class="side">
             <label for="startDate">Start Date</label>
-            <input type="text" name="startDate" placeholder="Start Date" value="<?php if (isset($_POST['startDate'])) echo $_POST['startDate']; ?>" required>
+            <input type="date" name="startDate" placeholder="Start Date" value="<?php if (isset($_POST['startDate'])) echo $_POST['startDate']; ?>" required>
 
             <label for="endDate">End Date</label>
-            <input type="text" name="endDate" placeholder="End Date" value="<?php if (isset($_POST['endDate'])) echo $_POST['endDate']; ?>" required>
+            <input type="date" name="endDate" placeholder="End Date" value="<?php if (isset($_POST['endDate'])) echo $_POST['endDate']; ?>" required>
             <button type="submit" name="submit" class="btn">Show</button>
 
           </div>
